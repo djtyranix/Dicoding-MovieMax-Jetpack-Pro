@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.nixstudio.moviemax.view.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_tvShowsFragment"
+            app:destination="@id/tvShowsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_itemDetailActivity"
+            app:destination="@id/itemDetailActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.nixstudio.moviemax.view.home.movie.MovieFragment"
+        android:label="movie_fragment"
+        tools:layout="@layout/movie_fragment" >
+        <action
+            android:id="@+id/action_movieFragment_to_itemDetailActivity"
+            app:destination="@id/itemDetailActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvShowsFragment"
+        android:name="com.nixstudio.moviemax.view.home.tvshows.TvShowsFragment"
+        android:label="tv_shows_fragment"
+        tools:layout="@layout/tv_shows_fragment" >
+        <action
+            android:id="@+id/action_tvShowsFragment_to_itemDetailActivity"
+            app:destination="@id/itemDetailActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/itemDetailActivity"
+        android:name="com.nixstudio.moviemax.view.detail.ItemDetailActivity"
+        android:label="ItemDetailActivity" />
+</navigation>

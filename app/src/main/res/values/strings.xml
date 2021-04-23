@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieMax</string>
+    <string name="see_all">See all</string>
+    <string name="greeting_msg">Hello, Guest</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
+    <string name="dummy_movie_count">10</string>
+    <string name="dummy_tv_count">10</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieMax</string>
+    <string name="see_all">Lihat semua</string>
+    <string name="greeting_msg">Halo, Kamu</string>
+    <string name="movies">Film</string>
+    <string name="tv_shows">Acara TV</string>
+    <string name="dummy_movie_count">10</string>
+    <string name="dummy_tv_count">10</string>
+</resources>
