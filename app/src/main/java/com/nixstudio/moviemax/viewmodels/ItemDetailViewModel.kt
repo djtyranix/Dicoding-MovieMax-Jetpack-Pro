@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.viewmodel
+package com.nixstudio.moviemax.viewmodels
 
 import androidx.lifecycle.ViewModel
 

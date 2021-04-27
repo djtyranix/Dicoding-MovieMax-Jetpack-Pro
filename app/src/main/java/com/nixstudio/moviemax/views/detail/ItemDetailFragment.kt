@@ -1,13 +1,13 @@
-package com.nixstudio.moviemax.view.detail
+package com.nixstudio.moviemax.views.detail
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.viewmodel.ItemDetailViewModel
+import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
 
 class ItemDetailFragment : Fragment() {
 

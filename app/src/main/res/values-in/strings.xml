@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MovieMax</string>
+    <string name="app_name">Movie Max</string>
     <string name="see_all">Lihat semua</string>
-    <string name="greeting_msg">Halo, Kamu</string>
+    <string name="greeting_msg">Halo, Guest</string>
     <string name="movies">Film</string>
     <string name="tv_shows">Acara TV</string>
-    <string name="dummy_movie_count">10</string>
-    <string name="dummy_tv_count">10</string>
+    <string name="dummy_movie_count">11</string>
+    <string name="dummy_tv_count">11</string>
+    <string name="exit_confirmation">Tekan sekali lagi untuk keluar</string>
+    <string name="all_movies">Semua Film</string>
+    <string name="all_tv_shows">All TV Shows</string>
+    <string name="setting">Pengaturan</string>
+    <string name="title_activity_settings">Pengaturan</string>
+    <string name="language_change_desc">Ubah bahasa dari pengaturan sistem</string>
+    <string name="language_header">Bahasa</string>
+    <string name="language_option">Pilih Bahasa</string>
+    <string name="poster">poster</string>
+    <string name="test_text">Test Text</string>
 </resources>

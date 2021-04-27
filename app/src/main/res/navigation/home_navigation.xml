@@ -7,39 +7,81 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.nixstudio.moviemax.view.home.HomeFragment"
+        android:name="com.nixstudio.moviemax.views.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_movieFragment"
-            app:destination="@id/movieFragment" />
+            app:destination="@id/movieFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_tvShowsFragment"
-            app:destination="@id/tvShowsFragment" />
+            app:destination="@id/tvShowsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity" />
+            app:destination="@id/itemDetailActivity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.nixstudio.moviemax.view.home.movie.MovieFragment"
+        android:name="com.nixstudio.moviemax.views.home.movie.MovieFragment"
         android:label="movie_fragment"
-        tools:layout="@layout/movie_fragment" >
+        tools:layout="@layout/movie_fragment">
         <action
             android:id="@+id/action_movieFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity" />
+            app:destination="@id/itemDetailActivity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/tvShowsFragment"
-        android:name="com.nixstudio.moviemax.view.home.tvshows.TvShowsFragment"
+        android:name="com.nixstudio.moviemax.views.home.tvshows.TvShowsFragment"
         android:label="tv_shows_fragment"
-        tools:layout="@layout/tv_shows_fragment" >
+        tools:layout="@layout/tv_shows_fragment">
         <action
             android:id="@+id/action_tvShowsFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity" />
+            app:destination="@id/itemDetailActivity"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <activity
         android:id="@+id/itemDetailActivity"
-        android:name="com.nixstudio.moviemax.view.detail.ItemDetailActivity"
-        android:label="ItemDetailActivity" />
+        android:name="com.nixstudio.moviemax.views.detail.ItemDetailActivity"
+        android:label="ItemDetailActivity">
+        <argument
+            android:name="movie_entity"
+            app:argType="com.nixstudio.moviemax.models.MovieEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="tv_shows_entity"
+            app:argType="com.nixstudio.moviemax.models.TvShowsEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </activity>
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.nixstudio.moviemax.views.settings.SettingsActivity"
+        android:label="SettingsActivity" />
 </navigation>

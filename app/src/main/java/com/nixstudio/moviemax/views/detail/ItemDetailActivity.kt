@@ -1,7 +1,8 @@
-package com.nixstudio.moviemax.view.detail
+package com.nixstudio.moviemax.views.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.nixstudio.moviemax.R
 
 class ItemDetailActivity : AppCompatActivity() {
 

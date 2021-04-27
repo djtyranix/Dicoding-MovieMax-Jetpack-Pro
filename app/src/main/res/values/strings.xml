@@ -1,9 +1,19 @@
 <resources>
-    <string name="app_name">MovieMax</string>
+    <string name="app_name">Movie Max</string>
     <string name="see_all">See all</string>
     <string name="greeting_msg">Hello, Guest</string>
     <string name="movies">Movies</string>
     <string name="tv_shows">TV Shows</string>
-    <string name="dummy_movie_count">10</string>
-    <string name="dummy_tv_count">10</string>
+    <string name="dummy_movie_count">11</string>
+    <string name="dummy_tv_count">11</string>
+    <string name="exit_confirmation">Press again to exit</string>
+    <string name="all_movies">All Movies</string>
+    <string name="all_tv_shows">All TV Shows</string>
+    <string name="setting">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="language_change_desc">Change your system language</string>
+    <string name="language_header">Language</string>
+    <string name="language_option">Language Selection</string>
+    <string name="poster">poster</string>
+    <string name="test_text">Test Text</string>
 </resources>
