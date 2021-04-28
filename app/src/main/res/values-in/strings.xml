@@ -4,12 +4,12 @@
     <string name="see_all">Lihat semua</string>
     <string name="greeting_msg">Halo, Guest</string>
     <string name="movies">Film</string>
-    <string name="tv_shows">Acara TV</string>
+    <string name="tv_shows">Serial TV</string>
     <string name="dummy_movie_count">11</string>
     <string name="dummy_tv_count">11</string>
     <string name="exit_confirmation">Tekan sekali lagi untuk keluar</string>
     <string name="all_movies">Semua Film</string>
-    <string name="all_tv_shows">All TV Shows</string>
+    <string name="all_tv_shows">Semua Serial TV</string>
     <string name="setting">Pengaturan</string>
     <string name="title_activity_settings">Pengaturan</string>
     <string name="language_change_desc">Ubah bahasa dari pengaturan sistem</string>
@@ -28,8 +28,8 @@
     <string name="dummy_year">2021</string>
     <string name="dummy_genre_title">GENRE</string>
     <string name="dummy_overview_title">GAMBARAN</string>
-    <string name="detail_movie">Movie Detail</string>
-    <string name="detail_tv">TV Show Detail</string>
+    <string name="detail_movie">Detil Film</string>
+    <string name="detail_tv">Detil Serial TV</string>
     <string name="playtime">WAKTU MAIN</string>
     <string name="season">SEASON</string>
     <string name="year_of_release">TAHUN RILIS</string>

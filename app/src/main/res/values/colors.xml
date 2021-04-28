@@ -6,8 +6,9 @@
     <color name="red_200">#FFFF6F60</color>
     <color name="red_500">#FFE53935</color>
     <color name="red_700">#FFAB000D</color>
-    <color name="black">#FF424242</color>
-    <color name="white">#FFFAFAFA</color>
+    <color name="black">#FF212121</color>
+    <color name="white">#FFFEFEFE</color>
     <color name="bg_light">#FFF7F7F7</color>
     <color name="bg_dark">#FF212121</color>
+    <color name="dark">#FF121212</color>
 </resources>

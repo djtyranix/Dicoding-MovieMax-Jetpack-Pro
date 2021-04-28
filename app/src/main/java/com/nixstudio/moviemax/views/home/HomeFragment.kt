@@ -52,8 +52,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.tvShowsCount.setOnClickListener(this)
         binding.tvShowsCountSubtitle.setOnClickListener(this)
 
-        val curActivity = activity as AppCompatActivity
+        val curActivity = activity as HomeActivity
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        curActivity.setActionBarTitle(resources.getString(R.string.app_name))
 
         return binding.root
     }

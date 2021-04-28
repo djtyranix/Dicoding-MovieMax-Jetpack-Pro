@@ -10,22 +10,33 @@ class ItemDetailViewModel : ViewModel() {
     private val currentMovie = MutableLiveData<MovieEntity>()
     private val currentTvShows = MutableLiveData<TvShowsEntity>()
 
+    private lateinit var _currentMovieItem: MovieEntity
+    private lateinit var _currentTvShowsItem: TvShowsEntity
+
+    val currentMovieItem: MovieEntity
+        get() = _currentMovieItem
+
+    val currentTvShowsItem: TvShowsEntity
+        get() = _currentTvShowsItem
+
 //    0 = Movie, 1 = TvShows
-    private var mode = MutableLiveData<Int>()
+    var _mode: Int = 0
 
     fun setCurrrentMovie(movie: MovieEntity) {
         currentMovie.postValue(movie)
-        mode.postValue(0)
+        _currentMovieItem = movie
+        _mode = 0
     }
 
     fun setCurrentTvShows(tvShows: TvShowsEntity) {
         currentTvShows.postValue(tvShows)
-        mode.postValue(1)
+        _currentTvShowsItem = tvShows
+        _mode = 1
     }
 
     fun getCurrentMovie(): LiveData<MovieEntity> = currentMovie
 
     fun getCurrentTvShows(): LiveData<TvShowsEntity> = currentTvShows
 
-    fun getMode(): LiveData<Int> = mode
+    fun getMode(): Int = _mode
 }

@@ -1,0 +1,135 @@
+-----------------------------------------------------
+Unit Test Scenario
+-----------------------------------------------------
+
+1. HomeViewModelTest
+    > Memuat Film yang ditampilkan di Homepage
+        - Memastikan data film tidak null saat di set
+        - Memastikan jumlah film terbaru yang ditampilkan di homepage sesuai dengan jumlah yang diharapkan
+
+    > Memuat TV Show yang ditampilkan di Homepage
+        - Memastikan data tv shows tidak null saat di set
+        - Memastikan jumlah tv shows terbaru yang ditampilkan di homepage sesuai dengan jumlah yang diharapkan
+
+2. MovieViewModelTest
+    > Memuat Semua Film
+        - Memastikan data film tidak null saat di set
+        - Memastikan jumlah film sesuai dengan jumlah yang diharapkan
+
+3. TvShowsViewModelTest
+    > Memuat semua TV Shows
+        - Memastikan data tv shows tidak null saat di set
+        - Memastikan jumlah tv shows sesuai dengan jumlah yang diharapkan
+
+4. ItemDetailViewModelTest
+    > Memuat detail film yang dipilih
+        - Memastikan data film tidak null
+        - Memastikan value dari film tidak null (untuk yang tidak boleh null)
+        - Memastikan data dari film sesuai dengan yang diharapkan
+        - Memastikan perubahan title di Action Bar sesuai dengan pilihan (Film/TV Shows)
+
+    > Memuat detail tv shows yang dipilih
+        - Memastikan data tv shows tidak null
+        - Memastikan value dari tv shows tidak null (untuk yang tidak boleh null)
+        - Memastikan data dari tv shows dengan yang diharapkan
+        - Memastikan perubahan title di Action Bar sesuai dengan pilihan (Film/Tv Shows)
+
+    > Memuat konten sesuai dengan mode terpilih
+        - Memastikan saat memilih TV Shows, akan muncul detil TV Shows
+        - Memastikan saat memilih Film, akan muncul detil film
+
+-----------------------------------------------------
+Instrumentation Test Scenario
+-----------------------------------------------------
+
+1. HomeFragment
+    > Show
+        - Memastikan aplikasi terbuka dan menampilkan homepage
+        - Memastikan button See All tertampil untuk Movies dan TV Shows dan dapat di klik
+        - Memastikan RecyclerView Movie menampilkan data latest movie dan dapat di klik
+        - Memastikan RecyclerView TV Shows menampilkan data latest TV Shows dan dapat di klik
+        - Memastikan Greetings tertampil
+        - Memastikan Jumlah total Movies dan TV Shows tertampil dan dapat di klik
+        - Memastikan menu ter-inflate dengan baik dan tertampil pilihan settings serta dapat di klik
+
+    > Directions
+        - Memastikan saat di klik see all pada movies, akan menuju ke MovieFragment
+        - Memastikan saat di klik see all pada tv shows, akan menuju ke TvShowsFragment
+        - Memastikan saat di klik jumlah movies, akan menuju ke MovieFragment
+        - Memastikan saat di klik jumlah TV Shows, akan menuju ke MovieFragment
+        - Memastikan saat di klik salah satu poster film, akan menuju ke ItemDetailActivity
+        - Memastikan saat di klik salah satu poster TV Shows, akan menuju ke ItemDetailActivity
+        - Memastikan saat di klik menu settings, akan menuju ke settings
+
+2. MovieFragment
+    > Show
+        - Memastikan RecyclerView Movie menampilkan data all movies dan dapat di klik
+        - Memastikan TextView All Movies tertampil
+        - Memastikan Action Bar title berubah menjadi Movies
+        - Memastikan button back di action bar tertampil
+
+    > Directions
+        - Memastikan saat item RecyclerView di klik, akan menuju ke ItemDetailActivity
+
+3. TvShowsFragment
+    > Show
+        - Memastikan RecyclerView Movie menampilkan data all TV Shows dan dapat di klik
+        - Memastikan TextView All TV Shows tertampil
+        - Memastikan Action Bar title berubah menjadi TV Shows
+        - Memastikan button back di action bar tertampil
+
+    > Directions
+        - Memastikan saat item RecyclerView di klik, akan menuju ke ItemDetailActivity
+
+4. ItemDetailActivity -> ItemDetailFragment
+    > Show
+        - Memastikan judul movie/tv shows tertampil dengan benar
+        - Memastikan tahun keluar movie/tv shows tertampil dengan benar
+        - Memastikan genre movie/tv shows tertampil dengan benar
+        - Memastikan playtime movie tertampil dengan benar (Jika data adalah movie)
+        - Memastikan Season tertampil dengan benar (Jika data adalah TV Shows)
+        - Memastikan overview movie/tv shows tertampil dengan benar
+        - Memastikan poster movie/tv shows tertampil dengan benar
+        - Memastikan button back di action bar tertampil
+
+-----------------------------------------------------
+Usecase Test Scenario
+-----------------------------------------------------
+
+1. Pengujian Melihat Detail Film
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan salah satu poster film
+        3. Lihat detail film
+        4. Tekan back button
+        5. Tekan See All di Movies
+        6. Tekan salah satu poster film
+        7. Lihat detail film
+
+2. Pengujian Melihat Detail TV Shows
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan salah satu poster tv shows
+        3. Lihat detail tv shows
+        4. Tekan back button
+        5. Tekan See All di TV Shows
+        6. Tekan salah satu poster tv shows
+        7. Lihat detail tv shows
+
+3. Pengujian Melihat Semua Film
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan jumlah movies
+        3. Lihat list film
+        4. Tekan back button
+        5. Tekan see all di movies
+        6. Lihat list film
+
+4. Pengujian Melihat Semua TV Shows
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan jumlah TV Shows
+        3. Lihat list TV Shows
+        4. Tekan back button
+        5. Tekan see all di TV Shows
+        6. Lihat list TV Shows

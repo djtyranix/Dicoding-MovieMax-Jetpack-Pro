@@ -47,17 +47,15 @@ class ItemDetailFragment : Fragment() {
         tvPlaytimeSeason = binding.tvPlaytimeSeason
         tvOverview = binding.tvOverview
 
-        viewModel.getMode().observe(viewLifecycleOwner, { mode ->
-            if (mode == 0) {
-                viewModel.getCurrentMovie().observe(viewLifecycleOwner, { movie ->
-                    setMovieData(movie)
-                })
-            } else if (mode == 1) {
-                viewModel.getCurrentTvShows().observe(viewLifecycleOwner, { tvShows ->
-                    setTvShows(tvShows)
-                })
-            }
-        })
+        if (viewModel.getMode() == 0) {
+            viewModel.getCurrentMovie().observe(viewLifecycleOwner, { movie ->
+                setMovieData(movie)
+            })
+        } else if (viewModel.getMode() == 1) {
+            viewModel.getCurrentTvShows().observe(viewLifecycleOwner, { tvShows ->
+                setTvShows(tvShows)
+            })
+        }
 
         return binding.root
     }

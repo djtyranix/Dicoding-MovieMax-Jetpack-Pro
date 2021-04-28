@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.MovieFragmentBinding
 import com.nixstudio.moviemax.models.MovieEntity
 import com.nixstudio.moviemax.viewmodels.MovieViewModel
+import com.nixstudio.moviemax.views.home.HomeActivity
 
 class MovieFragment : Fragment() {
 
@@ -55,8 +57,9 @@ class MovieFragment : Fragment() {
             }
         })
 
-        val curActivity = activity as AppCompatActivity
+        val curActivity = activity as HomeActivity
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        curActivity.setActionBarTitle(resources.getString(R.string.movies))
     }
 
     private fun showMovieDetail(data: MovieEntity) {

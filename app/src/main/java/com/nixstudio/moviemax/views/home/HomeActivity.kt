@@ -73,4 +73,8 @@ class HomeActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
+    fun setActionBarTitle(title: String?) {
+        supportActionBar?.title = title
+    }
 }
