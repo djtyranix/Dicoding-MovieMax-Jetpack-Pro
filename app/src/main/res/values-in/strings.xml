@@ -17,4 +17,20 @@
     <string name="language_option">Pilih Bahasa</string>
     <string name="poster">poster</string>
     <string name="test_text">Test Text</string>
+    <string name="dummy_title">Godzilla vs. Kong</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu arcu vel enim vehicula congue. Phasellus a convallis ante, sit amet mattis nulla. Cras malesuada feugiat lorem id malesuada. In orci est, tristique quis malesuada sit amet, vulputate sed nunc. Donec eget tortor sem. Sed eu pharetra justo, at porttitor lacus. In fringilla suscipit ligula, ac eleifend lorem volutpat quis. Maecenas laoreet, ex nec viverra tempus, lectus nulla fringilla purus, sed venenatis diam arcu at leo. Maecenas elementum nisi id felis laoreet, in tincidunt turpis tempus. Nulla at hendrerit lectus. Sed dui dolor, hendrerit rutrum placerat vitae, vehicula quis libero. Nullam finibus viverra facilisis. Curabitur convallis dolor augue, a dictum ligula eleifend at. Donec fermentum tortor justo, ut dictum sapien mattis et.
+    </string>
+    <string name="playtime_season_title_dummy">PLAYTIME/SEASON</string>
+    <string name="dummy_playtime">01:53:00</string>
+    <string name="dummy_genre">Aksi</string>
+    <string name="dummy_year">2021</string>
+    <string name="dummy_genre_title">GENRE</string>
+    <string name="dummy_overview_title">GAMBARAN</string>
+    <string name="detail_movie">Movie Detail</string>
+    <string name="detail_tv">TV Show Detail</string>
+    <string name="playtime">WAKTU MAIN</string>
+    <string name="season">SEASON</string>
+    <string name="year_of_release">TAHUN RILIS</string>
 </resources>

@@ -47,6 +47,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         binding.seeAllMovies.setOnClickListener(this)
         binding.seeAllTv.setOnClickListener(this)
+        binding.tvMovieCount.setOnClickListener(this)
+        binding.tvMovieCountSubtitle.setOnClickListener(this)
+        binding.tvShowsCount.setOnClickListener(this)
+        binding.tvShowsCountSubtitle.setOnClickListener(this)
 
         val curActivity = activity as AppCompatActivity
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -99,12 +103,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.see_all_movies -> {
+            R.id.see_all_movies, R.id.tv_movie_count, R.id.tv_movie_count_subtitle -> {
                 val toAllMovie = HomeFragmentDirections.actionHomeFragmentToMovieFragment()
                 v.findNavController().navigate(toAllMovie)
             }
 
-            R.id.see_all_tv -> {
+            R.id.see_all_tv, R.id.tv_shows_count, R.id.tv_shows_count_subtitle -> {
                 val toAllTv = HomeFragmentDirections.actionHomeFragmentToTvShowsFragment()
                 v.findNavController().navigate(toAllTv)
             }
