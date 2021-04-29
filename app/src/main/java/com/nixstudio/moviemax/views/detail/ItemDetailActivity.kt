@@ -1,6 +1,10 @@
 package com.nixstudio.moviemax.views.detail
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
@@ -47,5 +51,34 @@ class ItemDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.item_detail_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+
+                if (currentMovie != null) {
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.movieTitle)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentMovie?.movieTitle}\n\nOverview: ${currentMovie?.overview}")
+                } else if (currentTvShows != null) {
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.tvTitle)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentTvShows?.tvTitle}\n\nOverview: ${currentTvShows?.overview}")
+                }
+
+                shareIntent.type = "text/plain"
+                startActivity(shareIntent)
+                return true
+            }
+
+            else -> return true
+        }
     }
 }

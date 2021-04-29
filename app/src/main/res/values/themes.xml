@@ -14,4 +14,8 @@
         <!-- Customize your theme here. -->
         <item name="cardview_bg">@color/bg_light</item>
     </style>
+
+    <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_brand_logo</item>
+    </style>
 </resources>
