@@ -96,40 +96,41 @@ Instrumentation Test Scenario
 Usecase Test Scenario
 -----------------------------------------------------
 
-1. Pengujian Melihat Detail Film
+1a. Pengujian Melihat Detail Film
     Steps:
         1. Membuka Aplikasi
         2. Tekan salah satu poster film
         3. Lihat detail film
-        4. Tekan back button
-        5. Tekan See All di Movies
-        6. Tekan salah satu poster film
-        7. Lihat detail film
 
-2. Pengujian Melihat Detail TV Shows
-    Steps:
+1b. Pengujian Melihat Semua Film -> Detil Film
         1. Membuka Aplikasi
-        2. Tekan salah satu poster tv shows
-        3. Lihat detail tv shows
-        4. Tekan back button
-        5. Tekan See All di TV Shows
-        6. Tekan salah satu poster tv shows
-        7. Lihat detail tv shows
+        2. Tekan see all di movies
+        3. Lihat list film
+        4. Pilih salah satu dan lihat detil film
 
-3. Pengujian Melihat Semua Film
+1c. Pengujian Melihat Semua Film -> Detil Film
     Steps:
         1. Membuka Aplikasi
         2. Tekan jumlah movies
         3. Lihat list film
-        4. Tekan back button
-        5. Tekan see all di movies
-        6. Lihat list film
+        4. Pilih salah satu dan lihat detil film
 
-4. Pengujian Melihat Semua TV Shows
+2a. Pengujian Melihat Detail TV Shows dari home
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan salah satu poster tv shows
+        3. Lihat detail tv shows
+
+2b. Pengujian Melihat Semua TV Shows -> Detil TV Shows
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan see all di TV Shows
+        3. Lihat list TV Shows
+        4. Pilih salah satu dan lihat detil film
+
+2c. Pengujian Melihat Semua TV Shows -> Detil TV Shows
     Steps:
         1. Membuka Aplikasi
         2. Tekan jumlah TV Shows
         3. Lihat list TV Shows
-        4. Tekan back button
-        5. Tekan see all di TV Shows
-        6. Lihat list TV Shows
+        4. Pilih salah satu dan lihat detil film

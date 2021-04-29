@@ -30,6 +30,7 @@ class ItemDetailFragment : Fragment() {
     private lateinit var imgPoster: ImageView
     private lateinit var tvTitle: TextView
     private lateinit var tvGenre: TextView
+    private lateinit var tvYear: TextView
     private lateinit var tvPlaytimeSeasonTitle: TextView
     private lateinit var tvPlaytimeSeason: TextView
     private lateinit var tvOverview: TextView
@@ -43,6 +44,7 @@ class ItemDetailFragment : Fragment() {
         imgPoster = binding.imgPosterDetail
         tvTitle = binding.itemTitle
         tvGenre = binding.tvGenre
+        tvYear = binding.tvYear
         tvPlaytimeSeasonTitle = binding.tvPlaytimeSeasonTitle
         tvPlaytimeSeason = binding.tvPlaytimeSeason
         tvOverview = binding.tvOverview
@@ -68,6 +70,7 @@ class ItemDetailFragment : Fragment() {
 
         tvTitle.text = movie.movieTitle
         tvGenre.text = movie.genre
+        tvYear.text = movie.movieYear.toString()
         tvPlaytimeSeasonTitle.text = resources.getString(R.string.playtime)
         tvPlaytimeSeason.text = movie.playtime
         tvOverview.text = movie.overview
@@ -81,6 +84,7 @@ class ItemDetailFragment : Fragment() {
 
         tvTitle.text = tvShows.tvTitle
         tvGenre.text = tvShows.genre
+        tvYear.text = tvShows.tvYear.toString()
         tvPlaytimeSeasonTitle.text = resources.getString(R.string.season)
         tvPlaytimeSeason.text = tvShows.season.toString()
         tvOverview.text = tvShows.overview
