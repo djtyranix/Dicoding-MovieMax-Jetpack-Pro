@@ -17,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY", API_KEY)
     }
 
     buildTypes {
@@ -41,8 +42,6 @@ android {
 }
 
 dependencies {
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$material_version"
@@ -59,7 +58,7 @@ dependencies {
 
 //    GLIDE
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
 //    RECYCLER VIEW
@@ -76,4 +75,15 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$android_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core_version"
+
+//    API
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+//    KOIN
+    implementation "io.insert-koin:koin-android:$koin_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+    androidTestImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
