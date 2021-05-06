@@ -33,4 +33,7 @@
     <string name="season">SEASON</string>
     <string name="year_of_release">YEAR OF RELEASE</string>
     <string name="share">Share</string>
+    <string name="search_hint">Search Movies, TVs…</string>
+    <string name="trending">Trending Today</string>
+    <string name="search_header">Search</string>
 </resources>

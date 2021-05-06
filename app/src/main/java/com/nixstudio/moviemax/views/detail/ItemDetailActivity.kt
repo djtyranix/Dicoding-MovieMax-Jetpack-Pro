@@ -78,7 +78,7 @@ class ItemDetailActivity : AppCompatActivity() {
                 return true
             }
 
-            else -> return true
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 }

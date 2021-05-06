@@ -86,4 +86,7 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
     androidTestImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+
+//    FLOATING SEARCH BAR
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
 }

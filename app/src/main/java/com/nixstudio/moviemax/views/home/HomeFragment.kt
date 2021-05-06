@@ -1,10 +1,15 @@
 package com.nixstudio.moviemax.views.home
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -47,14 +52,34 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         binding.seeAllMovies.setOnClickListener(this)
         binding.seeAllTv.setOnClickListener(this)
-        binding.tvMovieCount.setOnClickListener(this)
-        binding.tvMovieCountSubtitle.setOnClickListener(this)
-        binding.tvShowsCount.setOnClickListener(this)
-        binding.tvShowsCountSubtitle.setOnClickListener(this)
 
         val curActivity = activity as HomeActivity
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         curActivity.setActionBarTitle(resources.getString(R.string.app_name))
+
+        val searchManager = (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = binding.svSearchItem
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
+        searchView.setIconifiedByDefault(false)
+        searchView.queryHint = resources.getString(R.string.search_hint)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return true
+            }
+        })
+
+        searchView.setOnCloseListener {
+            Log.d("Closed", "Closed")
+            true
+        }
 
         return binding.root
     }
@@ -104,12 +129,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.see_all_movies, R.id.tv_movie_count, R.id.tv_movie_count_subtitle -> {
+            R.id.see_all_movies -> {
                 val toAllMovie = HomeFragmentDirections.actionHomeFragmentToMovieFragment()
                 v.findNavController().navigate(toAllMovie)
             }
 
-            R.id.see_all_tv, R.id.tv_shows_count, R.id.tv_shows_count_subtitle -> {
+            R.id.see_all_tv -> {
                 val toAllTv = HomeFragmentDirections.actionHomeFragmentToTvShowsFragment()
                 v.findNavController().navigate(toAllTv)
             }

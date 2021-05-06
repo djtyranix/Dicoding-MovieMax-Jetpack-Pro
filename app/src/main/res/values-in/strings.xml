@@ -34,4 +34,7 @@
     <string name="season">SEASON</string>
     <string name="year_of_release">TAHUN RILIS</string>
     <string name="share">Share</string>
+    <string name="search_hint">Cari Film, Serial…</string>
+    <string name="trending">Trending Hari Ini</string>
+    <string name="search_header">Search</string>
 </resources>
