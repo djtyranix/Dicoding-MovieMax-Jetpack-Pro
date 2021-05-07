@@ -7,23 +7,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.FragmentHomeBinding
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.TvShowsEntity
+import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
-    private val viewModel: HomeViewModel by activityViewModels()
+    private val viewModel by viewModel<HomeViewModel>()
     lateinit var movieViewAdapter: HomeMovieAdapter
     lateinit var tvViewAdapter: HomeTvAdapter
 
@@ -32,6 +30,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        viewModel.setMovies()
+        viewModel.setTvShows()
 
         movieViewAdapter = HomeMovieAdapter()
         tvViewAdapter = HomeTvAdapter()
@@ -49,6 +50,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
             adapter = tvViewAdapter
             setHasFixedSize(true)
         }
+
+        viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
+            if (movieItem != null) {
+                movieViewAdapter.setMovies(movieItem)
+            }
+        })
+
+        viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
+            if (tvItem != null) {
+                tvViewAdapter.setTv(tvItem)
+            }
+        })
 
         binding.seeAllMovies.setOnClickListener(this)
         binding.seeAllTv.setOnClickListener(this)
@@ -87,41 +100,26 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.setMovies()
-        viewModel.setTvShows()
-
-        viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
-            if (movieItem != null) {
-                movieViewAdapter.setMovies(movieItem)
-            }
-        })
-
-        viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
-            if (tvItem != null) {
-                tvViewAdapter.setTv(tvItem)
-            }
-        })
-
         movieViewAdapter.setOnItemClickCallback(object : HomeMovieAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: MovieEntity) {
+            override fun onItemClicked(data: DiscoverMovieResultsItem) {
                 showMovieDetail(data)
             }
         })
 
         tvViewAdapter.setOnItemClickCallback(object : HomeTvAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: TvShowsEntity) {
+            override fun onItemClicked(data: DiscoverTvResultsItem) {
                 showTvDetail(data)
             }
         })
     }
 
-    private fun showMovieDetail(data: MovieEntity) {
+    private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
             HomeFragmentDirections.actionHomeFragmentToItemDetailActivity(data, null)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 
-    private fun showTvDetail(data: TvShowsEntity) {
+    private fun showTvDetail(data: DiscoverTvResultsItem) {
         val toDetailItemActivity =
             HomeFragmentDirections.actionHomeFragmentToItemDetailActivity(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)

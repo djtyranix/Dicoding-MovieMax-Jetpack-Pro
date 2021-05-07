@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.MovieFragmentBinding
 import com.nixstudio.moviemax.models.MovieEntity
+import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.viewmodels.MovieViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
 
     private var _binding: MovieFragmentBinding? = null
     val binding get() = _binding!!
-    private val viewModel: MovieViewModel by viewModels()
+    private val viewModel by viewModel<MovieViewModel>()
     lateinit var viewAdapter: MovieAdapter
 
     override fun onCreateView(
@@ -52,7 +54,7 @@ class MovieFragment : Fragment() {
         })
 
         viewAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: MovieEntity) {
+            override fun onItemClicked(data: DiscoverMovieResultsItem) {
                 showMovieDetail(data)
             }
         })
@@ -62,7 +64,7 @@ class MovieFragment : Fragment() {
         curActivity.setActionBarTitle(resources.getString(R.string.movies))
     }
 
-    private fun showMovieDetail(data: MovieEntity) {
+    private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
             MovieFragmentDirections.actionMovieFragmentToItemDetailActivity(data, null)
         view?.findNavController()?.navigate(toDetailItemActivity)

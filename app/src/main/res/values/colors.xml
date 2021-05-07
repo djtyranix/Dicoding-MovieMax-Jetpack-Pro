@@ -11,4 +11,5 @@
     <color name="bg_light">#FFF7F7F7</color>
     <color name="bg_dark">#FF212121</color>
     <color name="dark">#FF121212</color>
+    <color name="transparent">#00000000</color>
 </resources>

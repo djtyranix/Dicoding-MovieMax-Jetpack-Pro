@@ -71,14 +71,12 @@
         android:label="ItemDetailActivity">
         <argument
             android:name="movie_entity"
-            app:argType="com.nixstudio.moviemax.models.MovieEntity"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem"
+            app:nullable="true" />
         <argument
             android:name="tv_shows_entity"
-            app:argType="com.nixstudio.moviemax.models.TvShowsEntity"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem"
+            app:nullable="true" />
     </activity>
     <activity
         android:id="@+id/settingsActivity"

@@ -1,39 +1,94 @@
 package com.nixstudio.moviemax.viewmodels
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.nixstudio.moviemax.models.CombinedResultEntity
 import com.nixstudio.moviemax.models.MovieEntity
 import com.nixstudio.moviemax.models.TvShowsEntity
-import com.nixstudio.moviemax.utils.DummyData
+import com.nixstudio.moviemax.models.sources.MovieMaxRepository
+import com.nixstudio.moviemax.models.sources.remote.*
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
-    private val _listMovie = MutableLiveData<List<MovieEntity>>()
-    private val _listTv = MutableLiveData<List<TvShowsEntity>>()
-
-    private var _listMovieList = ArrayList<MovieEntity>()
-    private var _listTvList = ArrayList<TvShowsEntity>()
-
-    val listMovieList: ArrayList<MovieEntity>
-        get() = _listMovieList
-
-    val listTvList: ArrayList<TvShowsEntity>
-        get() = _listTvList
+class HomeViewModel(private val repo: MovieMaxRepository) : ViewModel() {
+    private val _listMovie = MutableLiveData<List<DiscoverMovieResultsItem>>()
+    private val _listTv = MutableLiveData<List<DiscoverTvResultsItem>>()
+    private val _listTrending = MutableLiveData<List<CombinedResultEntity>>()
+    private val _isLoading = MutableLiveData<Boolean>()
 
     fun setMovies() {
-        val movies = DummyData.generateLatestMovies()
-        _listMovieList.addAll(movies)
-        _listMovie.postValue(movies)
+        val discoverMovieResponse = repo.getDiscoveryMovie()
+
+        discoverMovieResponse.enqueue(object : Callback<DiscoverMovieResponse> {
+            override fun onResponse(
+                call: Call<DiscoverMovieResponse>,
+                response: Response<DiscoverMovieResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _listMovie.postValue(response.body()?.results?.take(7) as ArrayList<DiscoverMovieResultsItem>)
+                }
+            }
+
+            override fun onFailure(call: Call<DiscoverMovieResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
     }
 
     fun setTvShows() {
-        val tvShows = DummyData.generateLatestTvShows()
-        _listTvList.addAll(tvShows)
-        _listTv.postValue(tvShows)
+        val discoverTvResponse = repo.getDiscoveryTvShows()
+
+        discoverTvResponse.enqueue(object : Callback<DiscoverTvResponse> {
+            override fun onResponse(
+                call: Call<DiscoverTvResponse>,
+                response: Response<DiscoverTvResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _listTv.postValue(response.body()?.results?.take(7) as ArrayList<DiscoverTvResultsItem>)
+                }
+            }
+
+            override fun onFailure(call: Call<DiscoverTvResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+            }
+        })
     }
 
-    fun getTvShows(): LiveData<List<TvShowsEntity>> = _listTv
+    fun setTrending() {
+        val trendingResponse = repo.getTrendingToday()
 
-    fun getMovies(): LiveData<List<MovieEntity>> = _listMovie
+        trendingResponse.enqueue(object : Callback<TrendingResponse> {
+            override fun onResponse(
+                call: Call<TrendingResponse>,
+                response: Response<TrendingResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _listTrending.postValue(response.body()?.results?.take(7) as ArrayList<CombinedResultEntity>)
+                }
+            }
 
+            override fun onFailure(call: Call<TrendingResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
+            }
+
+        })
+    }
+
+    fun setLoadingState(state: Boolean) {
+        _isLoading.value = state
+    }
+
+    fun getTvShows(): LiveData<List<DiscoverTvResultsItem>> = _listTv
+
+    fun getMovies(): LiveData<List<DiscoverMovieResultsItem>> = _listMovie
+
+    fun getTrending(): LiveData<List<CombinedResultEntity>> = _listTrending
+
+    fun getLoadingState(): LiveData<Boolean> = _isLoading
 }

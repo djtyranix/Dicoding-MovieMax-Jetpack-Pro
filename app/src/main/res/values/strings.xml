@@ -31,9 +31,11 @@
     <string name="detail_tv">TV Show Detail</string>
     <string name="playtime">PLAYTIME</string>
     <string name="season">SEASON</string>
-    <string name="year_of_release">YEAR OF RELEASE</string>
+    <string name="year_of_release">RELEASE DATE</string>
     <string name="share">Share</string>
-    <string name="search_hint">Search Movies, TVs…</string>
+    <string name="search_hint">Movies, TVs</string>
     <string name="trending">Trending Today</string>
     <string name="search_header">Search</string>
+    <string name="minutes">%1$s mins</string>
+    <string name="backdrop">Backdrop</string>
 </resources>

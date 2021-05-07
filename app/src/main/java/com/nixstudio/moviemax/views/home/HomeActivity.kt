@@ -12,13 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.viewmodels.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
     private var mHomeFragment = HomeFragment()
     var doubleBackToExitOnce: Boolean = false
     private lateinit var navHostFragment: NavHostFragment
-    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

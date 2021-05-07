@@ -7,21 +7,21 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.ItemListFullBinding
-import com.nixstudio.moviemax.models.TvShowsEntity
+import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
 
 class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.TvShowsViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
-    private val listTv = ArrayList<TvShowsEntity>()
+    private val listTv = ArrayList<DiscoverTvResultsItem>()
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: TvShowsEntity)
+        fun onItemClicked(data: DiscoverTvResultsItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setTv(tvShows: List<TvShowsEntity>?) {
+    fun setTv(tvShows: List<DiscoverTvResultsItem>?) {
         if (tvShows == null) return
 
         this.listTv.clear()
@@ -31,11 +31,12 @@ class TvShowsAdapter : RecyclerView.Adapter<TvShowsAdapter.TvShowsViewHolder>() 
 
     inner class TvShowsViewHolder(private val binding: ItemListFullBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: TvShowsEntity) {
-            binding.tvTitle.text = movie.tvTitle
+        fun bind(tv: DiscoverTvResultsItem) {
+            binding.tvTitle.text = tv.name
 
+            val url = "https://image.tmdb.org/t/p/original${tv.posterPath}"
             Glide.with(binding.imgPoster.context)
-                .load(movie.tvPoster)
+                .load(url)
                 .apply(RequestOptions().override(400, 600).error(R.drawable.ic_broken_image_black))
                 .into(binding.imgPoster)
         }

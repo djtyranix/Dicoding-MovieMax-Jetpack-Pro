@@ -32,9 +32,11 @@
     <string name="detail_tv">Detil Serial TV</string>
     <string name="playtime">WAKTU MAIN</string>
     <string name="season">SEASON</string>
-    <string name="year_of_release">TAHUN RILIS</string>
+    <string name="year_of_release">TANGGAL RILIS</string>
     <string name="share">Share</string>
-    <string name="search_hint">Cari Film, Serial…</string>
+    <string name="search_hint">Film, Serial</string>
     <string name="trending">Trending Hari Ini</string>
     <string name="search_header">Search</string>
+    <string name="minutes">%1$s menit</string>
+    <string name="backdrop">Backdrop</string>
 </resources>

@@ -1,7 +1,10 @@
 package com.nixstudio.moviemax.models.sources.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class DiscoverTvResponse(
 
 	@field:SerializedName("page")
@@ -15,8 +18,9 @@ data class DiscoverTvResponse(
 
 	@field:SerializedName("total_results")
 	val totalResults: Int? = null
-)
+): Parcelable
 
+@Parcelize
 data class DiscoverTvResultsItem(
 
 	@field:SerializedName("first_air_date")
@@ -57,4 +61,4 @@ data class DiscoverTvResultsItem(
 
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null
-)
+): Parcelable

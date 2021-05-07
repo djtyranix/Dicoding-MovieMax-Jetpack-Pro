@@ -8,7 +8,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.utils.DummyData
 import com.nixstudio.moviemax.views.home.movie.MovieAdapter
 import com.nixstudio.moviemax.views.home.tvshows.TvShowsAdapter
 import org.junit.Assert.*

@@ -1,18 +1,13 @@
 package com.nixstudio.moviemax.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.utils.DummyData
+import com.nixstudio.moviemax.utils.repositoryModule
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 
 class HomeViewModelTest {
@@ -24,7 +19,8 @@ class HomeViewModelTest {
 
     @Before
     fun init() {
-        homeViewModel = HomeViewModel()
+
+        homeViewModel = HomeViewModel(KoinComponent.get())
     }
 
     @Test

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:scrollbars="none"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,6 +12,15 @@
         android:layout_height="wrap_content"
         tools:context=".views.detail.ItemDetailFragment">
 
+        <ImageView
+            android:id="@+id/img_backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/backdrop"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_playtime_season_title"
@@ -35,13 +45,13 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:fontFamily="@font/poppins_bold"
+            android:fontFamily="@font/poppins_semibold"
             android:text="@string/dummy_title"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/img_backdrop" />
 
         <View
             android:id="@+id/view2"
@@ -79,8 +89,8 @@
                 android:id="@+id/img_poster_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/poster"/>
+                android:contentDescription="@string/poster"
+                android:scaleType="fitCenter" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -128,39 +138,42 @@
 
         <TextView
             android:id="@+id/tv_year"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/dummy_year"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/tv_genre"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/dummy_genre"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <TextView
             android:id="@+id/tv_playtime_season"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="@string/dummy_playtime"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/tv_playtime_season_title"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tv_playtime_season_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_playtime_season_title" />

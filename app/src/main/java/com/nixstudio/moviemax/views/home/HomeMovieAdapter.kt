@@ -8,21 +8,22 @@ import com.bumptech.glide.request.RequestOptions
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.ItemListMainBinding
 import com.nixstudio.moviemax.models.MovieEntity
+import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
 
 class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.MovieViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
-    private val listMovie = ArrayList<MovieEntity>()
+    private val listMovie = ArrayList<DiscoverMovieResultsItem>()
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: MovieEntity)
+        fun onItemClicked(data: DiscoverMovieResultsItem)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setMovies(movies: List<MovieEntity>?) {
+    fun setMovies(movies: List<DiscoverMovieResultsItem>?) {
         if (movies == null) return
 
         this.listMovie.clear()
@@ -32,11 +33,12 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.MovieViewHolder>(
 
     inner class MovieViewHolder(private val binding: ItemListMainBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieEntity) {
-            binding.tvTitle.text = movie.movieTitle
+        fun bind(movie: DiscoverMovieResultsItem) {
+            binding.tvTitle.text = movie.title
 
+            val url = "https://image.tmdb.org/t/p/original${movie.posterPath}"
             Glide.with(binding.imgPoster.context)
-                .load(movie.moviePoster)
+                .load(url)
                 .apply(RequestOptions().override(400, 600).error(R.drawable.ic_broken_image_black))
                 .into(binding.imgPoster)
         }

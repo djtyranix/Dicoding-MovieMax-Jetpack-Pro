@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.TvShowsFragmentBinding
 import com.nixstudio.moviemax.models.TvShowsEntity
+import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.TvShowsViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TvShowsFragment : Fragment() {
 
     private var _binding: TvShowsFragmentBinding? = null
     val binding get() = _binding!!
-    private val viewModel: TvShowsViewModel by viewModels()
+    private val viewModel by viewModel<TvShowsViewModel>()
     lateinit var viewAdapter: TvShowsAdapter
 
     override fun onCreateView(
@@ -52,7 +54,7 @@ class TvShowsFragment : Fragment() {
         })
 
         viewAdapter.setOnItemClickCallback(object : TvShowsAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: TvShowsEntity) {
+            override fun onItemClicked(data: DiscoverTvResultsItem) {
                 showMovieDetail(data)
             }
         })
@@ -62,7 +64,7 @@ class TvShowsFragment : Fragment() {
         curActivity.setActionBarTitle(resources.getString(R.string.tv_shows))
     }
 
-    private fun showMovieDetail(data: TvShowsEntity) {
+    private fun showMovieDetail(data: DiscoverTvResultsItem) {
         val toDetailItemActivity =
             TvShowsFragmentDirections.actionTvShowsFragmentToItemDetailActivity(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)

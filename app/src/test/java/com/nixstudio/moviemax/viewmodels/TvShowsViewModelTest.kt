@@ -1,7 +1,6 @@
 package com.nixstudio.moviemax.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nixstudio.moviemax.utils.DummyData
 import org.junit.Test
 
 import org.junit.Assert.*

@@ -11,13 +11,16 @@ import androidx.navigation.navArgs
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.models.MovieEntity
 import com.nixstudio.moviemax.models.TvShowsEntity
+import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemDetailActivity : AppCompatActivity() {
 
-    private val viewModel: ItemDetailViewModel by viewModels()
-    private var currentMovie: MovieEntity? = null
-    private var currentTvShows: TvShowsEntity? = null
+    private val viewModel by viewModel<ItemDetailViewModel>()
+    private var currentMovie: DiscoverMovieResultsItem? = null
+    private var currentTvShows: DiscoverTvResultsItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +31,10 @@ class ItemDetailActivity : AppCompatActivity() {
         currentTvShows = args?.tvShowsEntity
 
         if (currentMovie != null) {
-            viewModel.setCurrrentMovie(currentMovie!!)
+            currentMovie?.id?.let { viewModel.setCurrentMovie(it) }
             setActionBarTitle(resources.getString(R.string.detail_movie))
         } else if (currentTvShows != null) {
-            viewModel.setCurrentTvShows(currentTvShows!!)
+            currentTvShows?.id?.let { viewModel.setCurrentTvShows(it) }
             setActionBarTitle(resources.getString(R.string.detail_tv))
         }
 
@@ -66,11 +69,11 @@ class ItemDetailActivity : AppCompatActivity() {
                 val shareIntent = Intent(Intent.ACTION_SEND)
 
                 if (currentMovie != null) {
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.movieTitle)
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentMovie?.movieTitle}\n\nOverview: ${currentMovie?.overview}")
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.title)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentMovie?.title}\n\nOverview: ${currentMovie?.overview}")
                 } else if (currentTvShows != null) {
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.tvTitle)
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentTvShows?.tvTitle}\n\nOverview: ${currentTvShows?.overview}")
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.name)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentTvShows?.name}\n\nOverview: ${currentTvShows?.overview}")
                 }
 
                 shareIntent.type = "text/plain"
