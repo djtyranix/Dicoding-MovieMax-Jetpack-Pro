@@ -48,7 +48,7 @@ class TvShowsFragment : Fragment() {
         viewModel.setTvShows()
 
         viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
-            if (tvItem != null) {
+            if (!tvItem.isNullOrEmpty()) {
                 viewAdapter.setTv(tvItem)
             }
         })

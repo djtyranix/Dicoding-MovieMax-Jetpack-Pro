@@ -9,34 +9,36 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.ItemListMainBinding
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.models.CombinedResultEntity
 
-class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.MovieViewHolder>() {
+class HomeTrendingAdapter: RecyclerView.Adapter<HomeTrendingAdapter.TrendingViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
-    private val listMovie = ArrayList<DiscoverMovieResultsItem>()
+    private val listTrending = ArrayList<CombinedResultEntity>()
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: DiscoverMovieResultsItem)
+        fun onItemClicked(data: CombinedResultEntity)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setMovies(movies: List<DiscoverMovieResultsItem>?) {
-        if (movies == null) return
+    fun setTrendingData(list: List<CombinedResultEntity>?) {
+        if (list == null) return
 
-        this.listMovie.clear()
-        this.listMovie.addAll(movies)
+        this.listTrending.clear()
+        this.listTrending.addAll(list)
         notifyDataSetChanged()
     }
 
-    inner class MovieViewHolder(private val binding: ItemListMainBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: DiscoverMovieResultsItem) {
-            binding.tvTitle.text = movie.title
+    inner class TrendingViewHolder(private val binding: ItemListMainBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: CombinedResultEntity) {
+            if (item.mediaType == "movie") {
+                binding.tvTitle.text = item.title
+            } else {
+                binding.tvTitle.text = item.name
+            }
 
             val shimmer = Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
                 .setDuration(1000) // how long the shimmering animation takes to do one full sweep
@@ -51,7 +53,7 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.MovieViewHolder>(
                 setShimmer(shimmer)
             }
 
-            val url = "https://image.tmdb.org/t/p/original${movie.posterPath}"
+            val url = "https://image.tmdb.org/t/p/original${item.posterPath}"
             Glide.with(binding.imgPoster.context)
                 .load(url)
                 .apply(RequestOptions().override(400, 600).placeholder(shimmerDrawable).error(R.drawable.ic_broken_image_black))
@@ -59,21 +61,21 @@ class HomeMovieAdapter : RecyclerView.Adapter<HomeMovieAdapter.MovieViewHolder>(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder {
         val itemListMainBinding =
             ItemListMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(itemListMainBinding)
+        return TrendingViewHolder(itemListMainBinding)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = listMovie[position]
+    override fun onBindViewHolder(holder: TrendingViewHolder, position: Int) {
+        val item = listTrending[position]
 
         holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(listMovie[holder.absoluteAdapterPosition])
+            onItemClickCallback.onItemClicked(listTrending[holder.absoluteAdapterPosition])
         }
 
-        holder.bind(movie)
+        holder.bind(item)
     }
 
-    override fun getItemCount(): Int = listMovie.size
+    override fun getItemCount(): Int = listTrending.size
 }

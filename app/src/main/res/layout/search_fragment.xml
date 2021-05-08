@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchFragmentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.home.search.SearchFragment" >
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/rv_search_shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/rv_search_result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_auto_start="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_list_search_placeholder" />
+            <include layout="@layout/item_list_search_placeholder" />
+            <include layout="@layout/item_list_search_placeholder" />
+            <include layout="@layout/item_list_search_placeholder" />
+            <include layout="@layout/item_list_search_placeholder" />
+            <include layout="@layout/item_list_search_placeholder" />
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+<!--    IF EMPTY-->
+    <ImageView
+        android:id="@+id/empty_search_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_movie_black"
+        android:contentDescription="@string/search_empty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/empty_search_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins"
+        android:text="@string/search_empty"
+        android:textAlignment="center"
+        android:textColor="?attr/text_color_primary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/empty_search_placeholder"
+        app:layout_constraintStart_toStartOf="@+id/empty_search_placeholder"
+        app:layout_constraintTop_toBottomOf="@+id/empty_search_placeholder"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_list_search"
+        android:visibility="gone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

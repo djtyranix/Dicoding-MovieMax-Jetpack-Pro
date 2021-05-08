@@ -44,13 +44,13 @@ data class CombinedResultEntity(
 	val popularity: Double? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@field:SerializedName("adult")
 	val adult: Boolean? = null,
 
 	@field:SerializedName("vote_count")
-	val voteCount: Int? = null,
+	val voteCount: Long? = null,
 
 	@field:SerializedName("first_air_date")
 	val firstAirDate: String? = null,

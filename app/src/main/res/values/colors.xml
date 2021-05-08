@@ -12,4 +12,7 @@
     <color name="bg_dark">#FF212121</color>
     <color name="dark">#FF121212</color>
     <color name="transparent">#00000000</color>
+    <color name="shimmer_bgcolor">#FFDDDDDD</color>
+    <color name="text_dark">#FFF7F7F7</color>
+    <color name="text_light">#FF454545</color>
 </resources>

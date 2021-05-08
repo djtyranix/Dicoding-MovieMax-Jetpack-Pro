@@ -25,6 +25,7 @@
             android:text="@string/search_header"
             android:textAlignment="viewStart"
             android:textSize="24sp"
+            android:textColor="?attr/text_color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +41,7 @@
             android:text="@string/trending"
             android:textAlignment="viewStart"
             android:textSize="20sp"
+            android:textColor="?attr/text_color_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sv_search_item" />
 
@@ -74,10 +76,11 @@
             android:text="@string/movies"
             android:textAlignment="viewStart"
             android:textSize="20sp"
+            android:textColor="?attr/text_color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_trending" />
+            app:layout_constraintTop_toBottomOf="@id/linear_layout_trending" />
 
         <TextView
             android:id="@+id/textView5"
@@ -90,28 +93,11 @@
             android:text="@string/tv_shows"
             android:textAlignment="viewStart"
             android:textSize="20sp"
+            android:textColor="?attr/text_color_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_movie" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tvshows"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="32dp"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
-            tools:listitem="@layout/item_list_main" />
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_movie" />
 
         <TextView
             android:id="@+id/see_all_movies"
@@ -134,38 +120,136 @@
             app:layout_constraintTop_toTopOf="@+id/textView11"
             app:layout_constraintVertical_bias="0.533" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_trending"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linear_layout_trending"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8"
-            tools:listitem="@layout/item_list_main" />
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_movie"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/rv_trending_shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:shimmer_auto_start="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    android:clipToPadding="false" >
+
+                    <include layout="@layout/item_list_placeholder" />
+                    <include layout="@layout/item_list_placeholder" />
+                    <include layout="@layout/item_list_placeholder" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_list_main"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
             android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
-            tools:listitem="@layout/item_list_main">
+            app:layout_constraintTop_toBottomOf="@+id/textView11" >
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/rv_movie_shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:shimmer_auto_start="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    android:clipToPadding="false" >
+
+                    <include layout="@layout/item_list_placeholder" />
+                    <include layout="@layout/item_list_placeholder" />
+                    <include layout="@layout/item_list_placeholder" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_list_main" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" >
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/rv_tv_shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:shimmer_auto_start="true" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    android:clipToPadding="false" >
+
+                    <include layout="@layout/item_list_placeholder" />
+                    <include layout="@layout/item_list_placeholder" />
+                    <include layout="@layout/item_list_placeholder" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tvshows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_list_main"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/sv_search_item"
@@ -181,9 +265,6 @@
             app:layout_constraintEnd_toEndOf="@+id/textView7"
             app:layout_constraintStart_toStartOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
-            app:queryBackground="@color/transparent">
-
-        </androidx.appcompat.widget.SearchView>
-
+            app:queryBackground="@color/transparent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

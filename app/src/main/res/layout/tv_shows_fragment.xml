@@ -23,6 +23,7 @@
             android:text="@string/all_tv_shows"
             android:textAlignment="viewStart"
             android:textSize="24sp"
+            android:textColor="?attr/text_color_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

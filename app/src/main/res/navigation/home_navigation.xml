@@ -38,6 +38,13 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
@@ -82,4 +89,16 @@
         android:id="@+id/settingsActivity"
         android:name="com.nixstudio.moviemax.views.settings.SettingsActivity"
         android:label="SettingsActivity" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.nixstudio.moviemax.views.home.search.SearchFragment"
+        android:label="search_fragment"
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_itemDetailActivity"
+            app:destination="@id/itemDetailActivity" />
+        <argument
+            android:name="query"
+            app:argType="string" />
+    </fragment>
 </navigation>

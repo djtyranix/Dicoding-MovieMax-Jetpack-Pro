@@ -6,10 +6,7 @@ import com.google.gson.GsonBuilder
 import com.nixstudio.moviemax.api.ApiService
 import com.nixstudio.moviemax.models.sources.MovieMaxRepository
 import com.nixstudio.moviemax.models.sources.remote.RemoteDataSource
-import com.nixstudio.moviemax.viewmodels.HomeViewModel
-import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
-import com.nixstudio.moviemax.viewmodels.MovieViewModel
-import com.nixstudio.moviemax.viewmodels.TvShowsViewModel
+import com.nixstudio.moviemax.viewmodels.*
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -19,6 +16,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 val viewModelModule = module {
     viewModel {
         HomeViewModel(get())
+    }
+
+    viewModel {
+        SearchViewModel(get())
     }
 
     viewModel {

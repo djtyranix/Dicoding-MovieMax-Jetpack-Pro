@@ -20,7 +20,6 @@ class HomeViewModel(private val repo: MovieMaxRepository) : ViewModel() {
     private val _listMovie = MutableLiveData<List<DiscoverMovieResultsItem>>()
     private val _listTv = MutableLiveData<List<DiscoverTvResultsItem>>()
     private val _listTrending = MutableLiveData<List<CombinedResultEntity>>()
-    private val _isLoading = MutableLiveData<Boolean>()
 
     fun setMovies() {
         val discoverMovieResponse = repo.getDiscoveryMovie()
@@ -80,15 +79,9 @@ class HomeViewModel(private val repo: MovieMaxRepository) : ViewModel() {
         })
     }
 
-    fun setLoadingState(state: Boolean) {
-        _isLoading.value = state
-    }
-
     fun getTvShows(): LiveData<List<DiscoverTvResultsItem>> = _listTv
 
     fun getMovies(): LiveData<List<DiscoverMovieResultsItem>> = _listMovie
 
     fun getTrending(): LiveData<List<CombinedResultEntity>> = _listTrending
-
-    fun getLoadingState(): LiveData<Boolean> = _isLoading
 }

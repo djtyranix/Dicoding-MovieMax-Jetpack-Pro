@@ -8,8 +8,8 @@
     <string name="dummy_movie_count">11</string>
     <string name="dummy_tv_count">11</string>
     <string name="exit_confirmation">Tekan sekali lagi untuk keluar</string>
-    <string name="all_movies">Semua Film</string>
-    <string name="all_tv_shows">Semua Serial TV</string>
+    <string name="all_movies">Daftar Film</string>
+    <string name="all_tv_shows">Daftar Serial TV</string>
     <string name="setting">Pengaturan</string>
     <string name="title_activity_settings">Pengaturan</string>
     <string name="language_change_desc">Ubah bahasa dari pengaturan sistem</string>
@@ -20,7 +20,7 @@
     <string name="dummy_title">Godzilla vs. Kong</string>
 
     <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu arcu vel enim vehicula congue. Phasellus a convallis ante, sit amet mattis nulla. Cras malesuada feugiat lorem id malesuada. In orci est, tristique quis malesuada sit amet, vulputate sed nunc. Donec eget tortor sem. Sed eu pharetra justo, at porttitor lacus. In fringilla suscipit ligula, ac eleifend lorem volutpat quis. Maecenas laoreet, ex nec viverra tempus, lectus nulla fringilla purus, sed venenatis diam arcu at leo. Maecenas elementum nisi id felis laoreet, in tincidunt turpis tempus. Nulla at hendrerit lectus. Sed dui dolor, hendrerit rutrum placerat vitae, vehicula quis libero. Nullam finibus viverra facilisis. Curabitur convallis dolor augue, a dictum ligula eleifend at. Donec fermentum tortor justo, ut dictum sapien mattis et.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu arcu vel enim vehicula congue. Phasellus a convallis ante, sit amet mattis nulla. Cras malesuada feugiat lorem id malesuada. In orci est, tristique quis malesuada sit amet, vulputate sed nunc. Donec eget tortor sem. Sed eu pharetra justo, at porttitor lacus. In fringilla suscipit ligula, ac eleifend lorem volutpat quis. Maecenas laoreet, ex nec viverra tempus, lectus nulla fringilla purus, sed venenatis diam arcu at leo.
     </string>
     <string name="playtime_season_title_dummy">PLAYTIME/SEASON</string>
     <string name="dummy_playtime">01:53:00</string>
@@ -36,7 +36,11 @@
     <string name="share">Share</string>
     <string name="search_hint">Film, Serial</string>
     <string name="trending">Trending Hari Ini</string>
-    <string name="search_header">Search</string>
+    <string name="search_header">Cari</string>
     <string name="minutes">%1$s menit</string>
     <string name="backdrop">Backdrop</string>
+    <string name="placeholder_title">Here is a title placeholder</string>
+    <string name="search_result_header">Hasil Pencarian: %1$s</string>
+    <string name="query_empty_warning">Kolom tidak boleh kosong!</string>
+    <string name="search_empty">Tidak ditemukan.</string>
 </resources>

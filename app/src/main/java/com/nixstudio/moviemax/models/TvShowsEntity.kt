@@ -23,6 +23,9 @@ data class TvShowsEntity(
 	@field:SerializedName("backdrop_path")
 	val backdropPath: String? = null,
 
+	@field:SerializedName("credits")
+	val credits: Credits? = null,
+
 	@field:SerializedName("genres")
 	val genres: List<GenresItem?>? = null,
 
@@ -33,13 +36,13 @@ data class TvShowsEntity(
 	val productionCountries: List<ProductionCountriesItem?>? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@field:SerializedName("number_of_seasons")
 	val numberOfSeasons: Int? = null,
 
 	@field:SerializedName("vote_count")
-	val voteCount: Int? = null,
+	val voteCount: Long? = null,
 
 	@field:SerializedName("first_air_date")
 	val firstAirDate: String? = null,

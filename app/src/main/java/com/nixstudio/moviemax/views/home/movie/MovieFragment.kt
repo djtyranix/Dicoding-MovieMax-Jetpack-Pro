@@ -20,9 +20,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MovieFragment : Fragment() {
 
     private var _binding: MovieFragmentBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
     private val viewModel by viewModel<MovieViewModel>()
-    lateinit var viewAdapter: MovieAdapter
+    private lateinit var viewAdapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +48,7 @@ class MovieFragment : Fragment() {
         viewModel.setMovies()
 
         viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
-            if (movieItem != null) {
+            if (!movieItem.isNullOrEmpty()) {
                 viewAdapter.setMovies(movieItem)
             }
         })

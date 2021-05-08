@@ -57,11 +57,11 @@ data class DiscoverMovieResultsItem(
 	val voteAverage: Double? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Long? = null,
 
 	@field:SerializedName("adult")
 	val adult: Boolean? = null,
 
 	@field:SerializedName("vote_count")
-	val voteCount: Int? = null
+	val voteCount: Long? = null
 ): Parcelable

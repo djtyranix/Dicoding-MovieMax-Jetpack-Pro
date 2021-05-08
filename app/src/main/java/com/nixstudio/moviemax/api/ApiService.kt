@@ -42,13 +42,13 @@ interface ApiService {
 
     @GET("movie/{id}")
     fun getMovieById(
-        @Path("id") id: Int,
+        @Path("id") id: Long,
         @Query("api_key") api_key: String
     ): Call<MovieEntity>
 
     @GET("tv/{id}")
     fun getTvShowsById(
-        @Path("id") id: Int,
+        @Path("id") id: Long,
         @Query("api_key") api_key: String
     ): Call<TvShowsEntity>
 }

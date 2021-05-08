@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
         <item name="cardview_bg">@color/bg_light</item>
+        <item name="text_color_primary">@color/text_light</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">

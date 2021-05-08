@@ -2,10 +2,7 @@ package com.nixstudio.moviemax.viewmodels
 
 import android.content.ContentValues
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.nixstudio.moviemax.models.MovieEntity
 import com.nixstudio.moviemax.models.TvShowsEntity
 import com.nixstudio.moviemax.models.sources.MovieMaxRepository
@@ -17,11 +14,13 @@ import retrofit2.Response
 class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
     private val currentMovie = MutableLiveData<MovieEntity>()
     private val currentTvShows = MutableLiveData<TvShowsEntity>()
-
 //    0 = Movie, 1 = TvShows
-    var _mode: Int = 0
+    private var _mode: Int = 0
+    private var _isBackdropLoading = MutableLiveData<Boolean>()
+    private var _isPosterLoading = MutableLiveData<Boolean>()
 
-    fun setCurrentMovie(id: Int) {
+    fun setCurrentMovie(id: Long) {
+        setMode(0)
         val movieResponse = repo.getMovieById(id)
 
         movieResponse.enqueue(object: Callback<MovieEntity> {
@@ -35,11 +34,10 @@ class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
-
-        _mode = 0
     }
 
-    fun setCurrentTvShows(id: Int) {
+    fun setCurrentTvShows(id: Long) {
+        setMode(1)
         val tvResponse = repo.getTvShowsById(id)
 
         tvResponse.enqueue(object: Callback<TvShowsEntity> {
@@ -53,8 +51,23 @@ class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
 
-        _mode = 1
+    private fun setMode(mode: Int) {
+        _mode = mode
+    }
+
+    fun setBackdropLoadingState(state: Boolean) {
+        _isBackdropLoading.postValue(state)
+    }
+
+    fun setPosterLoadingState(state: Boolean) {
+        _isPosterLoading.postValue(state)
+    }
+
+    fun stopLoading() {
+        _isBackdropLoading.postValue(false)
+        _isPosterLoading.postValue(false)
     }
 
     fun getCurrentMovie(): LiveData<MovieEntity> = currentMovie
@@ -62,4 +75,29 @@ class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
     fun getCurrentTvShows(): LiveData<TvShowsEntity> = currentTvShows
 
     fun getMode(): Int = _mode
+
+    fun getLoadingState(): LiveData<Boolean> {
+        return MediatorLiveData<Boolean>().apply {
+            var isBackdropLoading: Boolean? = null
+            var isPosterLoading: Boolean? = null
+
+            fun update() {
+                val localIsBackgroundLoading = isBackdropLoading
+                val localIsPosterLoading = isPosterLoading
+                if (localIsBackgroundLoading == localIsPosterLoading) {
+                    this.value = localIsBackgroundLoading
+                }
+            }
+
+            addSource(_isPosterLoading) {
+                isPosterLoading = it
+                update()
+            }
+
+            addSource(_isBackdropLoading) {
+                isBackdropLoading = it
+                update()
+            }
+        }
+    }
 }

@@ -1,38 +1,33 @@
 package com.nixstudio.moviemax.models.sources
 
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.nixstudio.moviemax.models.CombinedResultEntity
 import com.nixstudio.moviemax.models.MovieEntity
 import com.nixstudio.moviemax.models.TvShowsEntity
 import com.nixstudio.moviemax.models.sources.remote.*
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieMaxRepository(private val remoteDataSource: RemoteDataSource) :
-    DataSourceInterface {
-    override fun getDiscoveryMovie(): Call<DiscoverMovieResponse> {
-        return remoteDataSource.getMoviesFromDiscovery()
+    MovieMaxRepositoryInterface {
+    override fun getDiscoveryMovie(page: Int): Call<DiscoverMovieResponse> {
+        return remoteDataSource.getMoviesFromDiscovery(page)
     }
 
-    override fun getDiscoveryTvShows(): Call<DiscoverTvResponse> {
-        return remoteDataSource.getTvShowsFromDiscovery()
+    override fun getDiscoveryTvShows(page: Int): Call<DiscoverTvResponse> {
+        return remoteDataSource.getTvShowsFromDiscovery(page)
     }
 
-    override fun searchByString(query: String): Call<SearchResponse> {
-        return remoteDataSource.searchFromString(query)
+    override fun searchByString(query: String, page: Int): Call<SearchResponse> {
+        return remoteDataSource.searchFromString(query, page)
     }
 
     override fun getTrendingToday(): Call<TrendingResponse> {
         return remoteDataSource.getTrendingToday()
     }
 
-    override fun getMovieById(id: Int): Call<MovieEntity> {
+    override fun getMovieById(id: Long): Call<MovieEntity> {
         return remoteDataSource.getMovieById(id)
     }
 
-    override fun getTvShowsById(id: Int): Call<TvShowsEntity> {
+    override fun getTvShowsById(id: Long): Call<TvShowsEntity> {
         return remoteDataSource.getTvShowsById(id)
     }
 }

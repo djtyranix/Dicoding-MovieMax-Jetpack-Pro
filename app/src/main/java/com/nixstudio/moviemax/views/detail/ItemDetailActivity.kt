@@ -2,6 +2,7 @@ package com.nixstudio.moviemax.views.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -19,8 +20,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ItemDetailActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<ItemDetailViewModel>()
-    private var currentMovie: DiscoverMovieResultsItem? = null
-    private var currentTvShows: DiscoverTvResultsItem? = null
+    var currentMovie: DiscoverMovieResultsItem? = null
+    var currentTvShows: DiscoverTvResultsItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,24 +31,16 @@ class ItemDetailActivity : AppCompatActivity() {
         currentMovie = args?.movieEntity
         currentTvShows = args?.tvShowsEntity
 
-        if (currentMovie != null) {
-            currentMovie?.id?.let { viewModel.setCurrentMovie(it) }
-            setActionBarTitle(resources.getString(R.string.detail_movie))
-        } else if (currentTvShows != null) {
-            currentTvShows?.id?.let { viewModel.setCurrentTvShows(it) }
-            setActionBarTitle(resources.getString(R.string.detail_tv))
-        }
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, ItemDetailFragment.newInstance())
+                .replace(R.id.container, ItemDetailFragment.newInstance(currentMovie, currentTvShows))
                 .commitNow()
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun setActionBarTitle(title: String?) {
+    fun setActionBarTitle(title: String?) {
         supportActionBar?.title = title
     }
 
