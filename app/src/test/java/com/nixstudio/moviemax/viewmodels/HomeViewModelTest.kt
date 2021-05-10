@@ -53,20 +53,6 @@ class HomeViewModelTest: KoinTest {
         val movies = MutableLiveData<List<DiscoverMovieResultsItem>>()
         val discoverMovieResponse = movieMaxRepository.getDiscoveryMovie()
 
-        discoverMovieResponse.enqueue(object : Callback<DiscoverMovieResponse> {
-            override fun onResponse(
-                call: Call<DiscoverMovieResponse>,
-                response: Response<DiscoverMovieResponse>
-            ) {
-                if (response.isSuccessful) {
-                    movies.value = response.body()?.results?.take(7) as ArrayList<DiscoverMovieResultsItem>
-                }
-            }
-
-            override fun onFailure(call: Call<DiscoverMovieResponse>, t: Throwable) {
-                Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
 
         `when`()
         homeViewModel.setMovies()

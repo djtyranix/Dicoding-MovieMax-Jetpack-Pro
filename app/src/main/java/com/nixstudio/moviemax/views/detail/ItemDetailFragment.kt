@@ -84,10 +84,8 @@ class ItemDetailFragment : Fragment() {
 
         viewModel.getLoadingState().observe(viewLifecycleOwner, { loadingState ->
             if (!loadingState) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.detailShimmer.visibility = View.GONE
-                    binding.itemDetails.visibility = View.VISIBLE
-                }, 650)
+                binding.detailShimmer.visibility = View.GONE
+                binding.itemDetails.visibility = View.VISIBLE
             }
         })
 
