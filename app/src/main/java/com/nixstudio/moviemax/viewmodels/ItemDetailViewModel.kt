@@ -7,14 +7,9 @@ import com.nixstudio.moviemax.data.sources.MovieMaxRepository
 import kotlinx.coroutines.launch
 
 class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
-//    0 = Movie, 1 = TvShows
-    private var _mode: Int = 0
+
     private var _isBackdropLoading = MutableLiveData<Boolean>()
     private var _isPosterLoading = MutableLiveData<Boolean>()
-
-    private fun setMode(mode: Int) {
-        _mode = mode
-    }
 
     fun setBackdropLoadingState(state: Boolean) {
         _isBackdropLoading.postValue(state)
@@ -29,17 +24,9 @@ class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
         _isPosterLoading.postValue(false)
     }
 
-    fun getCurrentMovie(id: Long): LiveData<MovieEntity> {
-        setMode(0)
-        return repo.getMovieById(id)
-    }
+    fun getCurrentMovie(id: Long): LiveData<MovieEntity> = repo.getMovieById(id)
 
-    fun getCurrentTvShows(id: Long): LiveData<TvShowsEntity> {
-        setMode(1)
-        return repo.getTvShowsById(id)
-    }
-
-    fun getMode(): Int = _mode
+    fun getCurrentTvShows(id: Long): LiveData<TvShowsEntity> = repo.getTvShowsById(id)
 
     fun getLoadingState(): LiveData<Boolean> {
         return MediatorLiveData<Boolean>().apply {

@@ -1,66 +1,78 @@
 package com.nixstudio.moviemax.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
-import org.junit.Test
-
-import org.junit.Assert.*
+import com.nixstudio.moviemax.data.sources.MovieMaxRepository
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.utils.DummyData
+import org.junit.Assert
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.verify
+import kotlin.test.assertEquals
 
+@RunWith(MockitoJUnitRunner::class)
 class ItemDetailViewModelTest {
 
     private lateinit var viewModel: ItemDetailViewModel
 
     @get:Rule
-    val rule = InstantTaskExecutorRule()
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Mock
+    private lateinit var observerMovie: Observer<MovieEntity>
+
+    @Mock
+    private lateinit var observerTv: Observer<TvShowsEntity>
+
+    @Mock
+    private lateinit var repos: MovieMaxRepository
 
     @Before
-    fun init() {
-        viewModel = ItemDetailViewModel()
+    fun setUp() {
+        viewModel = ItemDetailViewModel(repos)
     }
 
     @Test
     fun setCurrrentMovie_shouldPostCurrentMovieEntity() {
-        val movie = MovieEntity(
-            0,
-            "Interstellar",
-            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
-            2015,
-            "Sci-Fi",
-            "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
-            "02:49:00"
-        )
+        val dummyMovies = DummyData.getMovieEntity()
+        val movies = MutableLiveData<MovieEntity>()
+        movies.value = dummyMovies
 
-        viewModel.setCurrrentMovie(movie)
+        `when`(repos.getMovieById(42069)).thenReturn(movies)
+        val movieResults = viewModel.getCurrentMovie(42069).value
+        verify(repos).getMovieById(42069)
+        assertNotNull(movieResults)
+        assertEquals(dummyMovies.title, movieResults?.title)
 
-        assertEquals(movie, viewModel.currentMovieItem)
+        viewModel.getCurrentMovie(42069).observeForever(observerMovie)
+        verify(observerMovie).onChanged(dummyMovies)
     }
 
     @Test
     fun setCurrentTvShows_shouldPostCurrentTvShowsEntity() {
-        val tvShows = TvShowsEntity(
-            0,
-            "The Falcon and the Winter Soldier",
-            "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
-            2021,
-            "Action",
-            1,
-            "Following the events of “Avengers: Endgame”, the Falcon, Sam Wilson and the Winter Soldier, Bucky Barnes team up in a global adventure that tests their abilities, and their patience."
-        )
+        val dummyTv = DummyData.getTvShowsEntity()
+        val tvShows = MutableLiveData<TvShowsEntity>()
+        tvShows.value = dummyTv
 
-        viewModel.setCurrentTvShows(tvShows)
+        `when`(repos.getTvShowsById(42069)).thenReturn(tvShows)
+        val tvResults = viewModel.getCurrentTvShows(42069).value
+        verify(repos).getTvShowsById(42069)
+        assertNotNull(tvResults)
+        assertEquals(dummyTv.name, tvResults?.name)
 
-        assertEquals(tvShows, viewModel.currentTvShowsItem)
-    }
-
-    @Test
-    fun getMode_shouldReturnCorrectSetMode() {
-        val mode = 1
-
-        viewModel._mode = mode
-
-        assertEquals(mode, viewModel.getMode())
+        viewModel.getCurrentTvShows(42069).observeForever(observerTv)
+        verify(observerTv).onChanged(dummyTv)
     }
 }
