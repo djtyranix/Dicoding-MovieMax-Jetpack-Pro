@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.models.utils
+package com.nixstudio.moviemax.data.utils
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

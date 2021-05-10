@@ -2,18 +2,13 @@ package com.nixstudio.moviemax.views.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.TvShowsEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
-import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

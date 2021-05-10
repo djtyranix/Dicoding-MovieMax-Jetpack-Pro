@@ -9,7 +9,7 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.ItemListSearchBinding
-import com.nixstudio.moviemax.models.CombinedResultEntity
+import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import java.util.*
 import kotlin.collections.ArrayList
 

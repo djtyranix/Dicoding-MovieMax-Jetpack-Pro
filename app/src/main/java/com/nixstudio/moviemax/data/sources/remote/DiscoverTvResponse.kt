@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.models.sources.remote
+package com.nixstudio.moviemax.data.sources.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

@@ -1,8 +1,8 @@
-package com.nixstudio.moviemax.models
+package com.nixstudio.moviemax.data.entities
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.nixstudio.moviemax.models.utils.*
+import com.nixstudio.moviemax.data.utils.*
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

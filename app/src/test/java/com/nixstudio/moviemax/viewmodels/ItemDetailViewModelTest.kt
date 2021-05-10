@@ -1,8 +1,8 @@
 package com.nixstudio.moviemax.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.TvShowsEntity
+import com.nixstudio.moviemax.data.entities.MovieEntity
+import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import org.junit.Test
 
 import org.junit.Assert.*

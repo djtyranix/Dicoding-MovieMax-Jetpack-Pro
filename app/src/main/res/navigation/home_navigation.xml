@@ -78,11 +78,11 @@
         android:label="ItemDetailActivity">
         <argument
             android:name="movie_entity"
-            app:argType="com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem"
+            app:argType="com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem"
             app:nullable="true" />
         <argument
             android:name="tv_shows_entity"
-            app:argType="com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem"
+            app:argType="com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem"
             app:nullable="true" />
     </activity>
     <activity

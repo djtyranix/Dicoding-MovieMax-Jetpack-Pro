@@ -4,8 +4,8 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nixstudio.moviemax.api.ApiService
-import com.nixstudio.moviemax.models.sources.MovieMaxRepository
-import com.nixstudio.moviemax.models.sources.remote.RemoteDataSource
+import com.nixstudio.moviemax.data.sources.MovieMaxRepository
+import com.nixstudio.moviemax.data.sources.remote.RemoteDataSource
 import com.nixstudio.moviemax.viewmodels.*
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel

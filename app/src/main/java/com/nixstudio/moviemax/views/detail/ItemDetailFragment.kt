@@ -1,13 +1,9 @@
 package com.nixstudio.moviemax.views.detail
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,14 +20,11 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.ItemDetailFragmentBinding
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.TvShowsEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
-import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.data.entities.MovieEntity
+import com.nixstudio.moviemax.data.entities.TvShowsEntity
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
-import com.nixstudio.moviemax.views.home.HomeActivity
-import kotlinx.coroutines.delay
-import org.koin.androidx.scope.fragmentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemDetailFragment : Fragment() {
@@ -86,14 +79,6 @@ class ItemDetailFragment : Fragment() {
         val currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
         val currentActivity = activity as ItemDetailActivity
 
-        if (currentMovie != null) {
-            currentMovie.id?.let { viewModel.setCurrentMovie(it) }
-            currentActivity.setActionBarTitle(resources.getString(R.string.detail_movie))
-        } else if (currentTvShows != null) {
-            currentTvShows.id?.let { viewModel.setCurrentTvShows(it) }
-            currentActivity.setActionBarTitle(resources.getString(R.string.detail_tv))
-        }
-
         viewModel.setPosterLoadingState(true)
         viewModel.setBackdropLoadingState(true)
 
@@ -119,14 +104,22 @@ class ItemDetailFragment : Fragment() {
             setShimmer(shimmer)
         }
 
-        if (viewModel.getMode() == 0) {
-            viewModel.getCurrentMovie().observe(viewLifecycleOwner, { movie ->
-                setMovieData(movie)
-            })
-        } else {
-            viewModel.getCurrentTvShows().observe(viewLifecycleOwner, { tvShows ->
-                setTvShows(tvShows)
-            })
+        if (currentMovie != null) {
+            val id = currentMovie.id
+            if (id != null) {
+                viewModel.getCurrentMovie(id).observe(viewLifecycleOwner, { movie ->
+                    setMovieData(movie)
+                })
+            }
+            currentActivity.setActionBarTitle(resources.getString(R.string.detail_movie))
+        } else if (currentTvShows != null) {
+            val id = currentTvShows.id
+            if (id != null) {
+                viewModel.getCurrentTvShows(id).observe(viewLifecycleOwner, { tvShows ->
+                    setTvShows(tvShows)
+                })
+            }
+            currentActivity.setActionBarTitle(resources.getString(R.string.detail_tv))
         }
     }
 

@@ -1,11 +1,17 @@
-package com.nixstudio.moviemax.models.utils
+package com.nixstudio.moviemax.data.utils
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CrewItem(
+data class CastItem(
+
+    @field:SerializedName("cast_id")
+    val castId: Int? = null,
+
+    @field:SerializedName("character")
+    val character: String? = null,
 
     @field:SerializedName("gender")
     val gender: Int? = null,
@@ -34,9 +40,6 @@ data class CrewItem(
     @field:SerializedName("adult")
     val adult: Boolean? = null,
 
-    @field:SerializedName("department")
-    val department: String? = null,
-
-    @field:SerializedName("job")
-    val job: String? = null
+    @field:SerializedName("order")
+    val order: Int? = null
 ) : Parcelable

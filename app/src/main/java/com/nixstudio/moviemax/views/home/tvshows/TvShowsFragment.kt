@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.TvShowsFragmentBinding
-import com.nixstudio.moviemax.models.TvShowsEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.TvShowsViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,8 +41,6 @@ class TvShowsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        viewModel.setTvShows()
 
         viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
             if (!tvItem.isNullOrEmpty()) {

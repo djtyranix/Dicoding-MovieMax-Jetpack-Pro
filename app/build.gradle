@@ -68,14 +68,15 @@ dependencies {
 //    TESTING
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "org.mockito.kotlin:mockito-kotlin:3.1.0"
     testImplementation "androidx.arch.core:core-testing:$arch_core_version"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_kotlin_version"
     androidTestImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
     androidTestImplementation "androidx.test:runner:$android_test_version"
     androidTestImplementation "androidx.test:rules:$android_test_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core_version"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$espresso_core_version"
 
 //    API
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -85,6 +86,7 @@ dependencies {
 //    KOIN
     implementation "io.insert-koin:koin-android:$koin_version"
     testImplementation "org.mockito:mockito-inline:$mockito_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
     androidTestImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 

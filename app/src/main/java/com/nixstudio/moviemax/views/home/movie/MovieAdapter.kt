@@ -9,8 +9,7 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.ItemListFullBinding
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback

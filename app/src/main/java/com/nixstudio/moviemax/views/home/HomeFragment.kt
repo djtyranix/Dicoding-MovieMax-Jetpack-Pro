@@ -2,7 +2,6 @@ package com.nixstudio.moviemax.views.home
 
 import android.app.SearchManager
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,9 +14,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.FragmentHomeBinding
-import com.nixstudio.moviemax.models.CombinedResultEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
-import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.data.entities.CombinedResultEntity
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,10 +33,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        viewModel.setMovies()
-        viewModel.setTvShows()
-        viewModel.setTrending()
 
         trendingViewAdapter = HomeTrendingAdapter()
         movieViewAdapter = HomeMovieAdapter()
@@ -111,7 +106,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         viewModel.getTrending().observe(viewLifecycleOwner, { item ->
             if (!item.isNullOrEmpty()) {
-                trendingViewAdapter.setTrendingData(item)
+                trendingViewAdapter.setTrendingData(item.take(7))
                 binding.rvTrending.visibility = View.VISIBLE
                 binding.rvTrendingShimmer.visibility = View.GONE
             }
@@ -119,7 +114,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
             if (!movieItem.isNullOrEmpty()) {
-                movieViewAdapter.setMovies(movieItem)
+                movieViewAdapter.setMovies(movieItem.take(7))
                 binding.rvMovie.visibility = View.VISIBLE
                 binding.rvMovieShimmer.visibility = View.GONE
             }
@@ -127,7 +122,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
             if (!tvItem.isNullOrEmpty()) {
-                tvViewAdapter.setTv(tvItem)
+                tvViewAdapter.setTv(tvItem.take(7))
                 binding.rvTvshows.visibility = View.VISIBLE
                 binding.rvTvShimmer.visibility = View.GONE
             }

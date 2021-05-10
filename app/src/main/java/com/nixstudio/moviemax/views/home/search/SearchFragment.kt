@@ -1,7 +1,6 @@
 package com.nixstudio.moviemax.views.home.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -9,13 +8,11 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.databinding.SearchFragmentBinding
-import com.nixstudio.moviemax.models.CombinedResultEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResultsItem
-import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.data.entities.CombinedResultEntity
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.viewmodels.SearchViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
-import com.nixstudio.moviemax.views.home.HomeFragmentDirections
-import com.nixstudio.moviemax.views.home.HomeTrendingAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -47,13 +44,11 @@ class SearchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.setSearchResultFromString(args.query)
-
         val curActivity = activity as HomeActivity
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         curActivity.setActionBarTitle(resources.getString(R.string.search_result_header, args.query))
 
-        viewModel.getSearchResults().observe(viewLifecycleOwner, { item ->
+        viewModel.getSearchResults(args.query).observe(viewLifecycleOwner, { item ->
             if (!item.isNullOrEmpty()) {
                 viewAdapter.setSearchResult(item)
                 binding.rvSearchResult.visibility = View.VISIBLE

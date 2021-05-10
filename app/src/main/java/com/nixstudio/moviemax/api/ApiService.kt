@@ -1,11 +1,11 @@
 package com.nixstudio.moviemax.api
 
-import com.nixstudio.moviemax.models.MovieEntity
-import com.nixstudio.moviemax.models.TvShowsEntity
-import com.nixstudio.moviemax.models.sources.remote.DiscoverMovieResponse
-import com.nixstudio.moviemax.models.sources.remote.DiscoverTvResponse
-import com.nixstudio.moviemax.models.sources.remote.SearchResponse
-import com.nixstudio.moviemax.models.sources.remote.TrendingResponse
+import com.nixstudio.moviemax.data.entities.MovieEntity
+import com.nixstudio.moviemax.data.entities.TvShowsEntity
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResponse
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResponse
+import com.nixstudio.moviemax.data.sources.remote.SearchResponse
+import com.nixstudio.moviemax.data.sources.remote.TrendingResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
