@@ -6,13 +6,10 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.viewmodels.HomeViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
@@ -27,11 +24,11 @@ class HomeActivity : AppCompatActivity() {
         mHomeFragment = getForegroundFragment() as HomeFragment
     }
 
-    fun getForegroundFragment(): Fragment? {
+    private fun getForegroundFragment(): Fragment? {
         navHostFragment =
             supportFragmentManager.findFragmentByTag("container_fragment") as NavHostFragment
         return when (navHostFragment) {
-            else -> navHostFragment.childFragmentManager.fragments.get(0)
+            else -> navHostFragment.childFragmentManager.fragments[0]
         }
     }
 

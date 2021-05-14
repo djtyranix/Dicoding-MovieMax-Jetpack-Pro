@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:id="@+id/item_detail"
@@ -12,19 +12,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".views.detail.ItemDetailFragment"
-        android:animateLayoutChanges="true" >
+        android:animateLayoutChanges="true">
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/detail_shimmer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:shimmer_auto_start="true" >
+            app:shimmer_auto_start="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <include layout="@layout/item_detail_placeholder" />
             </LinearLayout>

@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
-class HomeViewModelTest{
+class HomeViewModelTest {
     private lateinit var viewModel: HomeViewModel
 
     @get:Rule

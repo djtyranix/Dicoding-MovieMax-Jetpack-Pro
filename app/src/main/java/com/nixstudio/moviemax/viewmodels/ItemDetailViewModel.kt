@@ -1,10 +1,12 @@
 package com.nixstudio.moviemax.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import com.nixstudio.moviemax.data.sources.MovieMaxRepository
-import kotlinx.coroutines.launch
 
 class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
 

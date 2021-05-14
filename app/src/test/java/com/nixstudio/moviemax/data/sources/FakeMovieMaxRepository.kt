@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
-import com.nixstudio.moviemax.data.sources.MovieMaxRepositoryInterface
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.data.sources.remote.RemoteDataSource

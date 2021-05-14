@@ -9,14 +9,14 @@ import kotlinx.parcelize.Parcelize
 data class TrendingResponse(
 
     @field:SerializedName("page")
-	val page: Int? = null,
+    val page: Int? = null,
 
     @field:SerializedName("total_pages")
-	val totalPages: Int? = null,
+    val totalPages: Int? = null,
 
     @field:SerializedName("results")
-	val results: List<CombinedResultEntity?>? = null,
+    val results: List<CombinedResultEntity?>? = null,
 
     @field:SerializedName("total_results")
-	val totalResults: Int? = null
-): Parcelable
+    val totalResults: Int? = null
+) : Parcelable

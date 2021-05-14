@@ -66,7 +66,7 @@ class RemoteDataSource(private val api: ApiService) {
         val searchResponse = api.searchWithString(api_key, string, page)
         val searchList = MutableLiveData<List<CombinedResultEntity>>()
 
-        searchResponse.enqueue(object: Callback<SearchResponse> {
+        searchResponse.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>,
                 response: Response<SearchResponse>
@@ -111,7 +111,7 @@ class RemoteDataSource(private val api: ApiService) {
         val movieResponse = api.getMovieById(id, api_key)
         val currentMovie = MutableLiveData<MovieEntity>()
 
-        movieResponse.enqueue(object: Callback<MovieEntity> {
+        movieResponse.enqueue(object : Callback<MovieEntity> {
             override fun onResponse(call: Call<MovieEntity>, response: Response<MovieEntity>) {
                 if (response.isSuccessful) {
                     currentMovie.postValue(response.body() as MovieEntity)
@@ -130,7 +130,7 @@ class RemoteDataSource(private val api: ApiService) {
         val tvResponse = api.getTvShowsById(id, api_key)
         val currentTvShows = MutableLiveData<TvShowsEntity>()
 
-        tvResponse.enqueue(object: Callback<TvShowsEntity> {
+        tvResponse.enqueue(object : Callback<TvShowsEntity> {
             override fun onResponse(call: Call<TvShowsEntity>, response: Response<TvShowsEntity>) {
                 if (response.isSuccessful) {
                     currentTvShows.postValue(response.body() as TvShowsEntity)

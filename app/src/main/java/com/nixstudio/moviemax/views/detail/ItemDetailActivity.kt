@@ -9,12 +9,9 @@ import androidx.navigation.navArgs
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
-import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemDetailActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel<ItemDetailViewModel>()
     var currentMovie: DiscoverMovieResultsItem? = null
     var currentTvShows: DiscoverTvResultsItem? = null
 
@@ -28,7 +25,10 @@ class ItemDetailActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, ItemDetailFragment.newInstance(currentMovie, currentTvShows))
+                .replace(
+                    R.id.container,
+                    ItemDetailFragment.newInstance(currentMovie, currentTvShows)
+                )
                 .commitNow()
         }
 
@@ -52,24 +52,28 @@ class ItemDetailActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.share -> {
-                val shareIntent = Intent(Intent.ACTION_SEND)
+        if (item.itemId == R.id.share) {
+            val shareIntent = Intent(Intent.ACTION_SEND)
 
-                if (currentMovie != null) {
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.title)
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentMovie?.title}\n\nOverview: ${currentMovie?.overview}")
-                } else if (currentTvShows != null) {
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.name)
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "${currentTvShows?.name}\n\nOverview: ${currentTvShows?.overview}")
-                }
-
-                shareIntent.type = "text/plain"
-                startActivity(shareIntent)
-                return true
+            if (currentMovie != null) {
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.title)
+                shareIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "${currentMovie?.title}\n\nOverview: ${currentMovie?.overview}"
+                )
+            } else if (currentTvShows != null) {
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.name)
+                shareIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "${currentTvShows?.name}\n\nOverview: ${currentTvShows?.overview}"
+                )
             }
 
-            else -> return super.onOptionsItemSelected(item)
+            shareIntent.type = "text/plain"
+            startActivity(shareIntent)
+            return true
+        } else {
+            return super.onOptionsItemSelected(item)
         }
     }
 }

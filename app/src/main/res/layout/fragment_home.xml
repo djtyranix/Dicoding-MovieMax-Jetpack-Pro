@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
@@ -135,17 +136,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:shimmer_auto_start="true" >
+                app:shimmer_auto_start="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:clipToPadding="false" >
+                    android:clipToPadding="false">
 
                     <include layout="@layout/item_list_placeholder" />
+
                     <include layout="@layout/item_list_placeholder" />
+
                     <include layout="@layout/item_list_placeholder" />
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -160,7 +163,7 @@
                 android:paddingHorizontal="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_main"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -171,24 +174,26 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" >
+            app:layout_constraintTop_toBottomOf="@+id/textView11">
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/rv_movie_shimmer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:shimmer_auto_start="true" >
+                app:shimmer_auto_start="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:clipToPadding="false" >
+                    android:clipToPadding="false">
 
                     <include layout="@layout/item_list_placeholder" />
+
                     <include layout="@layout/item_list_placeholder" />
+
                     <include layout="@layout/item_list_placeholder" />
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -216,24 +221,26 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" >
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/rv_tv_shimmer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:shimmer_auto_start="true" >
+                app:shimmer_auto_start="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingHorizontal="8dp"
-                    android:clipToPadding="false" >
+                    android:clipToPadding="false">
 
                     <include layout="@layout/item_list_placeholder" />
+
                     <include layout="@layout/item_list_placeholder" />
+
                     <include layout="@layout/item_list_placeholder" />
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -267,4 +274,4 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7"
             app:queryBackground="@color/transparent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

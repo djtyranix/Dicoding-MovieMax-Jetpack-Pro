@@ -30,20 +30,6 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
-
-        private var languageChange: Preference? = null
-
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
-
-            languageChange = findPreference("select_language")
-
-            val languageIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            languageChange?.intent = languageIntent
-        }
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

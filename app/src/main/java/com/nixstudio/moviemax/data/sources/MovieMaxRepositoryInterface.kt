@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
-import com.nixstudio.moviemax.data.sources.remote.*
+import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 
 interface MovieMaxRepositoryInterface {
     fun getDiscoveryMovie(page: Int = 1): LiveData<List<DiscoverMovieResultsItem>>

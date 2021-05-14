@@ -2,8 +2,6 @@ package com.nixstudio.moviemax.views.detail
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,24 +17,16 @@ import com.bumptech.glide.request.target.Target
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.databinding.ItemDetailFragmentBinding
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.databinding.ItemDetailFragmentBinding
+import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemDetailFragment : Fragment() {
-
-    companion object {
-        fun newInstance(currentMovie: DiscoverMovieResultsItem? = null, currentTvShows: DiscoverTvResultsItem? = null): ItemDetailFragment = ItemDetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable("currentMovie", currentMovie)
-                putParcelable("currentTvShows", currentTvShows)
-            }
-        }
-    }
 
     private var _binding: ItemDetailFragmentBinding? = null
     private val binding get() = _binding!!
@@ -69,12 +59,6 @@ class ItemDetailFragment : Fragment() {
         tvPlaytimeSeason = binding.tvPlaytimeSeason
         tvOverview = binding.tvOverview
 
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
         val currentMovie = arguments?.getParcelable<DiscoverMovieResultsItem?>("currentMovie")
         val currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
         val currentActivity = activity as ItemDetailActivity
@@ -82,20 +66,26 @@ class ItemDetailFragment : Fragment() {
         viewModel.setPosterLoadingState(true)
         viewModel.setBackdropLoadingState(true)
 
+        EspressoIdlingResource.increment()
         viewModel.getLoadingState().observe(viewLifecycleOwner, { loadingState ->
             if (!loadingState) {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 binding.detailShimmer.visibility = View.GONE
                 binding.itemDetails.visibility = View.VISIBLE
             }
         })
 
-        shimmer = Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
-            .setDuration(1000) // how long the shimmering animation takes to do one full sweep
-            .setBaseAlpha(0.7f) //the alpha of the underlying children
-            .setHighlightAlpha(0.6f) // the shimmer alpha amount
-            .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-            .setAutoStart(true)
-            .build()
+        shimmer =
+            Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
+                .setDuration(1000) // how long the shimmering animation takes to do one full sweep
+                .setBaseAlpha(0.7f) //the alpha of the underlying children
+                .setHighlightAlpha(0.6f) // the shimmer alpha amount
+                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+                .setAutoStart(true)
+                .build()
 
         // This is the placeholder for the imageView
         shimmerDrawable = ShimmerDrawable().apply {
@@ -119,6 +109,53 @@ class ItemDetailFragment : Fragment() {
             }
             currentActivity.setActionBarTitle(resources.getString(R.string.detail_tv))
         }
+
+        return binding.root
+    }
+
+    private fun ImageView.loadImage(url: String?, type: String) {
+        var width = 500
+        var height = 750
+
+        if (type == "backdrop") {
+            width = 1920
+            height = 1080
+        }
+
+        Glide.with(requireActivity())
+            .load(url)
+            .apply(
+                RequestOptions().override(width, height).placeholder(shimmerDrawable)
+                    .error(R.drawable.ic_broken_image_black)
+            )
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    viewModel.stopLoading()
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    if (type == "poster") {
+                        viewModel.setPosterLoadingState(false)
+                    } else {
+                        viewModel.setBackdropLoadingState(false)
+                    }
+
+                    return false
+                }
+            })
+            .into(this)
     }
 
     private fun setMovieData(movie: MovieEntity) {
@@ -133,60 +170,8 @@ class ItemDetailFragment : Fragment() {
             backdropUrl = "https://image.tmdb.org/t/p/w780${movie.backdropPath}"
         }
 
-        Glide.with(requireActivity())
-            .load(backdropUrl)
-            .apply(RequestOptions().override(1920, 1080).placeholder(shimmerDrawable).error(R.drawable.ic_broken_image_black))
-            .listener(object: RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.stopLoading()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.setBackdropLoadingState(false)
-                    return false
-                }
-            })
-            .into(imgBackdrop)
-
-        Glide.with(requireActivity())
-            .load(posterUrl)
-            .apply(RequestOptions().override(500, 750).placeholder(shimmerDrawable).error(R.drawable.ic_broken_image_black))
-            .listener(object: RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.stopLoading()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.setPosterLoadingState(false)
-                    return false
-                }
-            })
-            .into(imgPoster)
-
+        imgBackdrop.loadImage(backdropUrl, "backdrop")
+        imgPoster.loadImage(posterUrl, "poster")
 
         tvTitle.text = movie.title
         if (!movie.genres.isNullOrEmpty()) {
@@ -213,59 +198,8 @@ class ItemDetailFragment : Fragment() {
             backdropUrl = "https://image.tmdb.org/t/p/w780${tvShows.backdropPath}"
         }
 
-        Glide.with(requireActivity())
-            .load(backdropUrl)
-            .apply(RequestOptions().override(1920, 1080).placeholder(shimmerDrawable).error(R.drawable.ic_broken_image_black))
-            .addListener(object: RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.stopLoading()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.setBackdropLoadingState(false)
-                    return false
-                }
-            })
-            .into(imgBackdrop)
-
-        Glide.with(requireActivity())
-            .load(posterUrl)
-            .apply(RequestOptions().override(500, 750).placeholder(shimmerDrawable).error(R.drawable.ic_broken_image_black))
-            .addListener(object: RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.stopLoading()
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    viewModel.setPosterLoadingState(false)
-                    return false
-                }
-            })
-            .into(imgPoster)
+        imgBackdrop.loadImage(backdropUrl, "backdrop")
+        imgPoster.loadImage(posterUrl, "poster")
 
         tvTitle.text = tvShows.name
         tvGenre.text = tvShows.genres?.get(0)?.name
@@ -275,4 +209,15 @@ class ItemDetailFragment : Fragment() {
         tvOverview.text = tvShows.overview
     }
 
+    companion object {
+        fun newInstance(
+            currentMovie: DiscoverMovieResultsItem? = null,
+            currentTvShows: DiscoverTvResultsItem? = null
+        ): ItemDetailFragment = ItemDetailFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("currentMovie", currentMovie)
+                putParcelable("currentTvShows", currentTvShows)
+            }
+        }
+    }
 }

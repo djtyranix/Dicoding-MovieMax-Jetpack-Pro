@@ -8,8 +8,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.databinding.ItemListMainBinding
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.databinding.ItemListMainBinding
 
 class HomeTvAdapter : RecyclerView.Adapter<HomeTvAdapter.TvShowsViewHolder>() {
 
@@ -38,13 +38,14 @@ class HomeTvAdapter : RecyclerView.Adapter<HomeTvAdapter.TvShowsViewHolder>() {
             binding.tvTitle.text = tv.name
 
             val url = "https://image.tmdb.org/t/p/original${tv.posterPath}"
-            val shimmer = Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
-                .setDuration(1000) // how long the shimmering animation takes to do one full sweep
-                .setBaseAlpha(0.7f) //the alpha of the underlying children
-                .setHighlightAlpha(0.6f) // the shimmer alpha amount
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build()
+            val shimmer =
+                Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
+                    .setDuration(1000) // how long the shimmering animation takes to do one full sweep
+                    .setBaseAlpha(0.7f) //the alpha of the underlying children
+                    .setHighlightAlpha(0.6f) // the shimmer alpha amount
+                    .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+                    .setAutoStart(true)
+                    .build()
 
             // This is the placeholder for the imageView
             val shimmerDrawable = ShimmerDrawable().apply {
@@ -52,7 +53,10 @@ class HomeTvAdapter : RecyclerView.Adapter<HomeTvAdapter.TvShowsViewHolder>() {
             }
             Glide.with(binding.imgPoster.context)
                 .load(url)
-                .apply(RequestOptions().override(400, 600).placeholder(shimmerDrawable).error(R.drawable.ic_broken_image_black))
+                .apply(
+                    RequestOptions().override(400, 600).placeholder(shimmerDrawable)
+                        .error(R.drawable.ic_broken_image_black)
+                )
                 .into(binding.imgPoster)
         }
     }

@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.databinding.MovieFragmentBinding
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
+import com.nixstudio.moviemax.databinding.MovieFragmentBinding
+import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.MovieViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,8 +43,13 @@ class MovieFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        EspressoIdlingResource.increment()
         viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
             if (!movieItem.isNullOrEmpty()) {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 viewAdapter.setMovies(movieItem)
             }
         })

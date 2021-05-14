@@ -13,10 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.databinding.FragmentHomeBinding
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.databinding.FragmentHomeBinding
+import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,7 +67,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         curActivity.setActionBarTitle(resources.getString(R.string.app_name))
 
-        val searchManager = (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager =
+            (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = binding.svSearchItem
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
@@ -86,7 +88,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
                     view?.findNavController()?.navigate(toSearchFragment)
                 } else {
-                    Toast.makeText(activity, resources.getString(R.string.query_empty_warning), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        activity,
+                        resources.getString(R.string.query_empty_warning),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 return true
@@ -104,8 +110,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        EspressoIdlingResource.increment()
+        EspressoIdlingResource.increment()
+        EspressoIdlingResource.increment()
+
         viewModel.getTrending().observe(viewLifecycleOwner, { item ->
             if (!item.isNullOrEmpty()) {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 trendingViewAdapter.setTrendingData(item.take(7))
                 binding.rvTrending.visibility = View.VISIBLE
                 binding.rvTrendingShimmer.visibility = View.GONE
@@ -114,6 +128,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
             if (!movieItem.isNullOrEmpty()) {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 movieViewAdapter.setMovies(movieItem.take(7))
                 binding.rvMovie.visibility = View.VISIBLE
                 binding.rvMovieShimmer.visibility = View.GONE
@@ -122,13 +140,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
             if (!tvItem.isNullOrEmpty()) {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 tvViewAdapter.setTv(tvItem.take(7))
                 binding.rvTvshows.visibility = View.VISIBLE
                 binding.rvTvShimmer.visibility = View.GONE
             }
         })
 
-        trendingViewAdapter.setOnItemClickCallback(object: HomeTrendingAdapter.OnItemClickCallback {
+        trendingViewAdapter.setOnItemClickCallback(object :
+            HomeTrendingAdapter.OnItemClickCallback {
             override fun onItemClicked(data: CombinedResultEntity) {
                 if (data.mediaType == "movie") {
                     val movie = DiscoverMovieResultsItem(

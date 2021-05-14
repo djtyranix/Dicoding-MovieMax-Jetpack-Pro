@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.utils
+package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

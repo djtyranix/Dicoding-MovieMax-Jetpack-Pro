@@ -21,13 +21,14 @@ buildscript {
         retrofit_version = "2.9.0"
         okhttp_version = "4.9.0"
         koin_version = '3.0.1'
+        room_version = '2.3.0'
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0'
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
 

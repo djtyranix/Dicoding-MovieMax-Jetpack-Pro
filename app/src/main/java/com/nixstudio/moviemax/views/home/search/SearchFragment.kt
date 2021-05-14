@@ -1,16 +1,19 @@
 package com.nixstudio.moviemax.views.home.search
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
-import com.nixstudio.moviemax.databinding.SearchFragmentBinding
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.databinding.SearchFragmentBinding
+import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.SearchViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,14 +49,28 @@ class SearchFragment : Fragment() {
 
         val curActivity = activity as HomeActivity
         curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        curActivity.setActionBarTitle(resources.getString(R.string.search_result_header, args.query))
+        curActivity.setActionBarTitle(
+            resources.getString(
+                R.string.search_result_header,
+                args.query
+            )
+        )
 
+        EspressoIdlingResource.increment()
         viewModel.getSearchResults(args.query).observe(viewLifecycleOwner, { item ->
             if (!item.isNullOrEmpty()) {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 viewAdapter.setSearchResult(item)
                 binding.rvSearchResult.visibility = View.VISIBLE
                 binding.rvSearchShimmer.visibility = View.GONE
             } else {
+                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                    //Memberitahukan bahwa tugas sudah selesai dijalankan
+                    EspressoIdlingResource.decrement()
+                }
                 binding.rvSearchShimmer.visibility = View.GONE
                 binding.rvSearchResult.visibility = View.GONE
                 binding.emptySearchPlaceholder.visibility = View.VISIBLE
@@ -61,7 +78,7 @@ class SearchFragment : Fragment() {
             }
         })
 
-        viewAdapter.setOnItemClickCallback(object: SearchResultAdapter.OnItemClickCallback {
+        viewAdapter.setOnItemClickCallback(object : SearchResultAdapter.OnItemClickCallback {
             override fun onItemClicked(data: CombinedResultEntity) {
                 if (data.mediaType == "movie") {
                     val movie = DiscoverMovieResultsItem(

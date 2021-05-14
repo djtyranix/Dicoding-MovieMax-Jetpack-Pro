@@ -15,5 +15,5 @@ object EspressoIdlingResource {
         espressoTestIdlingResource.decrement()
     }
 
-    fun getEspressoIdlingResourceForMainActivity(): IdlingResource = espressoTestIdlingResource
+    fun getEspressoIdlingResource(): IdlingResource = espressoTestIdlingResource
 }
