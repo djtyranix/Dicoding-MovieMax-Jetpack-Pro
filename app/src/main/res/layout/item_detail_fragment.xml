@@ -51,14 +51,14 @@
                 <ImageView
                     android:id="@+id/img_backdrop"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="260dp"
                     android:contentDescription="@string/backdrop"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="16:9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -78,6 +78,8 @@
         android:animateLayoutChanges="true"
         android:scrollbars="none"
         android:visibility="gone"
+        android:overScrollMode="never"
+        app:behavior_overlapTop="65dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,6 +87,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/detail_layout_bg" >
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="140dp"
+                android:background="@drawable/small_scroller_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_playtime_season_title"
@@ -107,7 +121,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:lineSpacingMultiplier="0.8"
@@ -117,7 +131,7 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/view6" />
 
             <View
                 android:id="@+id/view2"
@@ -408,22 +422,4 @@
                 tools:listitem="@layout/item_list_review" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/favorite_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="?attr/colorSecondary"
-        android:baselineAlignBottom="false"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_favorite_border"
-        android:tint="?attr/colorOnSecondary"
-        app:fabSize="normal"
-        app:layout_anchor="@id/detail_appbar"
-        app:layout_anchorGravity="end|bottom"
-        android:contentDescription="@string/favorite"
-        android:visibility="gone"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

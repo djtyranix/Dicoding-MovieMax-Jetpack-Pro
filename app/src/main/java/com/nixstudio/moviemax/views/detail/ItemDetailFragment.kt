@@ -89,7 +89,6 @@ class ItemDetailFragment : Fragment() {
                 binding.detailShimmer.visibility = View.GONE
                 binding.itemDetails.visibility = View.VISIBLE
                 binding.detailAppbar.visibility = View.VISIBLE
-                binding.favoriteFab.visibility = View.VISIBLE
             }
         })
 
