@@ -3,6 +3,8 @@ package com.nixstudio.moviemax.data.entities
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.nixstudio.moviemax.data.utils.*
+import com.nixstudio.moviemax.data.utils.credits.Credits
+import com.nixstudio.moviemax.data.utils.reviews.ReviewsResponse
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -25,6 +27,9 @@ data class MovieEntity(
 
     @field:SerializedName("revenue")
     val revenue: Long? = null,
+
+    @field:SerializedName("reviews")
+    val reviews: ReviewsResponse.Reviews? = null,
 
     @field:SerializedName("credits")
     val credits: Credits? = null,

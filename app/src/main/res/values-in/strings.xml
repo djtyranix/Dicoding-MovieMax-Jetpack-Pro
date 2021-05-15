@@ -43,4 +43,11 @@
     <string name="search_result_header">Hasil Pencarian: %1$s</string>
     <string name="query_empty_warning">Kolom tidak boleh kosong!</string>
     <string name="search_empty">Tidak ditemukan.</string>
+    <string name="favorite">Favorit</string>
+    <string name="rating">PENILAIAN</string>
+    <string name="dummy_rating">6.9 / 10</string>
+    <string name="cast">PEMAIN</string>
+    <string name="author">djtyranix</string>
+    <string name="reviews">ULASAN</string>
+    <string name="no_reviews">Tidak ada ulasan ditemukan.</string>
 </resources>

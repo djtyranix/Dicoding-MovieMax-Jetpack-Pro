@@ -63,9 +63,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
         binding.seeAllMovies.setOnClickListener(this)
         binding.seeAllTv.setOnClickListener(this)
 
-        val curActivity = activity as HomeActivity
-        curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        curActivity.setActionBarTitle(resources.getString(R.string.app_name))
+        val currentActivity = activity as HomeActivity
+        val toolbar = binding.homeToolbar.toolbarHome
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        currentActivity.setActionBarTitle(" ")
 
         val searchManager =
             (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager

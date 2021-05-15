@@ -19,9 +19,9 @@ class ItemDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.item_detail_activity)
 
-        val args: ItemDetailActivityArgs? by navArgs()
-        currentMovie = args?.movieEntity
-        currentTvShows = args?.tvShowsEntity
+        val args: ItemDetailActivityArgs by navArgs()
+        currentMovie = args.movieEntity
+        currentTvShows = args.tvShowsEntity
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -31,12 +31,6 @@ class ItemDetailActivity : AppCompatActivity() {
                 )
                 .commitNow()
         }
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    fun setActionBarTitle(title: String?) {
-        supportActionBar?.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {

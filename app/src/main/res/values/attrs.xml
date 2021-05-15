@@ -2,4 +2,6 @@
 <resources>
     <attr name="cardview_bg" format="color" />
     <attr name="text_color_primary" format="color" />
+    <attr name="toolbar_gradient_color_left" format="color" />
+    <attr name="toolbar_gradient_color_right" format="color" />
 </resources>

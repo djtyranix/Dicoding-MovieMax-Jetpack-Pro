@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -41,15 +42,11 @@ class SearchFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val curActivity = activity as HomeActivity
-        curActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        curActivity.setActionBarTitle(
+        val currentActivity = activity as HomeActivity
+        val toolbar = currentActivity.findViewById<Toolbar>(R.id.toolbar_home)
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        currentActivity.setActionBarTitle(
             resources.getString(
                 R.string.search_result_header,
                 args.query
@@ -120,6 +117,8 @@ class SearchFragment : Fragment() {
                 }
             }
         })
+
+        return binding.root
     }
 
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {

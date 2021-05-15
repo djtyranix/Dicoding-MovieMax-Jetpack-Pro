@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -16,6 +17,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
@@ -25,6 +28,7 @@ import com.nixstudio.moviemax.databinding.ItemDetailFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ItemDetailFragment : Fragment() {
 
@@ -40,9 +44,11 @@ class ItemDetailFragment : Fragment() {
     private lateinit var tvPlaytimeSeason: TextView
     private lateinit var tvOverview: TextView
     private lateinit var imgBackdrop: ImageView
-
+    private lateinit var collapsingToolbarLayout: CollapsingToolbarLayout
     private lateinit var shimmer: Shimmer
     private lateinit var shimmerDrawable: ShimmerDrawable
+    private lateinit var appBarLayout: AppBarLayout
+    private lateinit var coordinatorLayout: CoordinatorLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,10 +64,17 @@ class ItemDetailFragment : Fragment() {
         tvPlaytimeSeasonTitle = binding.tvPlaytimeSeasonTitle
         tvPlaytimeSeason = binding.tvPlaytimeSeason
         tvOverview = binding.tvOverview
+        collapsingToolbarLayout = binding.detailCollapsingToolbar
+        appBarLayout = binding.detailAppbar
+        coordinatorLayout = binding.root
 
         val currentMovie = arguments?.getParcelable<DiscoverMovieResultsItem?>("currentMovie")
         val currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
         val currentActivity = activity as ItemDetailActivity
+
+        val toolbar = binding.detailToolbar
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.setPosterLoadingState(true)
         viewModel.setBackdropLoadingState(true)
@@ -75,6 +88,8 @@ class ItemDetailFragment : Fragment() {
                 }
                 binding.detailShimmer.visibility = View.GONE
                 binding.itemDetails.visibility = View.VISIBLE
+                binding.detailAppbar.visibility = View.VISIBLE
+                binding.favoriteFab.visibility = View.VISIBLE
             }
         })
 
@@ -99,7 +114,6 @@ class ItemDetailFragment : Fragment() {
                     setMovieData(movie)
                 })
             }
-            currentActivity.setActionBarTitle(resources.getString(R.string.detail_movie))
         } else if (currentTvShows != null) {
             val id = currentTvShows.id
             if (id != null) {
@@ -107,7 +121,6 @@ class ItemDetailFragment : Fragment() {
                     setTvShows(tvShows)
                 })
             }
-            currentActivity.setActionBarTitle(resources.getString(R.string.detail_tv))
         }
 
         return binding.root
@@ -180,6 +193,7 @@ class ItemDetailFragment : Fragment() {
             tvGenre.text = resources.getString(R.string.not_set)
         }
 
+        collapsingToolbarLayout.title = movie.title
         tvYear.text = movie.releaseDate
         tvPlaytimeSeasonTitle.text = resources.getString(R.string.playtime)
         tvPlaytimeSeason.text = resources.getString(R.string.minutes, movie.runtime.toString())
@@ -201,6 +215,7 @@ class ItemDetailFragment : Fragment() {
         imgBackdrop.loadImage(backdropUrl, "backdrop")
         imgPoster.loadImage(posterUrl, "poster")
 
+        collapsingToolbarLayout.title = tvShows.name
         tvTitle.text = tvShows.name
         tvGenre.text = tvShows.genres?.get(0)?.name
         tvYear.text = tvShows.firstAirDate

@@ -42,4 +42,11 @@
     <string name="search_result_header">Search Result: %1$s</string>
     <string name="query_empty_warning">Query can\'t be empty!</string>
     <string name="search_empty">Nothing found.</string>
+    <string name="favorite">Favorite</string>
+    <string name="rating">RATING</string>
+    <string name="dummy_rating">6.9 / 10</string>
+    <string name="cast">CASTS</string>
+    <string name="author">djtyranix</string>
+    <string name="reviews">REVIEWS</string>
+    <string name="no_reviews">No reviews found.</string>
 </resources>
