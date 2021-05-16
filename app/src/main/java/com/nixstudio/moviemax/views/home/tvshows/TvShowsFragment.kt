@@ -39,7 +39,7 @@ class TvShowsFragment : Fragment() {
         }
 
         val currentActivity = activity as HomeActivity
-        val toolbar = currentActivity.findViewById<Toolbar>(R.id.toolbar_home)
+        val toolbar = binding.homeToolbar.toolbarHome
         currentActivity.setSupportActionBar(toolbar)
         currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         currentActivity.setActionBarTitle("TV Shows")

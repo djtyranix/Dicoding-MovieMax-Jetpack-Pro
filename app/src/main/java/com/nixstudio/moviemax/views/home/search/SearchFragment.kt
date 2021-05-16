@@ -1,10 +1,12 @@
 package com.nixstudio.moviemax.views.home.search
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,6 +17,7 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.databinding.SearchFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
+import com.nixstudio.moviemax.utils.hideKeyboard
 import com.nixstudio.moviemax.viewmodels.SearchViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,7 +46,7 @@ class SearchFragment : Fragment() {
         }
 
         val currentActivity = activity as HomeActivity
-        val toolbar = currentActivity.findViewById<Toolbar>(R.id.toolbar_home)
+        val toolbar = binding.homeToolbar.toolbarHome
         currentActivity.setSupportActionBar(toolbar)
         currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         currentActivity.setActionBarTitle(
@@ -117,6 +120,8 @@ class SearchFragment : Fragment() {
                 }
             }
         })
+
+        hideKeyboard()
 
         return binding.root
     }

@@ -14,12 +14,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RemoteDataSource(private val api: ApiService) {
-    private val api_key = BuildConfig.API_KEY
-    private val include_adult = true
-    private val sort_by = "popularity.desc"
+    private val apiKey = BuildConfig.API_KEY
+    private val includeAdult = true
+    private val sortBy = "popularity.desc"
+    private val appendToResponse = "credits,reviews"
 
     fun getMoviesFromDiscovery(page: Int): LiveData<List<DiscoverMovieResultsItem>> {
-        val discoverMovieResponse = api.getMovieDiscovery(api_key, sort_by, include_adult, page)
+        val discoverMovieResponse = api.getMovieDiscovery(apiKey, sortBy, includeAdult, page)
         val discoveryMovies = MutableLiveData<List<DiscoverMovieResultsItem>>()
 
         discoverMovieResponse.enqueue(object : Callback<DiscoverMovieResponse> {
@@ -41,7 +42,7 @@ class RemoteDataSource(private val api: ApiService) {
     }
 
     fun getTvShowsFromDiscovery(page: Int): LiveData<List<DiscoverTvResultsItem>> {
-        val discoverTvResponse = api.getTvDiscovery(api_key, sort_by, include_adult, page)
+        val discoverTvResponse = api.getTvDiscovery(apiKey, sortBy, includeAdult, page)
         val discoveryTvShows = MutableLiveData<List<DiscoverTvResultsItem>>()
 
         discoverTvResponse.enqueue(object : Callback<DiscoverTvResponse> {
@@ -63,7 +64,7 @@ class RemoteDataSource(private val api: ApiService) {
     }
 
     fun searchFromString(string: String, page: Int): LiveData<List<CombinedResultEntity>> {
-        val searchResponse = api.searchWithString(api_key, string, page)
+        val searchResponse = api.searchWithString(apiKey, string, page)
         val searchList = MutableLiveData<List<CombinedResultEntity>>()
 
         searchResponse.enqueue(object : Callback<SearchResponse> {
@@ -86,7 +87,7 @@ class RemoteDataSource(private val api: ApiService) {
     }
 
     fun getTrendingToday(): LiveData<List<CombinedResultEntity>> {
-        val trendingResponse = api.getTrendingToday(api_key)
+        val trendingResponse = api.getTrendingToday(apiKey)
         val trendingList = MutableLiveData<List<CombinedResultEntity>>()
 
         trendingResponse.enqueue(object : Callback<TrendingResponse> {
@@ -108,7 +109,7 @@ class RemoteDataSource(private val api: ApiService) {
     }
 
     fun getMovieById(id: Long): LiveData<MovieEntity> {
-        val movieResponse = api.getMovieById(id, api_key)
+        val movieResponse = api.getMovieById(id, apiKey, appendToResponse)
         val currentMovie = MutableLiveData<MovieEntity>()
 
         movieResponse.enqueue(object : Callback<MovieEntity> {
@@ -127,7 +128,7 @@ class RemoteDataSource(private val api: ApiService) {
     }
 
     fun getTvShowsById(id: Long): LiveData<TvShowsEntity> {
-        val tvResponse = api.getTvShowsById(id, api_key)
+        val tvResponse = api.getTvShowsById(id, apiKey, appendToResponse)
         val currentTvShows = MutableLiveData<TvShowsEntity>()
 
         tvResponse.enqueue(object : Callback<TvShowsEntity> {

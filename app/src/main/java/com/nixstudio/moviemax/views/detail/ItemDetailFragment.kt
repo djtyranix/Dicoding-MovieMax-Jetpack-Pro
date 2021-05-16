@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -24,6 +26,8 @@ import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
+import com.nixstudio.moviemax.data.utils.credits.CastItem
+import com.nixstudio.moviemax.data.utils.reviews.ReviewsItem
 import com.nixstudio.moviemax.databinding.ItemDetailFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
@@ -49,6 +53,9 @@ class ItemDetailFragment : Fragment() {
     private lateinit var shimmerDrawable: ShimmerDrawable
     private lateinit var appBarLayout: AppBarLayout
     private lateinit var coordinatorLayout: CoordinatorLayout
+    private lateinit var tvRating: TextView
+    private lateinit var castAdapter: CastAdapter
+    private lateinit var reviewAdapter: ReviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +74,22 @@ class ItemDetailFragment : Fragment() {
         collapsingToolbarLayout = binding.detailCollapsingToolbar
         appBarLayout = binding.detailAppbar
         coordinatorLayout = binding.root
+        tvRating = binding.tvRating
+
+        castAdapter = CastAdapter()
+        reviewAdapter = ReviewAdapter()
+
+        binding.rvCast.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = castAdapter
+            setHasFixedSize(true)
+        }
+
+        binding.rvReview.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = reviewAdapter
+            setHasFixedSize(true)
+        }
 
         val currentMovie = arguments?.getParcelable<DiscoverMovieResultsItem?>("currentMovie")
         val currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
@@ -192,11 +215,26 @@ class ItemDetailFragment : Fragment() {
             tvGenre.text = resources.getString(R.string.not_set)
         }
 
+        if (movie.credits?.cast.isNullOrEmpty()) {
+            binding.rvCast.visibility = View.GONE
+            binding.tvNoCastInfo.visibility = View.VISIBLE
+        } else {
+            castAdapter.setCasts(movie.credits?.cast as List<CastItem>?)
+        }
+
+        if (movie.reviews?.results.isNullOrEmpty()) {
+            binding.rvReview.visibility = View.GONE
+            binding.tvNoReviews.visibility = View.VISIBLE
+        } else {
+            reviewAdapter.setReviews(movie.reviews?.results as List<ReviewsItem>?)
+        }
+
         collapsingToolbarLayout.title = movie.title
         tvYear.text = movie.releaseDate
         tvPlaytimeSeasonTitle.text = resources.getString(R.string.playtime)
         tvPlaytimeSeason.text = resources.getString(R.string.minutes, movie.runtime.toString())
         tvOverview.text = movie.overview
+        tvRating.text = resources.getString(R.string.rating_value, movie.voteAverage.toString())
     }
 
     private fun setTvShows(tvShows: TvShowsEntity) {
@@ -214,6 +252,20 @@ class ItemDetailFragment : Fragment() {
         imgBackdrop.loadImage(backdropUrl, "backdrop")
         imgPoster.loadImage(posterUrl, "poster")
 
+        if (tvShows.credits?.cast.isNullOrEmpty()) {
+            binding.rvCast.visibility = View.GONE
+            binding.tvNoCastInfo.visibility = View.VISIBLE
+        } else {
+            castAdapter.setCasts(tvShows.credits?.cast as List<CastItem>?)
+        }
+
+        if (tvShows.reviews?.results.isNullOrEmpty()) {
+            binding.rvReview.visibility = View.GONE
+            binding.tvNoReviews.visibility = View.VISIBLE
+        } else {
+            reviewAdapter.setReviews(tvShows.reviews?.results as List<ReviewsItem>?)
+        }
+
         collapsingToolbarLayout.title = tvShows.name
         tvTitle.text = tvShows.name
         tvGenre.text = tvShows.genres?.get(0)?.name
@@ -221,6 +273,7 @@ class ItemDetailFragment : Fragment() {
         tvPlaytimeSeasonTitle.text = resources.getString(R.string.season)
         tvPlaytimeSeason.text = tvShows.numberOfSeasons.toString()
         tvOverview.text = tvShows.overview
+        tvRating.text = resources.getString(R.string.rating_value, tvShows.voteAverage.toString())
     }
 
     companion object {

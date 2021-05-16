@@ -76,6 +76,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
         searchView.setIconifiedByDefault(false)
         searchView.queryHint = resources.getString(R.string.search_hint)
+        searchView.clearFocus()
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -84,6 +85,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
+
+                searchView.clearFocus()
 
                 if (query != null && query != "" && query != " ") {
                     val toSearchFragment =

@@ -27,6 +27,7 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.SearchViewH
                 binding.contentTitle.text = data.name
             }
 
+            binding.contentOverview.text = data.overview
             binding.contentType.text = data.mediaType?.uppercase(Locale.getDefault())
 
             val shimmer =

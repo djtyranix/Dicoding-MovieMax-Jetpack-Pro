@@ -55,4 +55,6 @@
     <string name="dark_mode_isenabled">Dark mode %1$s</string>
     <string name="enabled">enabled</string>
     <string name="disabled">disabled</string>
+    <string name="rating_value">%1$s / 10</string>
+    <string name="no_cast">No cast information found.</string>
 </resources>

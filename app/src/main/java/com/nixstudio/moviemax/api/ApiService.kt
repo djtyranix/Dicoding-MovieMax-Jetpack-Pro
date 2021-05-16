@@ -43,12 +43,14 @@ interface ApiService {
     @GET("movie/{id}")
     fun getMovieById(
         @Path("id") id: Long,
-        @Query("api_key") api_key: String
+        @Query("api_key") api_key: String,
+        @Query("append_to_response") append_to_response: String
     ): Call<MovieEntity>
 
     @GET("tv/{id}")
     fun getTvShowsById(
         @Path("id") id: Long,
-        @Query("api_key") api_key: String
+        @Query("api_key") api_key: String,
+        @Query("append_to_response") append_to_response: String
     ): Call<TvShowsEntity>
 }

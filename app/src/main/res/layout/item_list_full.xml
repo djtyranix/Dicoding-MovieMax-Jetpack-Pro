@@ -28,8 +28,9 @@
                 android:id="@+id/img_poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/poster" />
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/poster"
+                android:adjustViewBounds="true" />
 
             <TextView
                 android:id="@+id/tv_title"

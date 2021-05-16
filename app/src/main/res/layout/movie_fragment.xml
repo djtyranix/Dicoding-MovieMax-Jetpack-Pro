@@ -7,14 +7,9 @@
     android:gravity="center"
     tools:context=".views.home.movie.MovieFragment">
 
-    <LinearLayout
-        android:id="@+id/toolbar_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <include layout="@layout/home_toolbar" />
-    </LinearLayout>
+    <include
+        android:id="@+id/home_toolbar"
+        layout="@layout/home_toolbar" />
 
     <TextView
         android:id="@+id/textView"
@@ -31,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_linear_layout"
+        app:layout_constraintTop_toBottomOf="@+id/home_toolbar"
         app:layout_constraintVertical_bias="0.0" />
 
     <View
