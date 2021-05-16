@@ -49,4 +49,10 @@
     <string name="author">djtyranix</string>
     <string name="reviews">REVIEWS</string>
     <string name="no_reviews">No reviews found.</string>
+    <string name="theme">Theme</string>
+    <string name="dark_mode_summary">Turn on dark mode</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="dark_mode_isenabled">Dark mode %1$s</string>
+    <string name="enabled">enabled</string>
+    <string name="disabled">disabled</string>
 </resources>

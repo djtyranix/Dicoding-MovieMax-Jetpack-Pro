@@ -4,7 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/lightblue_200</item>
         <item name="colorPrimaryVariant">@color/lightblue_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/text_dark</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/lightblue_500</item>
         <item name="colorSecondaryVariant">@color/blue_500</item>
@@ -14,10 +14,11 @@
         <!-- Customize your theme here. -->
         <item name="cardview_bg">@color/bg_dark</item>
         <item name="text_color_primary">@color/text_dark</item>
-        <item name="toolbar_gradient_color_left">#FF121212</item>
+        <item name="toolbar_gradient_color_left">#FF171717</item>
         <item name="toolbar_gradient_color_right">#FF212121</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="home_primary_color">#171717</item>
     </style>
 
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">

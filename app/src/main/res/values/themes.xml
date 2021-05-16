@@ -18,6 +18,7 @@
         <item name="toolbar_gradient_color_right">@color/lightblue_700</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="home_primary_color">?attr/colorPrimary</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
@@ -43,6 +44,6 @@
     </style>
 
     <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="tint">@color/lightblue_500</item>
+        <item name="tint">@color/white</item>
     </style>
 </resources>

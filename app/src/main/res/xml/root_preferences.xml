@@ -6,4 +6,12 @@
             app:summary="@string/language_change_desc"
             app:title="@string/language_option" />
     </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/theme">
+
+        <SwitchPreference
+            app:key="enable_dark_mode"
+            app:summary="@string/dark_mode_summary"
+            app:title="@string/dark_mode" />
+    </PreferenceCategory>
 </PreferenceScreen>
