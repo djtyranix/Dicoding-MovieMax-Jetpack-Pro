@@ -1,20 +1,15 @@
 package com.nixstudio.moviemax.data.sources.local
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.paging.PagingSource
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
-import com.nixstudio.moviemax.data.entities.MovieEntity
-import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import com.nixstudio.moviemax.data.sources.local.room.MovieMaxDao
 import com.nixstudio.moviemax.data.utils.MediaType
 
 class LocalDataSource(private val movieMaxDao: MovieMaxDao) {
 
-    fun getAllFavorites(): PagingSource<Int, FavoriteEntity> = movieMaxDao.getAll()
+    fun getAllFavorites(): DataSource.Factory<Int, FavoriteEntity> = movieMaxDao.getAll()
 
-    fun getAllFromMediaType(mediaType: MediaType): PagingSource<Int, FavoriteEntity> {
+    fun getAllFromMediaType(mediaType: MediaType): DataSource.Factory<Int, FavoriteEntity> {
         return if (mediaType == MediaType.MOVIE) {
             movieMaxDao.getAllFromMediaType("movie")
         } else {

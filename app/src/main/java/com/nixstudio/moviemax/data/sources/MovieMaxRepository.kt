@@ -1,9 +1,7 @@
 package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
@@ -42,30 +40,24 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
         return remoteDataSource.getTvShowsById(id)
     }
 
-    override fun getAllFavorites(): Flow<PagingData<FavoriteEntity>> {
-        val items = Pager(
-            PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = true
-            )
-        ) {
-            localDataSource.getAllFavorites()
-        }.flow
+    override fun getAllFavorites(): LiveData<PagedList<FavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(5)
+            .setPageSize(5)
+            .build()
 
-        return items
+        return LivePagedListBuilder(localDataSource.getAllFavorites(), config).build()
     }
 
-    override fun getFavoritesFromMediaType(mediaType: MediaType): Flow<PagingData<FavoriteEntity>> {
-        val items = Pager(
-            PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = true
-            )
-        ) {
-            localDataSource.getAllFromMediaType(mediaType)
-        }.flow
+    override fun getFavoritesFromMediaType(mediaType: MediaType): LiveData<PagedList<FavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(5)
+            .setPageSize(5)
+            .build()
 
-        return items
+        return LivePagedListBuilder(localDataSource.getAllFromMediaType(mediaType), config).build()
     }
 
     override fun addFavorite(movie: MovieEntity?, tvShow: TvShowsEntity?) {

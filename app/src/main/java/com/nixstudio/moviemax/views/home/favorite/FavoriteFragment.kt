@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
@@ -20,8 +18,6 @@ import com.nixstudio.moviemax.databinding.FavoriteFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.FavoriteViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : Fragment() {
@@ -64,48 +60,37 @@ class FavoriteFragment : Fragment() {
             ) {
                 if (!isSpinnerInitialized) {
                     isSpinnerInitialized = true
-                    lifecycleScope.launch {
-                        viewModel.getFavorites().collectLatest {
-                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                                EspressoIdlingResource.decrement()
-                            }
-                            viewAdapter.submitData(PagingData.empty())
-                            viewAdapter.submitData(it)
+                    viewModel.getFavorites().observe(viewLifecycleOwner, {
+                        if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                            EspressoIdlingResource.decrement()
                         }
-                    }
+                        viewAdapter.submitList(it)
+                    })
                     return
                 }
 
                 if (id == 0L) {
-                    lifecycleScope.launch {
-                        viewModel.getFavorites().collectLatest {
-                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                                EspressoIdlingResource.decrement()
-                            }
-                            viewAdapter.submitData(PagingData.empty())
-                            viewAdapter.submitData(it)
+                    viewModel.getFavorites().observe(viewLifecycleOwner, {
+                        if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                            EspressoIdlingResource.decrement()
                         }
-                    }
+                        viewAdapter.submitList(it)
+                    })
                 } else if (id == 1L) {
-                    lifecycleScope.launch {
-                        viewModel.getFavoritesByMediaType(MediaType.MOVIE).collectLatest {
-                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                                EspressoIdlingResource.decrement()
-                            }
-                            viewAdapter.submitData(PagingData.empty())
-                            viewAdapter.submitData(it)
+                    viewModel.getFavoritesByMediaType(MediaType.MOVIE).observe(viewLifecycleOwner, {
+                        if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                            EspressoIdlingResource.decrement()
                         }
-                    }
+                        viewAdapter.submitList(it)
+                    })
                 } else {
-                    lifecycleScope.launch {
-                        viewModel.getFavoritesByMediaType(MediaType.TVSHOW).collectLatest {
+                    viewModel.getFavoritesByMediaType(MediaType.TVSHOW)
+                        .observe(viewLifecycleOwner, {
                             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                                 EspressoIdlingResource.decrement()
                             }
-                            viewAdapter.submitData(PagingData.empty())
-                            viewAdapter.submitData(it)
-                        }
-                    }
+                            viewAdapter.submitList(it)
+                        })
                 }
             }
 

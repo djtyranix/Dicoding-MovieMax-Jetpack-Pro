@@ -1,6 +1,7 @@
 package com.nixstudio.moviemax.utils
 
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
+import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
@@ -55,6 +56,7 @@ object DummyData {
 
     fun getMovieEntity(): MovieEntity {
         return MovieEntity(
+            id = 1,
             overview = "Yes",
             title = "This is a Movie Test"
         )
@@ -62,8 +64,42 @@ object DummyData {
 
     fun getTvShowsEntity(): TvShowsEntity {
         return TvShowsEntity(
+            id = 1,
             overview = "Nice",
             name = "This is a TV Test"
         )
+    }
+
+    fun getFavoriteEntity(): FavoriteEntity {
+        return FavoriteEntity(
+            itemId = 1,
+            title = "Test",
+            mediaType = "movie",
+            posterPath = null
+        )
+    }
+
+    fun getFavoriteList(): List<FavoriteEntity> {
+        val list = ArrayList<FavoriteEntity>()
+
+        list.add(
+            FavoriteEntity(
+                itemId = 1,
+                title = "Test",
+                mediaType = "movie",
+                posterPath = null
+            )
+        )
+
+        list.add(
+            FavoriteEntity(
+                itemId = 2,
+                title = "Test 2",
+                mediaType = "tv",
+                posterPath = null
+            )
+        )
+
+        return list
     }
 }

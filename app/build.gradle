@@ -106,7 +106,7 @@ dependencies {
 //    CIRCLE IMAGE VIEW
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-//    PAGING
+//    PAGING -> USING 2.1.2 BECAUSE 3.0.0 IS HARD TO TEST (IMMATURE)
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
 //    LIVE EVENT

@@ -2,7 +2,6 @@ package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import androidx.paging.PagingData
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
@@ -10,7 +9,6 @@ import com.nixstudio.moviemax.data.entities.TvShowsEntity
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.data.utils.MediaType
-import kotlinx.coroutines.flow.Flow
 
 interface MovieMaxRepositoryInterface {
     fun getDiscoveryMovie(page: Int = 1): LiveData<List<DiscoverMovieResultsItem>>
@@ -25,9 +23,9 @@ interface MovieMaxRepositoryInterface {
 
     fun getTvShowsById(id: Long): LiveData<TvShowsEntity>
 
-    fun getAllFavorites(): Flow<PagingData<FavoriteEntity>>
+    fun getAllFavorites(): LiveData<PagedList<FavoriteEntity>>
 
-    fun getFavoritesFromMediaType(mediaType: MediaType): Flow<PagingData<FavoriteEntity>>
+    fun getFavoritesFromMediaType(mediaType: MediaType): LiveData<PagedList<FavoriteEntity>>
 
     fun addFavorite(movie: MovieEntity? = null, tvShow: TvShowsEntity? = null)
 
