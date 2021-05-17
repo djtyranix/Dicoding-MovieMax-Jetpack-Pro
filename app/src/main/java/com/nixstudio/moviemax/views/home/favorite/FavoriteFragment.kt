@@ -1,6 +1,7 @@
 package com.nixstudio.moviemax.views.home.favorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,6 +116,7 @@ class FavoriteFragment : Fragment() {
 
         EspressoIdlingResource.increment()
         viewModel.setItemCount()
+        Log.d("Test", "Masuk")
         viewModel.getItemCount().observe(viewLifecycleOwner, { count ->
             if (count > 0) {
                 if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
@@ -133,6 +135,7 @@ class FavoriteFragment : Fragment() {
                 }
                 binding.textView.visibility = View.VISIBLE
                 binding.view2.visibility = View.VISIBLE
+                binding.sortSpinner.visibility = View.GONE
                 binding.rvFavoriteShimmer.visibility = View.GONE
                 binding.rvFavorite.visibility = View.GONE
                 binding.emptyFavoritePlaceholder.visibility = View.VISIBLE
@@ -175,5 +178,11 @@ class FavoriteFragment : Fragment() {
         val toDetailItemActivity =
             FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailActivity(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.setItemCount()
     }
 }

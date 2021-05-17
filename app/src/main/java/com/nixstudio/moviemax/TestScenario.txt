@@ -47,3 +47,29 @@ Usecase Test Scenario
         2. Masukkan query pada Searchbar
         3. Lihat Hasil Search, cocokkan title Action bar dengan Query
         4. Lihat apakah informasi nothing found muncul
+
+5a. Pengujian Menambahkan Favorit
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan salah satu poster pada salah satu list di home
+        3. Lihat detil item
+        4. Tekan tombol favorit
+        5. Tekan back
+        6. Tekan tombol favorit pada home
+        7. Tekan data yang ada
+        8. Match apakah data sama dengan yang awal
+
+5b. Pengujian Menghapus Favorit
+    Steps:
+        1. Membuka Aplikasi
+        2. Tekan salah satu poster pada salah satu list di home
+        3. Lihat detil item
+        4. Tekan tombol favorit
+        5. Tekan back
+        6. Tekan tombol favorit pada home
+        7. Tekan data yang ada
+        8. Tekan tombol favorit
+        9. Tekan back
+        10. Tekan tombol favorit pada home
+        11. Tekan data yang ada
+        12. Lihat apakah informasi nothing found muncul

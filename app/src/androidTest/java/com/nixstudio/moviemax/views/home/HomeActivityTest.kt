@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.UiController
@@ -17,6 +18,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
+import com.nixstudio.moviemax.views.home.favorite.FavoriteAdapter
 import com.nixstudio.moviemax.views.home.movie.MovieAdapter
 import com.nixstudio.moviemax.views.home.tvshows.TvShowsAdapter
 import org.hamcrest.Matcher
@@ -256,6 +258,112 @@ class HomeActivityTest {
             .check(matches(isDisplayed()))
 
         onView(withId(R.id.empty_search_placeholder))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun usecase5a_testingAddingFavorite() {
+        onView(withId(R.id.rv_trending))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<HomeTrendingAdapter.TrendingViewHolder>(
+                    0, click()
+                )
+            )
+
+        onView(withId(R.id.item_title))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_year))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_genre))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_playtime_season))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_overview))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.favorite))
+            .perform(click())
+
+        Espresso.pressBack()
+
+        onView(withId(R.id.favorite))
+            .perform(click())
+
+        onView(withId(R.id.rv_favorite))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<FavoriteAdapter.FavoriteViewHolder>(
+                    0, click()
+                )
+            )
+
+        onView(withId(R.id.item_title))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_year))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_genre))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_playtime_season))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_overview))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun usecase5b_testingRemovingFavorite() {
+        onView(withId(R.id.rv_trending))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<HomeTrendingAdapter.TrendingViewHolder>(
+                    0, click()
+                )
+            )
+
+        onView(withId(R.id.item_title))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_year))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_genre))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_playtime_season))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.tv_overview))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.favorite))
+            .perform(click())
+
+        Espresso.pressBack()
+
+        onView(withId(R.id.favorite))
+            .perform(click())
+
+        onView(withId(R.id.rv_favorite))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<FavoriteAdapter.FavoriteViewHolder>(
+                    0, click()
+                )
+            )
+
+        onView(withId(R.id.favorite))
+            .perform(click())
+
+        Espresso.pressBack()
+
+        onView(withId(R.id.empty_favorite_info))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.empty_favorite_placeholder))
             .check(matches(isDisplayed()))
     }
 }
