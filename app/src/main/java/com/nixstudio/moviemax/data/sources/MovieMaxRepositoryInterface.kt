@@ -33,5 +33,5 @@ interface MovieMaxRepositoryInterface {
 
     fun checkIfFavoriteExist(id: Long): Int
 
-    fun getDbItemCount(): Int
+    fun getDbItemCount(): LiveData<Int>
 }

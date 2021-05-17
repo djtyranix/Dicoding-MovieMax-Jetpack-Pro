@@ -1,13 +1,13 @@
 package com.nixstudio.moviemax.views.home.favorite
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
@@ -27,6 +27,7 @@ class FavoriteFragment : Fragment() {
     private val viewModel by viewModel<FavoriteViewModel>()
     private lateinit var viewAdapter: FavoriteAdapter
     private var isSpinnerInitialized = false
+    private lateinit var currentList: PagedList<FavoriteEntity>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +51,6 @@ class FavoriteFragment : Fragment() {
         currentActivity.setActionBarTitle(resources.getString(R.string.favorite))
 
         EspressoIdlingResource.increment()
-
         binding.sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -64,7 +64,9 @@ class FavoriteFragment : Fragment() {
                         if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                             EspressoIdlingResource.decrement()
                         }
+
                         viewAdapter.submitList(it)
+                        checkIsListEmpty(it.size)
                     })
                     return
                 }
@@ -74,14 +76,18 @@ class FavoriteFragment : Fragment() {
                         if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                             EspressoIdlingResource.decrement()
                         }
+
                         viewAdapter.submitList(it)
+                        checkIsListEmpty(it.size)
                     })
                 } else if (id == 1L) {
                     viewModel.getFavoritesByMediaType(MediaType.MOVIE).observe(viewLifecycleOwner, {
                         if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                             EspressoIdlingResource.decrement()
                         }
+
                         viewAdapter.submitList(it)
+                        checkIsListEmpty(it.size)
                     })
                 } else {
                     viewModel.getFavoritesByMediaType(MediaType.TVSHOW)
@@ -89,7 +95,9 @@ class FavoriteFragment : Fragment() {
                             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                                 EspressoIdlingResource.decrement()
                             }
+
                             viewAdapter.submitList(it)
+                            checkIsListEmpty(it.size)
                         })
                 }
             }
@@ -100,32 +108,11 @@ class FavoriteFragment : Fragment() {
         }
 
         EspressoIdlingResource.increment()
-        viewModel.setItemCount()
-        Log.d("Test", "Masuk")
         viewModel.getItemCount().observe(viewLifecycleOwner, { count ->
-            if (count > 0) {
-                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                    EspressoIdlingResource.decrement()
-                }
-
-                binding.rvFavorite.visibility = View.VISIBLE
-                binding.view2.visibility = View.VISIBLE
-                binding.sortSpinner.visibility = View.VISIBLE
-                binding.textView.visibility = View.VISIBLE
-                binding.rvFavoriteShimmer.visibility = View.GONE
-            } else {
-                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                    //Memberitahukan bahwa tugas sudah selesai dijalankan
-                    EspressoIdlingResource.decrement()
-                }
-                binding.textView.visibility = View.VISIBLE
-                binding.view2.visibility = View.VISIBLE
-                binding.sortSpinner.visibility = View.GONE
-                binding.rvFavoriteShimmer.visibility = View.GONE
-                binding.rvFavorite.visibility = View.GONE
-                binding.emptyFavoritePlaceholder.visibility = View.VISIBLE
-                binding.emptyFavoriteInfo.visibility = View.VISIBLE
+            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                EspressoIdlingResource.decrement()
             }
+            checkIsListEmpty(count)
         })
 
         viewAdapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
@@ -153,6 +140,24 @@ class FavoriteFragment : Fragment() {
         return binding.root
     }
 
+    private fun checkIsListEmpty(count: Int) {
+        if (count > 0) {
+            binding.rvFavorite.visibility = View.VISIBLE
+            binding.view2.visibility = View.VISIBLE
+            binding.sortSpinner.visibility = View.VISIBLE
+            binding.textView.visibility = View.VISIBLE
+            binding.rvFavoriteShimmer.visibility = View.GONE
+        } else {
+            binding.textView.visibility = View.VISIBLE
+            binding.view2.visibility = View.VISIBLE
+            binding.sortSpinner.visibility = View.GONE
+            binding.rvFavoriteShimmer.visibility = View.GONE
+            binding.rvFavorite.visibility = View.GONE
+            binding.emptyFavoritePlaceholder.visibility = View.VISIBLE
+            binding.emptyFavoriteInfo.visibility = View.VISIBLE
+        }
+    }
+
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
             FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailActivity(data, null)
@@ -163,11 +168,5 @@ class FavoriteFragment : Fragment() {
         val toDetailItemActivity =
             FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailActivity(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.setItemCount()
     }
 }

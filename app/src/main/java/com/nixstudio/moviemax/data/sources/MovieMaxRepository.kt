@@ -1,6 +1,7 @@
 package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.paging.*
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
@@ -120,7 +121,12 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
         return localDataSource.checkIfRecordExist(id)
     }
 
-    override fun getDbItemCount(): Int {
-        return localDataSource.getAllCount()
+    override fun getDbItemCount(): LiveData<Int> = liveData {
+        val count = localDataSource.getAllCount()
+        if (count != null) {
+            emit(count)
+        } else {
+            emit(0)
+        }
     }
 }

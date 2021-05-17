@@ -1,9 +1,9 @@
 package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.lifecycle.liveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
@@ -13,9 +13,11 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.data.sources.remote.RemoteDataSource
 import com.nixstudio.moviemax.data.utils.MediaType
-import kotlinx.coroutines.flow.Flow
 
-class FakeMovieMaxRepository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) :
+class FakeMovieMaxRepository(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) :
     MovieMaxRepositoryInterface {
 
     override fun getDiscoveryMovie(page: Int): LiveData<List<DiscoverMovieResultsItem>> {
@@ -42,30 +44,24 @@ class FakeMovieMaxRepository(private val remoteDataSource: RemoteDataSource, pri
         return remoteDataSource.getTvShowsById(id)
     }
 
-    override fun getAllFavorites(): Flow<PagingData<FavoriteEntity>> {
-        val items = Pager(
-            PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = true
-            )
-        ) {
-            localDataSource.getAllFavorites()
-        }.flow
+    override fun getAllFavorites(): LiveData<PagedList<FavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(5)
+            .setPageSize(5)
+            .build()
 
-        return items
+        return LivePagedListBuilder(localDataSource.getAllFavorites(), config).build()
     }
 
-    override fun getFavoritesFromMediaType(mediaType: MediaType): Flow<PagingData<FavoriteEntity>> {
-        val items = Pager(
-            PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = true
-            )
-        ) {
-            localDataSource.getAllFromMediaType(mediaType)
-        }.flow
+    override fun getFavoritesFromMediaType(mediaType: MediaType): LiveData<PagedList<FavoriteEntity>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(5)
+            .setPageSize(5)
+            .build()
 
-        return items
+        return LivePagedListBuilder(localDataSource.getAllFromMediaType(mediaType), config).build()
     }
 
     override fun addFavorite(movie: MovieEntity?, tvShow: TvShowsEntity?) {
@@ -128,7 +124,12 @@ class FakeMovieMaxRepository(private val remoteDataSource: RemoteDataSource, pri
         return localDataSource.checkIfRecordExist(id)
     }
 
-    override fun getDbItemCount(): Int {
-        return localDataSource.getAllCount()
+    override fun getDbItemCount(): LiveData<Int> = liveData {
+        val count = localDataSource.getAllCount()
+        if (count != null) {
+            emit(count)
+        } else {
+            emit(0)
+        }
     }
 }

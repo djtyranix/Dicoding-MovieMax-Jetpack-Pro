@@ -12,20 +12,9 @@ import kotlinx.coroutines.withContext
 
 class FavoriteViewModel(private val repo: MovieMaxRepository) : ViewModel() {
 
-    private val itemCount = MutableLiveData<Int>()
-
     fun getFavorites() = repo.getAllFavorites()
 
     fun getFavoritesByMediaType(mediaType: MediaType) = repo.getFavoritesFromMediaType(mediaType)
 
-    fun setItemCount() {
-        viewModelScope.launch(Dispatchers.Default) {
-            val count = repo.getDbItemCount()
-            withContext(Dispatchers.Main) {
-                itemCount.postValue(count)
-            }
-        }
-    }
-
-    fun getItemCount(): LiveData<Int> = itemCount
+    fun getItemCount(): LiveData<Int> = repo.getDbItemCount()
 }

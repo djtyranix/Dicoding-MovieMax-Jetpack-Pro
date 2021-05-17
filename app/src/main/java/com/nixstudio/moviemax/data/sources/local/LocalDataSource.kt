@@ -1,11 +1,19 @@
 package com.nixstudio.moviemax.data.sources.local
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.sources.local.room.MovieMaxDao
 import com.nixstudio.moviemax.data.utils.MediaType
+import com.nixstudio.moviemax.utils.DefaultDispatcherProvider
+import com.nixstudio.moviemax.utils.DispatcherProvider
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
-class LocalDataSource(private val movieMaxDao: MovieMaxDao) {
+class LocalDataSource(
+    private val movieMaxDao: MovieMaxDao,
+    private val dispatchers: DispatcherProvider = DefaultDispatcherProvider()
+) {
 
     fun getAllFavorites(): DataSource.Factory<Int, FavoriteEntity> = movieMaxDao.getAll()
 
@@ -35,5 +43,16 @@ class LocalDataSource(private val movieMaxDao: MovieMaxDao) {
 
     fun checkIfRecordExist(id: Long): Int = movieMaxDao.checkIfRecordExist(id)
 
-    fun getAllCount(): Int = movieMaxDao.getItemCount()
+    suspend fun getAllCount(): Int? {
+        val count = MutableLiveData<Int>()
+        count.value = 0
+
+        coroutineScope {
+            launch(dispatchers.io()) {
+                count.postValue(movieMaxDao.getItemCount())
+            }
+        }
+
+        return count.value
+    }
 }
