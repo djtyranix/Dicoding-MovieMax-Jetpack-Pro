@@ -58,7 +58,14 @@
     <string name="disabled">nonaktif</string>
     <string name="rating_value">%1$s / 10</string>
     <string name="no_cast">Tidak ada informasi pemeran.</string>
-    <string name="fav_add_success">Pengguna berhasil ditambahkan ke favorit.</string>
-    <string name="fav_del_success">Pengguna berhasil dihapus dari favorit.</string>
+    <string name="fav_add_success">Item berhasil ditambahkan ke favorit.</string>
+    <string name="fav_del_success">item berhasil dihapus dari favorit.</string>
     <string name="no_favorite">Pengguna favorit tidak ditemukan.</string>
+    <string name="your_favorites">Your Favorites</string>
+
+    <string-array name="sort_category">
+        <item>Semua</item>
+        <item>Film</item>
+        <item>Serial</item>
+    </string-array>
 </resources>

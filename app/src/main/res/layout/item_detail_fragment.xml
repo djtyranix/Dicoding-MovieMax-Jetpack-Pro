@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:shimmer_auto_start="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:scrollbars="none"
-        android:visibility="visible"
+        android:visibility="gone"
         android:overScrollMode="never"
         app:behavior_overlapTop="65dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">

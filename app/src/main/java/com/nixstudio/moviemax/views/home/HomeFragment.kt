@@ -229,6 +229,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         if (selectedDest == R.id.setting_menu) {
             val toSettingActivity = HomeFragmentDirections.actionHomeFragmentToSettingsActivity()
             view?.findNavController()?.navigate(toSettingActivity)
+        } else if (selectedDest == R.id.favorite) {
+            val toFavoriteFragment = HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
+            view?.findNavController()?.navigate(toFavoriteFragment)
         }
     }
 

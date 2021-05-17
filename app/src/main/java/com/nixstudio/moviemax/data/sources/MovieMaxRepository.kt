@@ -1,6 +1,9 @@
 package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
@@ -10,6 +13,7 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.data.sources.remote.RemoteDataSource
 import com.nixstudio.moviemax.data.utils.MediaType
+import kotlinx.coroutines.flow.Flow
 
 class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) :
     MovieMaxRepositoryInterface {
@@ -38,16 +42,30 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
         return remoteDataSource.getTvShowsById(id)
     }
 
-    override fun getAllFavorites(): LiveData<List<FavoriteEntity>> {
-        return localDataSource.getAllFavorites()
+    override fun getAllFavorites(): Flow<PagingData<FavoriteEntity>> {
+        val items = Pager(
+            PagingConfig(
+                pageSize = 5,
+                enablePlaceholders = true
+            )
+        ) {
+            localDataSource.getAllFavorites()
+        }.flow
+
+        return items
     }
 
-    override fun getFavoritesFromMediaType(mediaType: MediaType): LiveData<List<FavoriteEntity>> {
-        return localDataSource.getAllFromMediaType(mediaType)
-    }
+    override fun getFavoritesFromMediaType(mediaType: MediaType): Flow<PagingData<FavoriteEntity>> {
+        val items = Pager(
+            PagingConfig(
+                pageSize = 5,
+                enablePlaceholders = true
+            )
+        ) {
+            localDataSource.getAllFromMediaType(mediaType)
+        }.flow
 
-    override fun getFavoritesFromTitle(title: String): LiveData<List<FavoriteEntity>> {
-        return localDataSource.getAllFromTitle(title)
+        return items
     }
 
     override fun addFavorite(movie: MovieEntity?, tvShow: TvShowsEntity?) {
@@ -59,7 +77,6 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
                     itemId = it,
                     mediaType = "movie",
                     title = movie.title,
-                    name = null,
                     posterPath = movie.posterPath
                 )
             }
@@ -69,7 +86,6 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
                     itemId = it,
                     mediaType = "tv",
                     title = tvShow.name,
-                    name = null,
                     posterPath = tvShow.posterPath
                 )
             }
@@ -89,7 +105,6 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
                     itemId = it,
                     mediaType = "movie",
                     title = movie.title,
-                    name = null,
                     posterPath = movie.posterPath
                 )
             }
@@ -99,7 +114,6 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
                     itemId = it,
                     mediaType = "tv",
                     title = tvShow.name,
-                    name = null,
                     posterPath = tvShow.posterPath
                 )
             }
@@ -112,5 +126,9 @@ class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private
 
     override fun checkIfFavoriteExist(id: Long): Int {
         return localDataSource.checkIfRecordExist(id)
+    }
+
+    override fun getDbItemCount(): Int {
+        return localDataSource.getAllCount()
     }
 }

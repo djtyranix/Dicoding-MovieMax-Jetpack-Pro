@@ -42,7 +42,7 @@
     <string name="search_result_header">Search Result: %1$s</string>
     <string name="query_empty_warning">Query can\'t be empty!</string>
     <string name="search_empty">Nothing found.</string>
-    <string name="favorite">Favorite</string>
+    <string name="favorite">Favorites</string>
     <string name="rating">RATING</string>
     <string name="dummy_rating">6.9 / 10</string>
     <string name="cast">CASTS</string>
@@ -57,7 +57,14 @@
     <string name="disabled">disabled</string>
     <string name="rating_value">%1$s / 10</string>
     <string name="no_cast">No cast information found.</string>
-    <string name="fav_add_success">User successfully added to favorite.</string>
-    <string name="fav_del_success">User successfully removed from favorite.</string>
+    <string name="fav_add_success">Item successfully added to favorite.</string>
+    <string name="fav_del_success">Item successfully removed from favorite.</string>
     <string name="no_favorite">No favorited user found.</string>
+    <string name="your_favorites">Your Favorites</string>
+    
+    <string-array name="sort_category">
+        <item>All</item>
+        <item>Movies</item>
+        <item>TV Shows</item>
+    </string-array>
 </resources>
