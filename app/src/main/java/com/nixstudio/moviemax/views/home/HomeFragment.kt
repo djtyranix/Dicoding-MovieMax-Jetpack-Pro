@@ -76,6 +76,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
         searchView.setIconifiedByDefault(false)
         searchView.queryHint = resources.getString(R.string.search_hint)
+
         searchView.clearFocus()
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -108,12 +109,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             Log.d("Closed", "Closed")
             true
         }
-
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
         EspressoIdlingResource.increment()
         EspressoIdlingResource.increment()
@@ -162,10 +157,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     val movie = DiscoverMovieResultsItem(
                         overview = data.overview,
                         title = data.title,
-                        genreIds = data.genreIds,
-                        originalLanguage = data.originalLanguage,
-                        originalTitle = data.originalTitle,
-                        video = data.video,
                         posterPath = data.posterPath,
                         backdropPath = data.backdropPath,
                         releaseDate = data.releaseDate,
@@ -173,24 +164,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         voteAverage = data.voteAverage,
                         id = data.id,
                         adult = data.adult,
-                        voteCount = data.voteCount
                     )
 
                     showMovieDetail(movie)
                 } else {
                     val tvShow = DiscoverTvResultsItem(
                         overview = data.overview,
-                        genreIds = data.genreIds,
-                        originalLanguage = data.originalLanguage,
                         posterPath = data.posterPath,
                         backdropPath = data.backdropPath,
                         popularity = data.popularity,
                         voteAverage = data.voteAverage,
                         id = data.id,
-                        voteCount = data.voteCount,
                         firstAirDate = data.firstAirDate,
-                        originCountry = data.originCountry,
-                        originalName = data.originalName,
                         name = data.name
                     )
 
@@ -210,6 +195,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 showTvDetail(data)
             }
         })
+
+        return binding.root
     }
 
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {

@@ -84,10 +84,6 @@ class SearchFragment : Fragment() {
                     val movie = DiscoverMovieResultsItem(
                         overview = data.overview,
                         title = data.title,
-                        genreIds = data.genreIds,
-                        originalLanguage = data.originalLanguage,
-                        originalTitle = data.originalTitle,
-                        video = data.video,
                         posterPath = data.posterPath,
                         backdropPath = data.backdropPath,
                         releaseDate = data.releaseDate,
@@ -95,24 +91,18 @@ class SearchFragment : Fragment() {
                         voteAverage = data.voteAverage,
                         id = data.id,
                         adult = data.adult,
-                        voteCount = data.voteCount
                     )
 
                     showMovieDetail(movie)
                 } else {
                     val tvShow = DiscoverTvResultsItem(
                         overview = data.overview,
-                        genreIds = data.genreIds,
-                        originalLanguage = data.originalLanguage,
                         posterPath = data.posterPath,
                         backdropPath = data.backdropPath,
                         popularity = data.popularity,
                         voteAverage = data.voteAverage,
                         id = data.id,
-                        voteCount = data.voteCount,
                         firstAirDate = data.firstAirDate,
-                        originCountry = data.originCountry,
-                        originalName = data.originalName,
                         name = data.name
                     )
 

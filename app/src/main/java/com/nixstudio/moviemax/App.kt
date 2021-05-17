@@ -13,14 +13,13 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 listOf(
-                    roomModule,
-                    daoModule,
                     localDataSourceModule,
                     remoteDataSourceModule,
                     repositoryModule,
                     viewModelModule,
                     retrofitModule,
-                    apiModule
+                    apiModule,
+                    databaseModule
                 )
             )
         }

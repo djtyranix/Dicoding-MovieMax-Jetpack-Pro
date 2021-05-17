@@ -30,7 +30,12 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
             binding.tvAuthor.text = review.author
 
             if (review.authorDetails?.rating != null) {
-                binding.tvRatingReview.text = binding.tvRatingReview.context.resources.getString(R.string.rating_value, review.authorDetails.rating.toString())
+                if (review.authorDetails.rating < 10 && review.authorDetails.rating >= 0) {
+                    binding.tvRatingReview.text = binding.tvRatingReview.context.resources.getString(R.string.rating_value, review.authorDetails.rating.toString())
+                } else if (review.authorDetails.rating == 10.0){
+                    binding.tvRatingReview.text = binding.tvRatingReview.context.resources.getString(R.string.rating_value, review.authorDetails.rating.toInt().toString())
+                }
+
             } else {
                 binding.tvRatingReview.text = binding.tvRatingReview.context.resources.getString(R.string.rating_value, "-")
             }

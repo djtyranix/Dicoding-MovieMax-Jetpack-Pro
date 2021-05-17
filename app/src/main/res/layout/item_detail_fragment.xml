@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:shimmer_auto_start="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:scrollbars="none"
-        android:visibility="gone"
+        android:visibility="visible"
         android:overScrollMode="never"
         app:behavior_overlapTop="65dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -85,7 +85,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/detail_layout_bg" >
 
             <View
@@ -256,13 +256,14 @@
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/reviews"
                 android:textColor="?attr/text_color_primary"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/rv_cast" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cast" />
 
             <TextView
                 android:id="@+id/tv_rating"
@@ -272,6 +273,7 @@
                 android:drawablePadding="6dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="@string/dummy_rating"
+                android:gravity="center|end"
                 android:textAlignment="textEnd"
                 android:textColor="?attr/text_color_primary"
                 android:textSize="22sp"
@@ -377,33 +379,39 @@
                 app:layout_constraintStart_toStartOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cast"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/cast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:clipToPadding="false"
-                android:nestedScrollingEnabled="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
-                tools:listitem="@layout/item_list_main" />
+                app:layout_constraintTop_toBottomOf="@+id/textView9">
 
-            <TextView
-                android:id="@+id/tv_no_cast_info"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="32dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="@string/no_cast"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_list_main" />
+
+                <TextView
+                    android:id="@+id/tv_no_cast_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="@string/no_cast"
+                    android:visibility="gone" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
                 android:id="@+id/tv_no_reviews"

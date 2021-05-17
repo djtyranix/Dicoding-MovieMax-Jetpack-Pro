@@ -15,11 +15,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
         android:background="@drawable/home_bg" >
 
         <include
             android:id="@+id/home_toolbar"
-            layout="@layout/home_toolbar" />
+            layout="@layout/home_toolbar"
+            android:focusableInTouchMode="true" />
 
         <TextView
             android:id="@+id/textView7"
@@ -126,7 +128,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView11"
             app:layout_constraintVertical_bias="0.533" />
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_trending"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,9 +171,9 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_main"
                 android:visibility="gone" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_movie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -214,9 +216,9 @@
                 android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_main" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -261,7 +263,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_list_main"
                 android:visibility="gone" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/sv_search_item"
@@ -272,6 +274,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/shape_search"
             android:focusable="false"
+            android:focusableInTouchMode="false"
             android:iconifiedByDefault="false"
             android:queryHint="@string/search_hint"
             app:layout_constraintEnd_toEndOf="@+id/textView7"

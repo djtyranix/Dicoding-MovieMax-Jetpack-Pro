@@ -105,4 +105,10 @@ dependencies {
 
 //    CIRCLE IMAGE VIEW
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+//    PAGING
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+//    LIVE EVENT
+    implementation "com.github.hadilq:live-event:1.2.3"
 }

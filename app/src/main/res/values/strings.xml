@@ -57,4 +57,7 @@
     <string name="disabled">disabled</string>
     <string name="rating_value">%1$s / 10</string>
     <string name="no_cast">No cast information found.</string>
+    <string name="fav_add_success">User successfully added to favorite.</string>
+    <string name="fav_del_success">User successfully removed from favorite.</string>
+    <string name="no_favorite">No favorited user found.</string>
 </resources>

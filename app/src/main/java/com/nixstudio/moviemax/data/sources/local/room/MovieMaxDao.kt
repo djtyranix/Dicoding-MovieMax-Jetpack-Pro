@@ -10,8 +10,17 @@ interface MovieMaxDao {
     fun getAll(): LiveData<List<FavoriteEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(favorite: List<FavoriteEntity>)
+    fun insert(favorite: FavoriteEntity)
 
     @Delete
     fun delete(favorite: FavoriteEntity)
+
+    @Query("SELECT * FROM favorite WHERE media_type = :mediaType")
+    fun getAllFromMediaType(mediaType: String): LiveData<List<FavoriteEntity>>
+
+    @Query("SELECT * FROM favorite WHERE title = :title OR name = :title")
+    fun getAllFromTitle(title: String): LiveData<List<FavoriteEntity>>
+
+    @Query("SELECT COUNT(item_id) FROM favorite WHERE item_id = :id")
+    fun checkIfRecordExist(id: Long): Int
 }

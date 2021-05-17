@@ -26,20 +26,8 @@ data class DiscoverMovieResultsItem(
     @field:SerializedName("overview")
     val overview: String? = null,
 
-    @field:SerializedName("original_language")
-    val originalLanguage: String? = null,
-
-    @field:SerializedName("original_title")
-    val originalTitle: String? = null,
-
-    @field:SerializedName("video")
-    val video: Boolean? = null,
-
     @field:SerializedName("title")
     val title: String? = null,
-
-    @field:SerializedName("genre_ids")
-    val genreIds: List<Int?>? = null,
 
     @field:SerializedName("poster_path")
     val posterPath: String? = null,
@@ -61,7 +49,4 @@ data class DiscoverMovieResultsItem(
 
     @field:SerializedName("adult")
     val adult: Boolean? = null,
-
-    @field:SerializedName("vote_count")
-    val voteCount: Long? = null
 ) : Parcelable

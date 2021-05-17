@@ -14,6 +14,4 @@
             </shape>
         </rotate>
     </item>
-    <solid android:color="?attr/backgroundColor" />
-
 </layer-list>

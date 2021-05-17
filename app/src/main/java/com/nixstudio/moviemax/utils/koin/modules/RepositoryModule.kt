@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single {
-        MovieMaxRepository(get())
+        MovieMaxRepository(get(), get())
     }
 }
