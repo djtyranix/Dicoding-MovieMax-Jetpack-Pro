@@ -9,6 +9,7 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.utils.credits.CastItem
+import com.nixstudio.moviemax.databinding.ItemListCastBinding
 import com.nixstudio.moviemax.databinding.ItemListMainBinding
 
 class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
@@ -23,7 +24,7 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class CastViewHolder(private val binding: ItemListMainBinding) :
+    inner class CastViewHolder(private val binding: ItemListCastBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(cast: CastItem) {
             binding.tvTitle.text = cast.name
@@ -54,9 +55,9 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
-        val itemListMainBinding =
-            ItemListMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CastViewHolder(itemListMainBinding)
+        val itemListCastBinding =
+            ItemListCastBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CastViewHolder(itemListCastBinding)
     }
 
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
