@@ -55,7 +55,8 @@
     <string name="fav_add_success">Item successfully added to favorite.</string>
     <string name="fav_del_success">Item successfully removed from favorite.</string>
     <string name="your_favorites">Your Favorites</string>
-    
+    <string name="dark_mode_summary_off">Turn off dark mode</string>
+
     <string-array name="sort_category">
         <item>All</item>
         <item>Movies</item>

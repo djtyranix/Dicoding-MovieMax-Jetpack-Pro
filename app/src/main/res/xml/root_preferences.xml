@@ -11,7 +11,8 @@
 
         <SwitchPreference
             app:key="enable_dark_mode"
-            app:summary="@string/dark_mode_summary"
+            app:summaryOff="@string/dark_mode_summary"
+            app:summaryOn="@string/dark_mode_summary_off"
             app:title="@string/dark_mode" />
     </PreferenceCategory>
 </PreferenceScreen>

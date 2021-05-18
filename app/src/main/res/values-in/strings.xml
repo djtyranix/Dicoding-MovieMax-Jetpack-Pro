@@ -46,7 +46,7 @@
     <string name="reviews">ULASAN</string>
     <string name="no_reviews">Tidak ada ulasan ditemukan.</string>
     <string name="theme">Theme</string>
-    <string name="dark_mode_summary">Aktifkan Mode Gelap</string>
+    <string name="dark_mode_summary">Aktifkan mode gelap</string>
     <string name="dark_mode">Mode Gelap</string>
     <string name="dark_mode_isenabled">Mode gelap %1$s</string>
     <string name="enabled">aktif</string>
@@ -56,6 +56,7 @@
     <string name="fav_add_success">Item berhasil ditambahkan ke favorit.</string>
     <string name="fav_del_success">item berhasil dihapus dari favorit.</string>
     <string name="your_favorites">Your Favorites</string>
+    <string name="dark_mode_summary_off">Matikan mode gelap</string>
 
     <string-array name="sort_category">
         <item>Semua</item>
