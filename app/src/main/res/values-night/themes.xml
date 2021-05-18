@@ -20,6 +20,7 @@
         <item name="windowNoTitle">true</item>
         <item name="home_primary_color">#171717</item>
         <item name="love_color">#FFFF313B</item>
+        <item name="home_love_color">@color/lightblue_500</item>
     </style>
 
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">

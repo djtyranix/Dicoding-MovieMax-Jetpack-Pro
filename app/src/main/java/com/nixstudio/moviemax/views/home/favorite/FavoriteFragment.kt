@@ -27,7 +27,6 @@ class FavoriteFragment : Fragment() {
     private val viewModel by viewModel<FavoriteViewModel>()
     private lateinit var viewAdapter: FavoriteAdapter
     private var isSpinnerInitialized = false
-    private lateinit var currentList: PagedList<FavoriteEntity>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

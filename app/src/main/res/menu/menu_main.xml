@@ -5,7 +5,7 @@
     <group android:menuCategory="container">
         <item
             android:id="@+id/favorite"
-            android:icon="@drawable/ic_favorite"
+            android:icon="@drawable/ic_favorite_home"
             android:title="@string/favorite"
             app:showAsAction="ifRoom" />
         <item

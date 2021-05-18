@@ -6,4 +6,5 @@
     <attr name="toolbar_gradient_color_right" format="color" />
     <attr name="home_primary_color" format="color" />
     <attr name="love_color" format="color" />
+    <attr name="home_love_color" format="color" />
 </resources>

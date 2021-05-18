@@ -4,9 +4,8 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -41,6 +40,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         trendingViewAdapter.notifyDataSetChanged()
         movieViewAdapter.notifyDataSetChanged()
         tvViewAdapter.notifyDataSetChanged()
+
+        setHasOptionsMenu(true)
 
         binding.rvTrending.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -199,6 +200,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.setting_menu) {
+            val toSettingActivity = HomeFragmentDirections.actionHomeFragmentToSettingsActivity()
+            view?.findNavController()?.navigate(toSettingActivity)
+        } else if (item.itemId == R.id.favorite) {
+            val toFavoriteFragment = HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
+            view?.findNavController()?.navigate(toFavoriteFragment)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
             HomeFragmentDirections.actionHomeFragmentToItemDetailActivity(data, null)
@@ -222,16 +239,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val toAllTv = HomeFragmentDirections.actionHomeFragmentToTvShowsFragment()
                 v.findNavController().navigate(toAllTv)
             }
-        }
-    }
-
-    fun setNavigation(selectedDest: Int) {
-        if (selectedDest == R.id.setting_menu) {
-            val toSettingActivity = HomeFragmentDirections.actionHomeFragmentToSettingsActivity()
-            view?.findNavController()?.navigate(toSettingActivity)
-        } else if (selectedDest == R.id.favorite) {
-            val toFavoriteFragment = HomeFragmentDirections.actionHomeFragmentToFavoriteFragment()
-            view?.findNavController()?.navigate(toFavoriteFragment)
         }
     }
 

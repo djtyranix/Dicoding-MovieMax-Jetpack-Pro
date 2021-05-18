@@ -20,6 +20,7 @@
         <item name="windowNoTitle">true</item>
         <item name="home_primary_color">?attr/colorPrimary</item>
         <item name="love_color">#FFF51B38</item>
+        <item name="home_love_color">@color/white</item>
     </style>
 
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">

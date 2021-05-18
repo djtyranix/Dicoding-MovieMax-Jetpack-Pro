@@ -54,11 +54,20 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
                 setShimmer(shimmer)
             }
 
-            val url = "https://image.tmdb.org/t/p/w185${review.authorDetails?.avatarPath}"
+            var url: String? = null
+            if (review.authorDetails?.avatarPath != null) {
+                val currentUrl = review.authorDetails.avatarPath
+                if (currentUrl.contains("https")) {
+                    url = currentUrl.removeRange(0, 1)
+                } else {
+                    url = "https://image.tmdb.org/t/p/w185${currentUrl}"
+                }
+            }
+
             Glide.with(binding.imgAvatar.context)
                 .load(url)
                 .apply(
-                    RequestOptions().override(400, 400).placeholder(shimmerDrawable)
+                    RequestOptions().override(200, 200).placeholder(shimmerDrawable)
                         .error(R.drawable.ic_profile)
                 )
                 .into(binding.imgAvatar)

@@ -3,39 +3,29 @@ package com.nixstudio.moviemax.views.home
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Menu
-import android.view.MenuItem
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.fragment.NavHostFragment
 import com.nixstudio.moviemax.R
 
 class HomeActivity : AppCompatActivity() {
 
-    private var mHomeFragment = HomeFragment()
     var doubleBackToExitOnce: Boolean = false
     private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        mHomeFragment = getForegroundFragment() as HomeFragment
-    }
-
-    private fun getForegroundFragment(): Fragment? {
-        navHostFragment =
-            supportFragmentManager.findFragmentByTag("container_fragment") as NavHostFragment
-        return when (navHostFragment) {
-            else -> navHostFragment.childFragmentManager.fragments[0]
-        }
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
     }
 
     override fun onBackPressed() {
         if (navHostFragment.childFragmentManager.backStackEntryCount == 0) {
             if (doubleBackToExitOnce) {
                 super.onBackPressed()
+                finish()
                 return
             }
 
@@ -56,19 +46,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        mHomeFragment.setNavigation(item.itemId)
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
-        return true
+        return false
     }
 
     fun setActionBarTitle(title: String?) {
