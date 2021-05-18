@@ -60,7 +60,10 @@ class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
         }
     }
 
-    fun addFavorite(movie: DiscoverMovieResultsItem? = null, tvShows: DiscoverTvResultsItem? = null) {
+    fun addFavorite(
+        movie: DiscoverMovieResultsItem? = null,
+        tvShows: DiscoverTvResultsItem? = null
+    ) {
         var movieEntity: MovieEntity? = null
         var tvShowsEntity: TvShowsEntity? = null
 
@@ -83,7 +86,10 @@ class ItemDetailViewModel(private val repo: MovieMaxRepository) : ViewModel() {
         }
     }
 
-    fun removeFavorite(movie: DiscoverMovieResultsItem? = null, tvShows: DiscoverTvResultsItem? = null) {
+    fun removeFavorite(
+        movie: DiscoverMovieResultsItem? = null,
+        tvShows: DiscoverTvResultsItem? = null
+    ) {
         var movieEntity: MovieEntity? = null
         var tvShowsEntity: TvShowsEntity? = null
 

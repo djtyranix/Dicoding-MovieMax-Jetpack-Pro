@@ -17,7 +17,7 @@
             android:name=".views.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".views.detail.ItemDetailActivity" />
-        <activity android:name=".views.home.HomeActivity" />
+        <activity android:name=".views.home.HomeActivity" android:launchMode="singleInstance"/>
         <activity
             android:name=".views.splashscreen.SplashScreenActivity"
             android:theme="@style/SplashScreen">

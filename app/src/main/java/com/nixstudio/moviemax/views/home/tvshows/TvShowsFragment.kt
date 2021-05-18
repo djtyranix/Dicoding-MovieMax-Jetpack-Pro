@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.databinding.TvShowsFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
@@ -21,7 +19,7 @@ class TvShowsFragment : Fragment() {
     private var _binding: TvShowsFragmentBinding? = null
     val binding get() = _binding!!
     private val viewModel by viewModel<TvShowsViewModel>()
-    lateinit var viewAdapter: TvShowsAdapter
+    private lateinit var viewAdapter: TvShowsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

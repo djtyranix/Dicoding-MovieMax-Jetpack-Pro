@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">Movie Max</string>
     <string name="see_all">See all</string>
-    <string name="greeting_msg">Hello, Guest</string>
     <string name="movies">Movies</string>
     <string name="tv_shows">TV Shows</string>
-    <string name="dummy_movie_count">11</string>
-    <string name="dummy_tv_count">11</string>
     <string name="exit_confirmation">Press again to exit</string>
     <string name="all_movies">Discover Movies</string>
     <string name="all_tv_shows">Discover TV Shows</string>
@@ -27,8 +24,6 @@
     <string name="dummy_year">2021</string>
     <string name="dummy_genre_title">GENRE</string>
     <string name="dummy_overview_title">OVERVIEW</string>
-    <string name="detail_movie">Movie Detail</string>
-    <string name="detail_tv">TV Show Detail</string>
     <string name="playtime">PLAYTIME</string>
     <string name="season">SEASON</string>
     <string name="year_of_release">RELEASE DATE</string>
@@ -59,7 +54,6 @@
     <string name="no_cast">No cast information found.</string>
     <string name="fav_add_success">Item successfully added to favorite.</string>
     <string name="fav_del_success">Item successfully removed from favorite.</string>
-    <string name="no_favorite">No favorited user found.</string>
     <string name="your_favorites">Your Favorites</string>
     
     <string-array name="sort_category">

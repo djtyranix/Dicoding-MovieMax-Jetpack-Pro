@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -24,14 +23,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
     private val viewModel by viewModel<HomeViewModel>()
-    lateinit var trendingViewAdapter: HomeTrendingAdapter
-    lateinit var movieViewAdapter: HomeMovieAdapter
-    lateinit var tvViewAdapter: HomeTvAdapter
+    private lateinit var trendingViewAdapter: HomeTrendingAdapter
+    private lateinit var movieViewAdapter: HomeMovieAdapter
+    private lateinit var tvViewAdapter: HomeTvAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("FRAGMENT", "HOME FRAGMENT CREATED")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         trendingViewAdapter = HomeTrendingAdapter()

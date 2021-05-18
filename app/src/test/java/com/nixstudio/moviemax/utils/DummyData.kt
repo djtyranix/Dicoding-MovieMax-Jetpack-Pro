@@ -70,15 +70,6 @@ object DummyData {
         )
     }
 
-    fun getFavoriteEntity(): FavoriteEntity {
-        return FavoriteEntity(
-            itemId = 1,
-            title = "Test",
-            mediaType = "movie",
-            posterPath = null
-        )
-    }
-
     fun getFavoriteList(): List<FavoriteEntity> {
         val list = ArrayList<FavoriteEntity>()
 

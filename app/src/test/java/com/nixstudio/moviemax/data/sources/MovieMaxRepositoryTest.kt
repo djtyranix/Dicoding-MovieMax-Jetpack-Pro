@@ -17,10 +17,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
-import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.verify
 
 class MovieMaxRepositoryTest {

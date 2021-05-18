@@ -15,7 +15,7 @@ val databaseModule = module {
     }
 
     fun provideCountriesDao(database: MovieMaxDatabase): MovieMaxDao {
-        return  database.movieMaxDao()
+        return database.movieMaxDao()
     }
 
     single { provideDatabase(androidApplication()) }

@@ -2,7 +2,7 @@ package com.nixstudio.moviemax.data.entities
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.nixstudio.moviemax.data.utils.*
+import com.nixstudio.moviemax.data.utils.GenresItem
 import com.nixstudio.moviemax.data.utils.credits.Credits
 import com.nixstudio.moviemax.data.utils.reviews.ReviewsResponse
 import com.nixstudio.moviemax.data.utils.tvshows.LastEpisodeToAir

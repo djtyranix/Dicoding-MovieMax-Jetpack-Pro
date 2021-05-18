@@ -1,16 +1,12 @@
 package com.nixstudio.moviemax.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import androidx.paging.PositionalDataSource
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.sources.MovieMaxRepository
-import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.utils.MediaType
-import com.nixstudio.moviemax.utils.DummyData
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -44,17 +40,6 @@ class FavoriteViewModelTest {
     @Before
     fun setUp() {
         viewModel = FavoriteViewModel(repos)
-    }
-
-    inner class ListDataSource (private val items: List<FavoriteEntity>): PositionalDataSource<FavoriteEntity>() {
-        override fun loadInitial (params: LoadInitialParams, callback: LoadInitialCallback<FavoriteEntity>) {
-            callback.onResult (items, 0, items.size)
-        }
-        override fun loadRange (params: LoadRangeParams, callback: LoadRangeCallback<FavoriteEntity>) {
-            val start = params.startPosition
-            val end = params.startPosition + params.loadSize
-            callback.onResult (items.subList (start, end))
-        }
     }
 
     @Test

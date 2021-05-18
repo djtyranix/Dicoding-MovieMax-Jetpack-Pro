@@ -1,12 +1,8 @@
 package com.nixstudio.moviemax.data.entities
 
 import android.os.Parcelable
-import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.nixstudio.moviemax.data.utils.*
+import com.nixstudio.moviemax.data.utils.GenresItem
 import com.nixstudio.moviemax.data.utils.credits.Credits
 import com.nixstudio.moviemax.data.utils.reviews.ReviewsResponse
 import kotlinx.parcelize.Parcelize

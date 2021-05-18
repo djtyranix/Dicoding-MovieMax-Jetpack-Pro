@@ -2,7 +2,8 @@ package com.nixstudio.moviemax.data.sources
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import androidx.paging.*
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
@@ -12,9 +13,11 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.data.sources.remote.RemoteDataSource
 import com.nixstudio.moviemax.data.utils.MediaType
-import kotlinx.coroutines.flow.Flow
 
-class MovieMaxRepository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) :
+class MovieMaxRepository(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) :
     MovieMaxRepositoryInterface {
 
     override fun getDiscoveryMovie(page: Int): LiveData<List<DiscoverMovieResultsItem>> {

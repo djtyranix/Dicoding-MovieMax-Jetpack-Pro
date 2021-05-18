@@ -54,56 +54,68 @@ class ItemDetailActivity : AppCompatActivity() {
         }
 
         viewModel.checkIsFavorited().observe(this, { isExist ->
-                if (isExist) { //User already favorited
-                    menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_red)
-                    isFavorited = true
-                } else {
-                    menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
-                    isFavorited = false
-                }
+            isFavorited = if (isExist) { //User already favorited
+                menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_red)
+                true
+            } else {
+                menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
+                false
             }
+        }
         )
 
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.share) {
-            val shareIntent = Intent(Intent.ACTION_SEND)
+        when (item.itemId) {
+            R.id.share -> {
+                val shareIntent = Intent(Intent.ACTION_SEND)
 
-            if (currentMovie != null) {
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.title)
-                shareIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    "${currentMovie?.title}\n\nOverview: ${currentMovie?.overview}"
-                )
-            } else if (currentTvShows != null) {
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.name)
-                shareIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    "${currentTvShows?.name}\n\nOverview: ${currentTvShows?.overview}"
-                )
+                if (currentMovie != null) {
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.title)
+                    shareIntent.putExtra(
+                        Intent.EXTRA_TEXT,
+                        "${currentMovie?.title}\n\nOverview: ${currentMovie?.overview}"
+                    )
+                } else if (currentTvShows != null) {
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.name)
+                    shareIntent.putExtra(
+                        Intent.EXTRA_TEXT,
+                        "${currentTvShows?.name}\n\nOverview: ${currentTvShows?.overview}"
+                    )
+                }
+
+                shareIntent.type = "text/plain"
+                startActivity(shareIntent)
+                return true
             }
+            R.id.favorite -> {
+                isFavorited = !isFavorited
 
-            shareIntent.type = "text/plain"
-            startActivity(shareIntent)
-            return true
-        } else if (item.itemId == R.id.favorite) {
-            isFavorited = !isFavorited
+                if (isFavorited) { //Add user
+                    viewModel.addFavorite(currentMovie, currentTvShows)
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.fav_add_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    item.setIcon(R.drawable.ic_favorite_red)
+                } else {
+                    viewModel.removeFavorite(currentMovie, currentTvShows)
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.fav_del_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    item.setIcon(R.drawable.ic_favorite)
+                }
 
-            if (isFavorited) { //Add user
-                viewModel.addFavorite(currentMovie, currentTvShows)
-                Toast.makeText(this, resources.getString(R.string.fav_add_success), Toast.LENGTH_SHORT).show()
-                item.setIcon(R.drawable.ic_favorite_red)
-            } else {
-                viewModel.removeFavorite(currentMovie, currentTvShows)
-                Toast.makeText(this, resources.getString(R.string.fav_del_success), Toast.LENGTH_SHORT).show()
-                item.setIcon(R.drawable.ic_favorite)
+                return true
             }
-
-            return true
-        } else {
-            return super.onOptionsItemSelected(item)
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
         }
     }
 }

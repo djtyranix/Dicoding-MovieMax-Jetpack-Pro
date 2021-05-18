@@ -5,14 +5,12 @@ import androidx.paging.DataSource
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
 import com.nixstudio.moviemax.data.sources.local.room.MovieMaxDao
 import com.nixstudio.moviemax.data.utils.MediaType
-import com.nixstudio.moviemax.utils.DefaultDispatcherProvider
-import com.nixstudio.moviemax.utils.DispatcherProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class LocalDataSource(
-    private val movieMaxDao: MovieMaxDao,
-    private val dispatchers: DispatcherProvider = DefaultDispatcherProvider()
+    private val movieMaxDao: MovieMaxDao
 ) {
 
     fun getAllFavorites(): DataSource.Factory<Int, FavoriteEntity> = movieMaxDao.getAll()
@@ -48,7 +46,7 @@ class LocalDataSource(
         count.value = 0
 
         coroutineScope {
-            launch(dispatchers.io()) {
+            launch(Dispatchers.IO) {
                 count.postValue(movieMaxDao.getItemCount())
             }
         }

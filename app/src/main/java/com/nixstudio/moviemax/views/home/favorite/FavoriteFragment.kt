@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.entities.FavoriteEntity
@@ -70,27 +69,9 @@ class FavoriteFragment : Fragment() {
                     return
                 }
 
-                if (id == 0L) {
-                    viewModel.getFavorites().observe(viewLifecycleOwner, {
-                        if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                            EspressoIdlingResource.decrement()
-                        }
-
-                        viewAdapter.submitList(it)
-                        checkIsListEmpty(it.size)
-                    })
-                } else if (id == 1L) {
-                    viewModel.getFavoritesByMediaType(MediaType.MOVIE).observe(viewLifecycleOwner, {
-                        if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                            EspressoIdlingResource.decrement()
-                        }
-
-                        viewAdapter.submitList(it)
-                        checkIsListEmpty(it.size)
-                    })
-                } else {
-                    viewModel.getFavoritesByMediaType(MediaType.TVSHOW)
-                        .observe(viewLifecycleOwner, {
+                when (id) {
+                    0L -> {
+                        viewModel.getFavorites().observe(viewLifecycleOwner, {
                             if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
                                 EspressoIdlingResource.decrement()
                             }
@@ -98,6 +79,28 @@ class FavoriteFragment : Fragment() {
                             viewAdapter.submitList(it)
                             checkIsListEmpty(it.size)
                         })
+                    }
+                    1L -> {
+                        viewModel.getFavoritesByMediaType(MediaType.MOVIE).observe(viewLifecycleOwner, {
+                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                                EspressoIdlingResource.decrement()
+                            }
+
+                            viewAdapter.submitList(it)
+                            checkIsListEmpty(it.size)
+                        })
+                    }
+                    else -> {
+                        viewModel.getFavoritesByMediaType(MediaType.TVSHOW)
+                            .observe(viewLifecycleOwner, {
+                                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                                    EspressoIdlingResource.decrement()
+                                }
+
+                                viewAdapter.submitList(it)
+                                checkIsListEmpty(it.size)
+                            })
+                    }
                 }
             }
 

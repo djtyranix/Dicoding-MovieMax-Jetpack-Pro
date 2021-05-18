@@ -1,24 +1,44 @@
 package com.nixstudio.moviemax.views.home
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import com.nixstudio.moviemax.R
 
 class HomeActivity : AppCompatActivity() {
 
-    var doubleBackToExitOnce: Boolean = false
+    private var doubleBackToExitOnce: Boolean = false
     private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
+
+        Log.d("ACTIVITY", "HOME ACTIVITY CREATED")
+
+        val preference = this.getSharedPreferences("moviemax-prefs", Context.MODE_PRIVATE)
+        val isDarkModeEnabled = preference.getBoolean("isDarkModeEnabled", false)
+
+        if (isDarkModeEnabled) {
+            AppCompatDelegate
+                .setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
+        } else {
+            AppCompatDelegate
+                .setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
+        }
+
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
     }
 
     override fun onBackPressed() {
