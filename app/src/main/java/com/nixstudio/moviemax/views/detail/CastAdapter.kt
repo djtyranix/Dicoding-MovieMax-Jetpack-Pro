@@ -10,7 +10,6 @@ import com.facebook.shimmer.ShimmerDrawable
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.data.utils.credits.CastItem
 import com.nixstudio.moviemax.databinding.ItemListCastBinding
-import com.nixstudio.moviemax.databinding.ItemListMainBinding
 
 class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 

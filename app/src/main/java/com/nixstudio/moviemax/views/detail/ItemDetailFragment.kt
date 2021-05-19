@@ -1,7 +1,6 @@
 package com.nixstudio.moviemax.views.detail
 
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -146,7 +145,7 @@ class ItemDetailFragment : Fragment() {
                     binding.detailShimmer.visibility = View.GONE
                     binding.itemDetails.visibility = View.VISIBLE
                     binding.detailAppbar.visibility = View.VISIBLE
-                },500)
+                }, 500)
             }
         })
 
