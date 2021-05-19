@@ -19,6 +19,7 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.databinding.FragmentHomeBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
+import com.nixstudio.moviemax.utils.hideKeyboard
 import com.nixstudio.moviemax.viewmodels.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -203,6 +204,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 }, 500)
             }
         })
+
+        hideKeyboard()
 
         val currentActivity = activity as HomeActivity?
         val toolbar = binding.homeToolbar.toolbarHome
