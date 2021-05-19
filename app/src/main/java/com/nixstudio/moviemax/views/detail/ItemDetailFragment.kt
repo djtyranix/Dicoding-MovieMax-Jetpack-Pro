@@ -1,7 +1,10 @@
 package com.nixstudio.moviemax.views.detail
 
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -55,6 +59,8 @@ class ItemDetailFragment : Fragment() {
     private lateinit var tvRating: TextView
     private lateinit var castAdapter: CastAdapter
     private lateinit var reviewAdapter: ReviewAdapter
+    private var currentTvShows: DiscoverTvResultsItem? = null
+    private var currentMovie: DiscoverMovieResultsItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,44 +68,71 @@ class ItemDetailFragment : Fragment() {
     ): View {
         _binding = ItemDetailFragmentBinding.inflate(inflater, container, false)
 
-        imgPoster = binding.imgPosterDetail
-        imgBackdrop = binding.imgBackdrop
-        tvTitle = binding.itemTitle
-        tvGenre = binding.tvGenre
-        tvYear = binding.tvYear
-        tvPlaytimeSeasonTitle = binding.tvPlaytimeSeasonTitle
-        tvPlaytimeSeason = binding.tvPlaytimeSeason
-        tvOverview = binding.tvOverview
-        collapsingToolbarLayout = binding.detailCollapsingToolbar
-        appBarLayout = binding.detailAppbar
-        coordinatorLayout = binding.root
-        tvRating = binding.tvRating
+        lifecycleScope.launchWhenCreated {
+            imgPoster = binding.imgPosterDetail
+            imgBackdrop = binding.imgBackdrop
+            tvTitle = binding.itemTitle
+            tvGenre = binding.tvGenre
+            tvYear = binding.tvYear
+            tvPlaytimeSeasonTitle = binding.tvPlaytimeSeasonTitle
+            tvPlaytimeSeason = binding.tvPlaytimeSeason
+            tvOverview = binding.tvOverview
+            collapsingToolbarLayout = binding.detailCollapsingToolbar
+            appBarLayout = binding.detailAppbar
+            coordinatorLayout = binding.root
+            tvRating = binding.tvRating
 
-        castAdapter = CastAdapter()
-        reviewAdapter = ReviewAdapter()
+            castAdapter = CastAdapter()
+            reviewAdapter = ReviewAdapter()
 
-        binding.rvCast.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = castAdapter
-            setHasFixedSize(true)
+            viewModel.setPosterLoadingState(true)
+            viewModel.setBackdropLoadingState(true)
+
+            binding.rvCast.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = castAdapter
+                setHasFixedSize(true)
+            }
+
+            binding.rvReview.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = reviewAdapter
+                setHasFixedSize(true)
+            }
+
+            currentMovie = arguments?.getParcelable<DiscoverMovieResultsItem?>("currentMovie")
+            currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
+
+            shimmer =
+                Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
+                    .setDuration(1000) // how long the shimmering animation takes to do one full sweep
+                    .setBaseAlpha(0.7f) //the alpha of the underlying children
+                    .setHighlightAlpha(0.6f) // the shimmer alpha amount
+                    .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+                    .setAutoStart(true)
+                    .build()
+
+            // This is the placeholder for the imageView
+            shimmerDrawable = ShimmerDrawable().apply {
+                setShimmer(shimmer)
+            }
+
+            if (currentMovie != null) {
+                val id = currentMovie?.id
+                if (id != null) {
+                    viewModel.getCurrentMovie(id).observe(viewLifecycleOwner, { movie ->
+                        setMovieData(movie)
+                    })
+                }
+            } else if (currentTvShows != null) {
+                val id = currentTvShows?.id
+                if (id != null) {
+                    viewModel.getCurrentTvShows(id).observe(viewLifecycleOwner, { tvShows ->
+                        setTvShows(tvShows)
+                    })
+                }
+            }
         }
-
-        binding.rvReview.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = reviewAdapter
-            setHasFixedSize(true)
-        }
-
-        val currentMovie = arguments?.getParcelable<DiscoverMovieResultsItem?>("currentMovie")
-        val currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
-        val currentActivity = activity as ItemDetailActivity
-
-        val toolbar = binding.detailToolbar
-        currentActivity.setSupportActionBar(toolbar)
-        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        viewModel.setPosterLoadingState(true)
-        viewModel.setBackdropLoadingState(true)
 
         EspressoIdlingResource.increment()
         viewModel.getLoadingState().observe(viewLifecycleOwner, { loadingState ->
@@ -108,41 +141,19 @@ class ItemDetailFragment : Fragment() {
                     //Memberitahukan bahwa tugas sudah selesai dijalankan
                     EspressoIdlingResource.decrement()
                 }
-                binding.detailShimmer.visibility = View.GONE
-                binding.itemDetails.visibility = View.VISIBLE
-                binding.detailAppbar.visibility = View.VISIBLE
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.detailShimmer.visibility = View.GONE
+                    binding.itemDetails.visibility = View.VISIBLE
+                    binding.detailAppbar.visibility = View.VISIBLE
+                },500)
             }
         })
 
-        shimmer =
-            Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
-                .setDuration(1000) // how long the shimmering animation takes to do one full sweep
-                .setBaseAlpha(0.7f) //the alpha of the underlying children
-                .setHighlightAlpha(0.6f) // the shimmer alpha amount
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build()
-
-        // This is the placeholder for the imageView
-        shimmerDrawable = ShimmerDrawable().apply {
-            setShimmer(shimmer)
-        }
-
-        if (currentMovie != null) {
-            val id = currentMovie.id
-            if (id != null) {
-                viewModel.getCurrentMovie(id).observe(viewLifecycleOwner, { movie ->
-                    setMovieData(movie)
-                })
-            }
-        } else if (currentTvShows != null) {
-            val id = currentTvShows.id
-            if (id != null) {
-                viewModel.getCurrentTvShows(id).observe(viewLifecycleOwner, { tvShows ->
-                    setTvShows(tvShows)
-                })
-            }
-        }
+        val currentActivity = activity as ItemDetailActivity
+        val toolbar = binding.detailToolbar
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         return binding.root
     }

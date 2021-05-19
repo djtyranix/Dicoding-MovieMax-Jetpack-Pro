@@ -1,11 +1,14 @@
 package com.nixstudio.moviemax.views.home.favorite
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
@@ -33,20 +36,38 @@ class FavoriteFragment : Fragment() {
     ): View {
         _binding = FavoriteFragmentBinding.inflate(inflater, container, false)
 
-        viewAdapter = FavoriteAdapter()
-        viewAdapter.notifyDataSetChanged()
+        lifecycleScope.launchWhenCreated {
+            viewAdapter = FavoriteAdapter()
+            viewAdapter.notifyDataSetChanged()
 
-        binding.rvFavorite.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = viewAdapter
-            setHasFixedSize(true)
+            binding.rvFavorite.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                adapter = viewAdapter
+                setHasFixedSize(true)
+            }
+
+            viewAdapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: FavoriteEntity) {
+                    if (data.mediaType == "movie") {
+                        val movie = DiscoverMovieResultsItem(
+                            title = data.title,
+                            posterPath = data.posterPath,
+                            id = data.itemId,
+                        )
+
+                        showMovieDetail(movie)
+                    } else {
+                        val tvShow = DiscoverTvResultsItem(
+                            posterPath = data.posterPath,
+                            id = data.itemId,
+                            name = data.title
+                        )
+
+                        showTvDetail(tvShow)
+                    }
+                }
+            })
         }
-
-        val currentActivity = activity as HomeActivity
-        val toolbar = binding.homeToolbar.toolbarHome
-        currentActivity.setSupportActionBar(toolbar)
-        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        currentActivity.setActionBarTitle(resources.getString(R.string.favorite))
 
         EspressoIdlingResource.increment()
         binding.sortSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -81,14 +102,15 @@ class FavoriteFragment : Fragment() {
                         })
                     }
                     1L -> {
-                        viewModel.getFavoritesByMediaType(MediaType.MOVIE).observe(viewLifecycleOwner, {
-                            if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
-                                EspressoIdlingResource.decrement()
-                            }
+                        viewModel.getFavoritesByMediaType(MediaType.MOVIE)
+                            .observe(viewLifecycleOwner, {
+                                if (!EspressoIdlingResource.getEspressoIdlingResource().isIdleNow) {
+                                    EspressoIdlingResource.decrement()
+                                }
 
-                            viewAdapter.submitList(it)
-                            checkIsListEmpty(it.size)
-                        })
+                                viewAdapter.submitList(it)
+                                checkIsListEmpty(it.size)
+                            })
                     }
                     else -> {
                         viewModel.getFavoritesByMediaType(MediaType.TVSHOW)
@@ -117,46 +139,34 @@ class FavoriteFragment : Fragment() {
             checkIsListEmpty(count)
         })
 
-        viewAdapter.setOnItemClickCallback(object : FavoriteAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: FavoriteEntity) {
-                if (data.mediaType == "movie") {
-                    val movie = DiscoverMovieResultsItem(
-                        title = data.title,
-                        posterPath = data.posterPath,
-                        id = data.itemId,
-                    )
-
-                    showMovieDetail(movie)
-                } else {
-                    val tvShow = DiscoverTvResultsItem(
-                        posterPath = data.posterPath,
-                        id = data.itemId,
-                        name = data.title
-                    )
-
-                    showTvDetail(tvShow)
-                }
-            }
-        })
+        val currentActivity = activity as HomeActivity
+        val toolbar = binding.homeToolbar.toolbarHome
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        currentActivity.setActionBarTitle(resources.getString(R.string.favorite))
 
         return binding.root
     }
 
     private fun checkIsListEmpty(count: Int) {
         if (count > 0) {
-            binding.rvFavorite.visibility = View.VISIBLE
-            binding.view2.visibility = View.VISIBLE
-            binding.sortSpinner.visibility = View.VISIBLE
-            binding.textView.visibility = View.VISIBLE
-            binding.rvFavoriteShimmer.visibility = View.GONE
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.rvFavorite.visibility = View.VISIBLE
+                binding.view2.visibility = View.VISIBLE
+                binding.sortSpinner.visibility = View.VISIBLE
+                binding.textView.visibility = View.VISIBLE
+                binding.rvFavoriteShimmer.visibility = View.GONE
+            }, 500)
         } else {
-            binding.textView.visibility = View.VISIBLE
-            binding.view2.visibility = View.VISIBLE
-            binding.sortSpinner.visibility = View.GONE
-            binding.rvFavoriteShimmer.visibility = View.GONE
-            binding.rvFavorite.visibility = View.GONE
-            binding.emptyFavoritePlaceholder.visibility = View.VISIBLE
-            binding.emptyFavoriteInfo.visibility = View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.textView.visibility = View.VISIBLE
+                binding.view2.visibility = View.VISIBLE
+                binding.sortSpinner.visibility = View.GONE
+                binding.rvFavoriteShimmer.visibility = View.GONE
+                binding.rvFavorite.visibility = View.GONE
+                binding.emptyFavoritePlaceholder.visibility = View.VISIBLE
+                binding.emptyFavoriteInfo.visibility = View.VISIBLE
+            }, 500)
         }
     }
 

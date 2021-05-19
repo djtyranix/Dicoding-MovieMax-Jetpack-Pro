@@ -1,10 +1,13 @@
 package com.nixstudio.moviemax.views.home.tvshows
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
@@ -27,20 +30,30 @@ class TvShowsFragment : Fragment() {
     ): View {
         _binding = TvShowsFragmentBinding.inflate(inflater, container, false)
 
-        viewAdapter = TvShowsAdapter()
-        viewAdapter.notifyDataSetChanged()
+        lifecycleScope.launchWhenCreated {
+            viewAdapter = TvShowsAdapter()
+            viewAdapter.notifyDataSetChanged()
 
-        binding.rvAllTvShows.apply {
-            layoutManager = GridLayoutManager(activity, 2)
-            adapter = viewAdapter
-            setHasFixedSize(true)
+            binding.rvAllTvShows.apply {
+                layoutManager = GridLayoutManager(activity, 2)
+                adapter = viewAdapter
+                setHasFixedSize(true)
+            }
+
+            viewAdapter.setOnItemClickCallback(object : TvShowsAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: DiscoverTvResultsItem) {
+                    showMovieDetail(data)
+                }
+            })
         }
 
-        val currentActivity = activity as HomeActivity
-        val toolbar = binding.homeToolbar.toolbarHome
-        currentActivity.setSupportActionBar(toolbar)
-        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        currentActivity.setActionBarTitle("TV Shows")
+        Handler(Looper.getMainLooper()).postDelayed({
+            val currentActivity = activity as HomeActivity
+            val toolbar = binding.homeToolbar.toolbarHome
+            currentActivity.setSupportActionBar(toolbar)
+            currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            currentActivity.setActionBarTitle("TV Shows")
+        }, 100)
 
         EspressoIdlingResource.increment()
         viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
@@ -50,12 +63,13 @@ class TvShowsFragment : Fragment() {
                     EspressoIdlingResource.decrement()
                 }
                 viewAdapter.setTv(tvItem)
-            }
-        })
 
-        viewAdapter.setOnItemClickCallback(object : TvShowsAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: DiscoverTvResultsItem) {
-                showMovieDetail(data)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.rvAllTvShows.visibility = View.VISIBLE
+                    binding.textView.visibility = View.VISIBLE
+                    binding.view2.visibility = View.VISIBLE
+                    binding.tvShimmer.visibility = View.GONE
+                }, 500)
             }
         })
 

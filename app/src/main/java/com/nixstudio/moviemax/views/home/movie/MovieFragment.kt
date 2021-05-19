@@ -1,10 +1,13 @@
 package com.nixstudio.moviemax.views.home.movie
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
@@ -12,6 +15,7 @@ import com.nixstudio.moviemax.databinding.MovieFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.MovieViewModel
 import com.nixstudio.moviemax.views.home.HomeActivity
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
@@ -27,20 +31,30 @@ class MovieFragment : Fragment() {
     ): View {
         _binding = MovieFragmentBinding.inflate(inflater, container, false)
 
-        viewAdapter = MovieAdapter()
-        viewAdapter.notifyDataSetChanged()
+        lifecycleScope.launchWhenCreated {
+            viewAdapter = MovieAdapter()
+            viewAdapter.notifyDataSetChanged()
 
-        binding.rvAllMovie.apply {
-            layoutManager = GridLayoutManager(activity, 2)
-            adapter = viewAdapter
-            setHasFixedSize(true)
+            binding.rvAllMovie.apply {
+                layoutManager = GridLayoutManager(activity, 2)
+                adapter = viewAdapter
+                setHasFixedSize(true)
+            }
+
+            viewAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: DiscoverMovieResultsItem) {
+                    showMovieDetail(data)
+                }
+            })
         }
 
-        val currentActivity = activity as HomeActivity
-        val toolbar = binding.homeToolbar.toolbarHome
-        currentActivity.setSupportActionBar(toolbar)
-        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        currentActivity.setActionBarTitle("Movies")
+        Handler(Looper.getMainLooper()).postDelayed({
+            val currentActivity = activity as HomeActivity
+            val toolbar = binding.homeToolbar.toolbarHome
+            currentActivity.setSupportActionBar(toolbar)
+            currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            currentActivity.setActionBarTitle("Movies")
+        }, 100)
 
         EspressoIdlingResource.increment()
         viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
@@ -49,13 +63,17 @@ class MovieFragment : Fragment() {
                     //Memberitahukan bahwa tugas sudah selesai dijalankan
                     EspressoIdlingResource.decrement()
                 }
-                viewAdapter.setMovies(movieItem)
-            }
-        })
 
-        viewAdapter.setOnItemClickCallback(object : MovieAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: DiscoverMovieResultsItem) {
-                showMovieDetail(data)
+                lifecycleScope.launch {
+                    viewAdapter.setMovies(movieItem)
+                }
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.rvAllMovie.visibility = View.VISIBLE
+                    binding.textView.visibility = View.VISIBLE
+                    binding.view2.visibility = View.VISIBLE
+                    binding.movieShimmer.visibility = View.GONE
+                }, 500)
             }
         })
 

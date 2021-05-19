@@ -3,11 +3,14 @@ package com.nixstudio.moviemax.views.home
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nixstudio.moviemax.R
@@ -31,84 +34,125 @@ class HomeFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("FRAGMENT", "HOME FRAGMENT CREATED")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        trendingViewAdapter = HomeTrendingAdapter()
-        movieViewAdapter = HomeMovieAdapter()
-        tvViewAdapter = HomeTvAdapter()
-        trendingViewAdapter.notifyDataSetChanged()
-        movieViewAdapter.notifyDataSetChanged()
-        tvViewAdapter.notifyDataSetChanged()
+        lifecycleScope.launchWhenCreated {
+            trendingViewAdapter = HomeTrendingAdapter()
+            movieViewAdapter = HomeMovieAdapter()
+            tvViewAdapter = HomeTvAdapter()
+            trendingViewAdapter.notifyDataSetChanged()
+            movieViewAdapter.notifyDataSetChanged()
+            tvViewAdapter.notifyDataSetChanged()
 
-        setHasOptionsMenu(true)
+            setHasOptionsMenu(true)
 
-        binding.rvTrending.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = trendingViewAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.rvMovie.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = movieViewAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.rvTvshows.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = tvViewAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.seeAllMovies.setOnClickListener(this)
-        binding.seeAllTv.setOnClickListener(this)
-
-        val currentActivity = activity as HomeActivity
-        val toolbar = binding.homeToolbar.toolbarHome
-        currentActivity.setSupportActionBar(toolbar)
-        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        currentActivity.setActionBarTitle(" ")
-
-        val searchManager =
-            (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = binding.svSearchItem
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
-        searchView.setIconifiedByDefault(false)
-        searchView.queryHint = resources.getString(R.string.search_hint)
-
-        searchView.clearFocus()
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-
-                return true
+            binding.rvTrending.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = trendingViewAdapter
+                setHasFixedSize(true)
             }
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
+            binding.rvMovie.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = movieViewAdapter
+                setHasFixedSize(true)
+            }
 
-                searchView.clearFocus()
+            binding.rvTvshows.apply {
+                layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = tvViewAdapter
+                setHasFixedSize(true)
+            }
 
-                if (query != null && query != "" && query != " ") {
-                    val toSearchFragment =
-                        HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
-                    view?.findNavController()?.navigate(toSearchFragment)
-                } else {
-                    Toast.makeText(
-                        activity,
-                        resources.getString(R.string.query_empty_warning),
-                        Toast.LENGTH_SHORT
-                    ).show()
+            binding.seeAllMovies.setOnClickListener(this@HomeFragment)
+            binding.seeAllTv.setOnClickListener(this@HomeFragment)
+
+            val searchManager =
+                (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
+            val searchView = binding.svSearchItem
+
+            searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
+            searchView.setIconifiedByDefault(false)
+            searchView.queryHint = resources.getString(R.string.search_hint)
+
+            searchView.clearFocus()
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    return true
                 }
 
-                return true
-            }
-        })
+                override fun onQueryTextSubmit(query: String?): Boolean {
 
-        searchView.setOnCloseListener {
-            Log.d("Closed", "Closed")
-            true
+                    searchView.clearFocus()
+
+                    if (query != null && query != "" && query != " ") {
+                        val toSearchFragment =
+                            HomeFragmentDirections.actionHomeFragmentToSearchFragment(query)
+                        view?.findNavController()?.navigate(toSearchFragment)
+                    } else {
+                        Toast.makeText(
+                            activity,
+                            resources.getString(R.string.query_empty_warning),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    return true
+                }
+            })
+
+            searchView.setOnCloseListener {
+                Log.d("Closed", "Closed")
+                true
+            }
+
+            trendingViewAdapter.setOnItemClickCallback(object :
+                HomeTrendingAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: CombinedResultEntity) {
+                    if (data.mediaType == "movie") {
+                        val movie = DiscoverMovieResultsItem(
+                            overview = data.overview,
+                            title = data.title,
+                            posterPath = data.posterPath,
+                            backdropPath = data.backdropPath,
+                            releaseDate = data.releaseDate,
+                            popularity = data.popularity,
+                            voteAverage = data.voteAverage,
+                            id = data.id,
+                            adult = data.adult,
+                        )
+
+                        showMovieDetail(movie)
+                    } else {
+                        val tvShow = DiscoverTvResultsItem(
+                            overview = data.overview,
+                            posterPath = data.posterPath,
+                            backdropPath = data.backdropPath,
+                            popularity = data.popularity,
+                            voteAverage = data.voteAverage,
+                            id = data.id,
+                            firstAirDate = data.firstAirDate,
+                            name = data.name
+                        )
+
+                        showTvDetail(tvShow)
+                    }
+                }
+            })
+
+            movieViewAdapter.setOnItemClickCallback(object : HomeMovieAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: DiscoverMovieResultsItem) {
+                    showMovieDetail(data)
+                }
+            })
+
+            tvViewAdapter.setOnItemClickCallback(object : HomeTvAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: DiscoverTvResultsItem) {
+                    showTvDetail(data)
+                }
+            })
         }
 
         EspressoIdlingResource.increment()
@@ -122,8 +166,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     EspressoIdlingResource.decrement()
                 }
                 trendingViewAdapter.setTrendingData(item.take(7))
-                binding.rvTrending.visibility = View.VISIBLE
-                binding.rvTrendingShimmer.visibility = View.GONE
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.rvTrending.visibility = View.VISIBLE
+                    binding.rvTrendingShimmer.visibility = View.GONE
+                }, 500)
             }
         })
 
@@ -134,8 +181,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     EspressoIdlingResource.decrement()
                 }
                 movieViewAdapter.setMovies(movieItem.take(7))
-                binding.rvMovie.visibility = View.VISIBLE
-                binding.rvMovieShimmer.visibility = View.GONE
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.rvMovie.visibility = View.VISIBLE
+                    binding.rvMovieShimmer.visibility = View.GONE
+                }, 500)
             }
         })
 
@@ -146,56 +196,19 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     EspressoIdlingResource.decrement()
                 }
                 tvViewAdapter.setTv(tvItem.take(7))
-                binding.rvTvshows.visibility = View.VISIBLE
-                binding.rvTvShimmer.visibility = View.GONE
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.rvTvshows.visibility = View.VISIBLE
+                    binding.rvTvShimmer.visibility = View.GONE
+                }, 500)
             }
         })
 
-        trendingViewAdapter.setOnItemClickCallback(object :
-            HomeTrendingAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: CombinedResultEntity) {
-                if (data.mediaType == "movie") {
-                    val movie = DiscoverMovieResultsItem(
-                        overview = data.overview,
-                        title = data.title,
-                        posterPath = data.posterPath,
-                        backdropPath = data.backdropPath,
-                        releaseDate = data.releaseDate,
-                        popularity = data.popularity,
-                        voteAverage = data.voteAverage,
-                        id = data.id,
-                        adult = data.adult,
-                    )
-
-                    showMovieDetail(movie)
-                } else {
-                    val tvShow = DiscoverTvResultsItem(
-                        overview = data.overview,
-                        posterPath = data.posterPath,
-                        backdropPath = data.backdropPath,
-                        popularity = data.popularity,
-                        voteAverage = data.voteAverage,
-                        id = data.id,
-                        firstAirDate = data.firstAirDate,
-                        name = data.name
-                    )
-
-                    showTvDetail(tvShow)
-                }
-            }
-        })
-
-        movieViewAdapter.setOnItemClickCallback(object : HomeMovieAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: DiscoverMovieResultsItem) {
-                showMovieDetail(data)
-            }
-        })
-
-        tvViewAdapter.setOnItemClickCallback(object : HomeTvAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: DiscoverTvResultsItem) {
-                showTvDetail(data)
-            }
-        })
+        val currentActivity = activity as HomeActivity?
+        val toolbar = binding.homeToolbar.toolbarHome
+        currentActivity?.setSupportActionBar(toolbar)
+        currentActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        currentActivity?.setActionBarTitle(" ")
 
         return binding.root
     }
