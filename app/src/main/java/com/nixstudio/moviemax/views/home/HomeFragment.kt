@@ -21,6 +21,7 @@ import com.nixstudio.moviemax.databinding.FragmentHomeBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.utils.hideKeyboard
 import com.nixstudio.moviemax.viewmodels.HomeViewModel
+import com.nixstudio.moviemax.views.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -38,14 +39,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         lifecycleScope.launchWhenCreated {
+            setHasOptionsMenu(true)
+
             trendingViewAdapter = HomeTrendingAdapter()
             movieViewAdapter = HomeMovieAdapter()
             tvViewAdapter = HomeTvAdapter()
             trendingViewAdapter.notifyDataSetChanged()
             movieViewAdapter.notifyDataSetChanged()
             tvViewAdapter.notifyDataSetChanged()
-
-            setHasOptionsMenu(true)
 
             binding.rvTrending.apply {
                 layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -69,10 +70,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
             binding.seeAllTv.setOnClickListener(this@HomeFragment)
 
             val searchManager =
-                (activity as HomeActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
+                (activity as MainActivity).getSystemService(Context.SEARCH_SERVICE) as SearchManager
             val searchView = binding.svSearchItem
 
-            searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as HomeActivity).componentName))
+            searchView.setSearchableInfo(searchManager.getSearchableInfo((activity as MainActivity).componentName))
             searchView.setIconifiedByDefault(false)
             searchView.queryHint = resources.getString(R.string.search_hint)
 
@@ -207,7 +208,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         hideKeyboard()
 
-        val currentActivity = activity as HomeActivity?
+        val currentActivity = activity as MainActivity?
         val toolbar = binding.homeToolbar.toolbarHome
         currentActivity?.setSupportActionBar(toolbar)
         currentActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -234,13 +235,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
-            HomeFragmentDirections.actionHomeFragmentToItemDetailActivity(data, null)
+            HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(data, null)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 
     private fun showTvDetail(data: DiscoverTvResultsItem) {
         val toDetailItemActivity =
-            HomeFragmentDirections.actionHomeFragmentToItemDetailActivity(null, data)
+            HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 
@@ -256,10 +257,5 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 v.findNavController().navigate(toAllTv)
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

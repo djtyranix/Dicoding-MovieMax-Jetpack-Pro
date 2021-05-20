@@ -5,10 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nixstudio.moviemax.BuildConfig
-import com.nixstudio.moviemax.api.ApiService
 import com.nixstudio.moviemax.data.entities.CombinedResultEntity
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity
+import com.nixstudio.moviemax.data.sources.remote.api.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

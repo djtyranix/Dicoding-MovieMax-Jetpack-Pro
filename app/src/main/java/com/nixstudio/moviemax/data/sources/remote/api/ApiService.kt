@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.api
+package com.nixstudio.moviemax.data.sources.remote.api
 
 import com.nixstudio.moviemax.data.entities.MovieEntity
 import com.nixstudio.moviemax.data.entities.TvShowsEntity

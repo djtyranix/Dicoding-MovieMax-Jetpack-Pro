@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/lightblue_500" />
+    <item android:drawable="@color/bg_darkest" />
 
-    <item
-        android:width="150dp"
-        android:height="150dp"
-        android:gravity="center">
+    <item android:gravity="center">
         <bitmap
             android:gravity="fill_horizontal|fill_vertical"
             android:src="@drawable/video_player" />
-
     </item>
 
 </layer-list>

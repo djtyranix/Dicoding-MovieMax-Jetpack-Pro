@@ -12,4 +12,5 @@
     <color name="shimmer_bgcolor">#FFDDDDDD</color>
     <color name="text_dark">#FFF7F7F7</color>
     <color name="text_light">#FF212121</color>
+    <color name="bg_darkest">#FF171717</color>
 </resources>

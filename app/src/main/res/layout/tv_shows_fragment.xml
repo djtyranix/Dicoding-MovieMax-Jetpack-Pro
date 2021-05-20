@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.home.movie.MovieFragment"
-    android:gravity="center">
+    android:animateLayoutChanges="true"
+    android:gravity="center"
+    tools:context=".views.movie.MovieFragment">
 
     <include
         android:id="@+id/home_toolbar"
@@ -16,25 +17,26 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="1dp"
+        android:animateLayoutChanges="true"
         android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_toolbar"
-        app:shimmer_auto_start="true"
-        android:visibility="visible">
+        app:shimmer_auto_start="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:contentDescription="@string/tv_shows"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center|center_vertical|center_horizontal"
+                android:contentDescription="@string/tv_shows"
                 android:src="@drawable/ic_tv" />
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
@@ -65,8 +67,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:visibility="gone"
         android:background="@android:color/darker_gray"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -76,11 +78,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:clipToPadding="false"
         android:foregroundGravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="8dp"
         android:paddingBottom="24dp"
-        android:clipToPadding="false"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"

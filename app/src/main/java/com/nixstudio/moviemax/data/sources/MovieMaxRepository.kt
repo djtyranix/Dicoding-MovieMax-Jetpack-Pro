@@ -73,7 +73,8 @@ class MovieMaxRepository(
                     itemId = it,
                     mediaType = "movie",
                     title = movie.title,
-                    posterPath = movie.posterPath
+                    posterPath = movie.posterPath,
+                    createdAt = System.currentTimeMillis()
                 )
             }
         } else if (tvShow != null) {
@@ -82,7 +83,8 @@ class MovieMaxRepository(
                     itemId = it,
                     mediaType = "tv",
                     title = tvShow.name,
-                    posterPath = tvShow.posterPath
+                    posterPath = tvShow.posterPath,
+                    createdAt = System.currentTimeMillis()
                 )
             }
         }
@@ -101,7 +103,8 @@ class MovieMaxRepository(
                     itemId = it,
                     mediaType = "movie",
                     title = movie.title,
-                    posterPath = movie.posterPath
+                    posterPath = movie.posterPath,
+                    createdAt = System.currentTimeMillis()
                 )
             }
         } else if (tvShow != null) {
@@ -110,7 +113,8 @@ class MovieMaxRepository(
                     itemId = it,
                     mediaType = "tv",
                     title = tvShow.name,
-                    posterPath = tvShow.posterPath
+                    posterPath = tvShow.posterPath,
+                    createdAt = System.currentTimeMillis()
                 )
             }
         }

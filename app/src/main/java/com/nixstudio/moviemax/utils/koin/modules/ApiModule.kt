@@ -1,6 +1,6 @@
 package com.nixstudio.moviemax.utils.koin.modules
 
-import com.nixstudio.moviemax.api.ApiService
+import com.nixstudio.moviemax.data.sources.remote.api.ApiService
 import org.koin.dsl.module
 import retrofit2.Retrofit
 

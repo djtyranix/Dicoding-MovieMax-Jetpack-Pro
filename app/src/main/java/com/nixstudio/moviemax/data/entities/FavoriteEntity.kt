@@ -19,4 +19,6 @@ data class FavoriteEntity(
     @ColumnInfo(name = "title") val title: String?,
 
     @ColumnInfo(name = "poster_path") val posterPath: String?,
+
+    @ColumnInfo(name = "created_at") val createdAt: Long
 ) : Serializable, Parcelable

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:gravity="center"
-    tools:context=".views.home.favorite.FavoriteFragment">
+    tools:context=".views.favorite.FavoriteFragment">
 
     <include
         android:id="@+id/home_toolbar"
@@ -53,13 +54,13 @@
         android:textAlignment="viewStart"
         android:textColor="?attr/text_color_primary"
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_toolbar"
-        app:layout_constraintVertical_bias="0.0"
-        android:visibility="gone" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/view2"
@@ -69,10 +70,10 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/darker_gray"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <!--    IF EMPTY-->
     <ImageView
@@ -83,14 +84,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_movie_black"
         android:contentDescription="@string/search_empty"
+        android:src="@drawable/ic_movie_black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43"
-        android:visibility="gone" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/empty_favorite_info"
@@ -102,10 +103,10 @@
         android:textAlignment="center"
         android:textColor="?attr/text_color_primary"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/empty_favorite_placeholder"
         app:layout_constraintStart_toStartOf="@+id/empty_favorite_placeholder"
-        app:layout_constraintTop_toBottomOf="@+id/empty_favorite_placeholder"
-        android:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/empty_favorite_placeholder" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite"
@@ -117,12 +118,12 @@
         android:orientation="vertical"
         android:paddingHorizontal="8dp"
         android:paddingBottom="24dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sort_spinner"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:visibility="gone"
         tools:listitem="@layout/item_list_favorite" />
 
     <Spinner
@@ -131,14 +132,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:spinnerMode="dropdown"
         android:background="@drawable/shape_dropdown"
         android:entries="@array/sort_category"
+        android:gravity="center_vertical"
         android:paddingVertical="14dp"
         android:popupBackground="@drawable/shape_search"
-        android:gravity="center_vertical"
+        android:spinnerMode="dropdown"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
-        android:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

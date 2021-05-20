@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MovieMax" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="colorPrimary">@color/lightblue_200</item>
         <item name="colorPrimaryVariant">@color/lightblue_700</item>
         <item name="colorOnPrimary">@color/text_dark</item>
@@ -10,17 +11,29 @@
         <item name="colorSecondaryVariant">@color/blue_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/toolbar_gradient_color_left</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/toolbar_gradient_color_left
+        </item>
         <!-- Customize your theme here. -->
         <item name="cardview_bg">@color/bg_dark</item>
         <item name="text_color_primary">@color/text_dark</item>
-        <item name="toolbar_gradient_color_left">#FF171717</item>
-        <item name="toolbar_gradient_color_right">#FF212121</item>
+        <item name="toolbar_gradient_color_left">@color/bg_darkest</item>
+        <item name="toolbar_gradient_color_right">@color/bg_dark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="home_primary_color">#171717</item>
+        <item name="home_primary_color">@color/bg_darkest</item>
         <item name="love_color">#FFFF313B</item>
         <item name="home_love_color">@color/lightblue_500</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_brand_logo_dark</item>
+        <item name="android:statusBarColor">?attr/toolbar_gradient_color_left</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">

@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.views.home.search
+package com.nixstudio.moviemax.views.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

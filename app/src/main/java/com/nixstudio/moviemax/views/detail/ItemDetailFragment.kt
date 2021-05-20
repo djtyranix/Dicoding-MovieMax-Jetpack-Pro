@@ -1,17 +1,18 @@
 package com.nixstudio.moviemax.views.detail
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -33,13 +34,14 @@ import com.nixstudio.moviemax.data.utils.reviews.ReviewsItem
 import com.nixstudio.moviemax.databinding.ItemDetailFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.ItemDetailViewModel
+import com.nixstudio.moviemax.views.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class ItemDetailFragment : Fragment() {
 
     private var _binding: ItemDetailFragmentBinding? = null
     private val binding get() = _binding!!
+    private var isFavorited = false
     private val viewModel by viewModel<ItemDetailViewModel>()
 
     private lateinit var imgPoster: ImageView
@@ -68,6 +70,8 @@ class ItemDetailFragment : Fragment() {
         _binding = ItemDetailFragmentBinding.inflate(inflater, container, false)
 
         lifecycleScope.launchWhenCreated {
+            setHasOptionsMenu(true)
+
             imgPoster = binding.imgPosterDetail
             imgBackdrop = binding.imgBackdrop
             tvTitle = binding.itemTitle
@@ -99,8 +103,9 @@ class ItemDetailFragment : Fragment() {
                 setHasFixedSize(true)
             }
 
-            currentMovie = arguments?.getParcelable<DiscoverMovieResultsItem?>("currentMovie")
-            currentTvShows = arguments?.getParcelable<DiscoverTvResultsItem>("currentTvShows")
+            val args: ItemDetailFragmentArgs by navArgs()
+            currentMovie = args.movieEntity
+            currentTvShows = args.tvShowsEntity
 
             shimmer =
                 Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
@@ -149,7 +154,7 @@ class ItemDetailFragment : Fragment() {
             }
         })
 
-        val currentActivity = activity as ItemDetailActivity
+        val currentActivity = activity as MainActivity
         val toolbar = binding.detailToolbar
         currentActivity.setSupportActionBar(toolbar)
         currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -285,15 +290,83 @@ class ItemDetailFragment : Fragment() {
         tvRating.text = resources.getString(R.string.rating_value, tvShows.voteAverage.toString())
     }
 
-    companion object {
-        fun newInstance(
-            currentMovie: DiscoverMovieResultsItem? = null,
-            currentTvShows: DiscoverTvResultsItem? = null
-        ): ItemDetailFragment = ItemDetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable("currentMovie", currentMovie)
-                putParcelable("currentTvShows", currentTvShows)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.item_detail_menu, menu)
+
+        if (currentMovie != null) {
+            currentMovie?.id?.let { viewModel.checkIfProfileFavorited(it) }
+        } else if (currentTvShows != null) {
+            currentTvShows?.id?.let { viewModel.checkIfProfileFavorited(it) }
+        }
+
+        viewModel.checkIsFavorited().observe(this, { isExist ->
+            isFavorited = if (isExist) { //User already favorited
+                menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_red)
+                true
+            } else {
+                menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite)
+                false
             }
         }
+        )
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+
+                if (currentMovie != null) {
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentMovie?.title)
+                    shareIntent.putExtra(
+                        Intent.EXTRA_TEXT,
+                        "${currentMovie?.title}\n\nOverview: ${currentMovie?.overview}"
+                    )
+                } else if (currentTvShows != null) {
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, currentTvShows?.name)
+                    shareIntent.putExtra(
+                        Intent.EXTRA_TEXT,
+                        "${currentTvShows?.name}\n\nOverview: ${currentTvShows?.overview}"
+                    )
+                }
+
+                shareIntent.type = "text/plain"
+                startActivity(shareIntent)
+                return true
+            }
+            R.id.favorite -> {
+                isFavorited = !isFavorited
+
+                if (isFavorited) { //Add user
+                    viewModel.addFavorite(currentMovie, currentTvShows)
+                    Toast.makeText(
+                        activity,
+                        resources.getString(R.string.fav_add_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    item.setIcon(R.drawable.ic_favorite_red)
+                } else {
+                    viewModel.removeFavorite(currentMovie, currentTvShows)
+                    Toast.makeText(
+                        activity,
+                        resources.getString(R.string.fav_del_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    item.setIcon(R.drawable.ic_favorite)
+                }
+
+                return true
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

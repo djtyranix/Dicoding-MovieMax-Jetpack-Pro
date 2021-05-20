@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.views.home.movie
+package com.nixstudio.moviemax.views.movie
 
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +14,7 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem
 import com.nixstudio.moviemax.databinding.MovieFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.MovieViewModel
-import com.nixstudio.moviemax.views.home.HomeActivity
+import com.nixstudio.moviemax.views.MainActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -48,14 +48,6 @@ class MovieFragment : Fragment() {
             })
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val currentActivity = activity as HomeActivity
-            val toolbar = binding.homeToolbar.toolbarHome
-            currentActivity.setSupportActionBar(toolbar)
-            currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            currentActivity.setActionBarTitle("Movies")
-        }, 100)
-
         EspressoIdlingResource.increment()
         viewModel.getMovies().observe(viewLifecycleOwner, { movieItem ->
             if (!movieItem.isNullOrEmpty()) {
@@ -77,12 +69,18 @@ class MovieFragment : Fragment() {
             }
         })
 
+        val currentActivity = activity as MainActivity
+        val toolbar = binding.homeToolbar.toolbarHome
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        currentActivity.setActionBarTitle("Movies")
+
         return binding.root
     }
 
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
-            MovieFragmentDirections.actionMovieFragmentToItemDetailActivity(data, null)
+            MovieFragmentDirections.actionMovieFragmentToItemDetailFragment(data, null)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 }

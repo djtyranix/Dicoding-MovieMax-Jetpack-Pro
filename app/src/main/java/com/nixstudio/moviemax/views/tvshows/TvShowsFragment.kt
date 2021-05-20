@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.views.home.tvshows
+package com.nixstudio.moviemax.views.tvshows
 
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +14,7 @@ import com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem
 import com.nixstudio.moviemax.databinding.TvShowsFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.TvShowsViewModel
-import com.nixstudio.moviemax.views.home.HomeActivity
+import com.nixstudio.moviemax.views.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TvShowsFragment : Fragment() {
@@ -47,14 +47,6 @@ class TvShowsFragment : Fragment() {
             })
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val currentActivity = activity as HomeActivity
-            val toolbar = binding.homeToolbar.toolbarHome
-            currentActivity.setSupportActionBar(toolbar)
-            currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            currentActivity.setActionBarTitle("TV Shows")
-        }, 100)
-
         EspressoIdlingResource.increment()
         viewModel.getTvShows().observe(viewLifecycleOwner, { tvItem ->
             if (!tvItem.isNullOrEmpty()) {
@@ -73,12 +65,18 @@ class TvShowsFragment : Fragment() {
             }
         })
 
+        val currentActivity = activity as MainActivity
+        val toolbar = binding.homeToolbar.toolbarHome
+        currentActivity.setSupportActionBar(toolbar)
+        currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        currentActivity.setActionBarTitle("TV Shows")
+
         return binding.root
     }
 
     private fun showMovieDetail(data: DiscoverTvResultsItem) {
         val toDetailItemActivity =
-            TvShowsFragmentDirections.actionTvShowsFragmentToItemDetailActivity(null, data)
+            TvShowsFragmentDirections.actionTvShowsFragmentToItemDetailFragment(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 }

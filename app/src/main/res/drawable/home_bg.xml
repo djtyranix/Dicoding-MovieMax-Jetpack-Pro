@@ -3,14 +3,14 @@
     <item>
         <rotate
             android:fromDegrees="79"
-            android:toDegrees="30"
             android:pivotX="100%"
-            android:pivotY="7.5%" >
-            <shape
-                android:shape="rectangle" >
-                <stroke android:color="@color/transparent" android:width="10dp"/>
-                <solid
-                    android:color="?attr/home_primary_color" />
+            android:pivotY="7.5%"
+            android:toDegrees="30">
+            <shape android:shape="rectangle">
+                <stroke
+                    android:width="10dp"
+                    android:color="@color/transparent" />
+                <solid android:color="?attr/home_primary_color" />
             </shape>
         </rotate>
     </item>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
             <solid android:color="?attr/cardview_bg" />
@@ -11,6 +11,7 @@
                 android:top="10dp" />
         </shape>
     </item>
-    <item android:gravity="end"
-        android:drawable="@drawable/ic_drop_arrow" />
+    <item
+        android:drawable="@drawable/ic_drop_arrow"
+        android:gravity="end" />
 </layer-list>

@@ -18,9 +18,10 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import com.nixstudio.moviemax.R
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
-import com.nixstudio.moviemax.views.home.favorite.FavoriteAdapter
-import com.nixstudio.moviemax.views.home.movie.MovieAdapter
-import com.nixstudio.moviemax.views.home.tvshows.TvShowsAdapter
+import com.nixstudio.moviemax.views.MainActivity
+import com.nixstudio.moviemax.views.favorite.FavoriteAdapter
+import com.nixstudio.moviemax.views.movie.MovieAdapter
+import com.nixstudio.moviemax.views.tvshows.TvShowsAdapter
 import org.hamcrest.Matcher
 import org.hamcrest.core.AllOf.allOf
 import org.junit.After
@@ -29,7 +30,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4ClassRunner::class)
-class HomeActivityTest {
+class MainActivityTest {
 
     private lateinit var instrumentalContext: Context
 
@@ -37,7 +38,7 @@ class HomeActivityTest {
     fun setup() {
         instrumentalContext = InstrumentationRegistry.getInstrumentation().targetContext
 
-        ActivityScenario.launch(HomeActivity::class.java)
+        ActivityScenario.launch(MainActivity::class.java)
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getEspressoIdlingResource())
     }
 

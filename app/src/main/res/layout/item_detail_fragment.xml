@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/item_detail_bg"
     android:animateLayoutChanges="true"
+    android:background="@drawable/item_detail_bg"
     tools:context=".views.detail.ItemDetailFragment">
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:shimmer_auto_start="true"
-        android:visibility="visible">
+        android:visibility="visible"
+        app:shimmer_auto_start="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:theme="@style/ToolbarStyle"
             app:contentScrim="?attr/toolbar_gradient_color_left"
             app:expandedTitleTextAppearance="@style/TransparentText"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed" >
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -65,9 +65,9 @@
                 android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleTextColor="?attr/colorOnPrimary"
                 android:theme="@style/ToolbarStyle"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:titleTextColor="?attr/colorOnPrimary" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -76,9 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
+        android:overScrollMode="never"
         android:scrollbars="none"
         android:visibility="gone"
-        android:overScrollMode="never"
         app:behavior_overlapTop="65dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
@@ -86,7 +86,7 @@
             android:id="@+id/item_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/detail_layout_bg" >
+            android:background="@drawable/detail_layout_bg">
 
             <View
                 android:id="@+id/view6"
@@ -272,8 +272,8 @@
                 android:layout_marginEnd="16dp"
                 android:drawablePadding="6dp"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/dummy_rating"
                 android:gravity="center|end"
+                android:text="@string/dummy_rating"
                 android:textAlignment="textEnd"
                 android:textColor="?attr/text_color_primary"
                 android:textSize="22sp"
@@ -405,9 +405,9 @@
                     android:id="@+id/tv_no_cast_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginStart="16dp"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/no_cast"
                     android:visibility="gone" />
@@ -415,13 +415,13 @@
 
             <TextView
                 android:id="@+id/tv_no_reviews"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="@font/poppins_light"
                 android:text="@string/no_reviews"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView10"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />

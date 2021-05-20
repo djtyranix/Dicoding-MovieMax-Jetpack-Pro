@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.views.home.movie
+package com.nixstudio.moviemax.views.movie
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

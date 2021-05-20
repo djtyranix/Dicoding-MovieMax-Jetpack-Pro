@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.views.home.search
+package com.nixstudio.moviemax.views.search
 
 import android.os.Bundle
 import android.os.Handler
@@ -19,7 +19,7 @@ import com.nixstudio.moviemax.databinding.SearchFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.utils.hideKeyboard
 import com.nixstudio.moviemax.viewmodels.SearchViewModel
-import com.nixstudio.moviemax.views.home.HomeActivity
+import com.nixstudio.moviemax.views.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
@@ -110,7 +110,7 @@ class SearchFragment : Fragment() {
             }
         })
 
-        val currentActivity = activity as HomeActivity
+        val currentActivity = activity as MainActivity
         val toolbar = binding.homeToolbar.toolbarHome
         currentActivity.setSupportActionBar(toolbar)
         currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -126,13 +126,13 @@ class SearchFragment : Fragment() {
 
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
-            SearchFragmentDirections.actionSearchFragmentToItemDetailActivity(data, null)
+            SearchFragmentDirections.actionSearchFragmentToItemDetailFragment(data, null)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 
     private fun showTvDetail(data: DiscoverTvResultsItem) {
         val toDetailItemActivity =
-            SearchFragmentDirections.actionSearchFragmentToItemDetailActivity(null, data)
+            SearchFragmentDirections.actionSearchFragmentToItemDetailFragment(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 }

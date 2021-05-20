@@ -15,9 +15,9 @@
             android:id="@+id/img_poster_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:background="@color/shimmer_bgcolor"
-            android:contentDescription="@string/poster" />
+            android:contentDescription="@string/poster"
+            android:scaleType="fitXY" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

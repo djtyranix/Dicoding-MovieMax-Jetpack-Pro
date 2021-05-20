@@ -25,13 +25,6 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
         <action
-            android:id="@+id/action_homeFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <action
             android:id="@+id/action_homeFragment_to_settingsActivity"
             app:destination="@id/settingsActivity"
             app:enterAnim="@android:anim/fade_in"
@@ -52,37 +45,78 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.nixstudio.moviemax.views.home.movie.MovieFragment"
+        android:name="com.nixstudio.moviemax.views.movie.MovieFragment"
         android:label="movie_fragment"
         tools:layout="@layout/movie_fragment">
         <action
-            android:id="@+id/action_movieFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            android:id="@+id/action_movieFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/tvShowsFragment"
-        android:name="com.nixstudio.moviemax.views.home.tvshows.TvShowsFragment"
+        android:name="com.nixstudio.moviemax.views.tvshows.TvShowsFragment"
         android:label="tv_shows_fragment"
         tools:layout="@layout/tv_shows_fragment">
         <action
-            android:id="@+id/action_tvShowsFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
+            android:id="@+id/action_tvShowsFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <activity
-        android:id="@+id/itemDetailActivity"
-        android:name="com.nixstudio.moviemax.views.detail.ItemDetailActivity"
-        android:label="ItemDetailActivity">
+        android:id="@+id/settingsActivity"
+        android:name="com.nixstudio.moviemax.views.settings.SettingsActivity"
+        android:label="SettingsActivity" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.nixstudio.moviemax.views.search.SearchFragment"
+        android:label="search_fragment"
+        tools:layout="@layout/search_fragment">
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.nixstudio.moviemax.views.favorite.FavoriteFragment"
+        android:label="favorite_fragment"
+        tools:layout="@layout/favorite_fragment">
+        <action
+            android:id="@+id/action_favoriteFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailFragment"
+        android:name="com.nixstudio.moviemax.views.detail.ItemDetailFragment"
+        android:label="item_detail_fragment"
+        tools:layout="@layout/item_detail_fragment" >
         <argument
             android:name="movie_entity"
             app:argType="com.nixstudio.moviemax.data.sources.remote.DiscoverMovieResultsItem"
@@ -91,38 +125,5 @@
             android:name="tv_shows_entity"
             app:argType="com.nixstudio.moviemax.data.sources.remote.DiscoverTvResultsItem"
             app:nullable="true" />
-    </activity>
-    <activity
-        android:id="@+id/settingsActivity"
-        android:name="com.nixstudio.moviemax.views.settings.SettingsActivity"
-        android:label="SettingsActivity" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.nixstudio.moviemax.views.home.search.SearchFragment"
-        android:label="search_fragment"
-        tools:layout="@layout/search_fragment" >
-        <action
-            android:id="@+id/action_searchFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
-        <argument
-            android:name="query"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/favoriteFragment"
-        android:name="com.nixstudio.moviemax.views.home.favorite.FavoriteFragment"
-        android:label="favorite_fragment"
-        tools:layout="@layout/favorite_fragment" >
-        <action
-            android:id="@+id/action_favoriteFragment_to_itemDetailActivity"
-            app:destination="@id/itemDetailActivity"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>

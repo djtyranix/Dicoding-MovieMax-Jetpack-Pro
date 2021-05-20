@@ -49,13 +49,13 @@
             app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:src="@color/shimmer_bgcolor"
             android:id="@+id/imgAvatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:src="@color/shimmer_bgcolor"
             app:layout_constraintEnd_toStartOf="@+id/tv_rating_review"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

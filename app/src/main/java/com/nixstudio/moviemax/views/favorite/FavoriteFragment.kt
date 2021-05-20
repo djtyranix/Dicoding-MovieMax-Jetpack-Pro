@@ -1,4 +1,4 @@
-package com.nixstudio.moviemax.views.home.favorite
+package com.nixstudio.moviemax.views.favorite
 
 import android.os.Bundle
 import android.os.Handler
@@ -19,7 +19,7 @@ import com.nixstudio.moviemax.data.utils.MediaType
 import com.nixstudio.moviemax.databinding.FavoriteFragmentBinding
 import com.nixstudio.moviemax.utils.EspressoIdlingResource
 import com.nixstudio.moviemax.viewmodels.FavoriteViewModel
-import com.nixstudio.moviemax.views.home.HomeActivity
+import com.nixstudio.moviemax.views.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : Fragment() {
@@ -139,7 +139,7 @@ class FavoriteFragment : Fragment() {
             checkIsListEmpty(count)
         })
 
-        val currentActivity = activity as HomeActivity
+        val currentActivity = activity as MainActivity
         val toolbar = binding.homeToolbar.toolbarHome
         currentActivity.setSupportActionBar(toolbar)
         currentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -156,12 +156,14 @@ class FavoriteFragment : Fragment() {
                 binding.sortSpinner.visibility = View.VISIBLE
                 binding.textView.visibility = View.VISIBLE
                 binding.rvFavoriteShimmer.visibility = View.GONE
+                binding.emptyFavoritePlaceholder.visibility = View.GONE
+                binding.emptyFavoriteInfo.visibility = View.GONE
             }, 500)
         } else {
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.textView.visibility = View.VISIBLE
                 binding.view2.visibility = View.VISIBLE
-                binding.sortSpinner.visibility = View.GONE
+                binding.sortSpinner.visibility = View.VISIBLE
                 binding.rvFavoriteShimmer.visibility = View.GONE
                 binding.rvFavorite.visibility = View.GONE
                 binding.emptyFavoritePlaceholder.visibility = View.VISIBLE
@@ -172,13 +174,13 @@ class FavoriteFragment : Fragment() {
 
     private fun showMovieDetail(data: DiscoverMovieResultsItem) {
         val toDetailItemActivity =
-            FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailActivity(data, null)
+            FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailFragment(data, null)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 
     private fun showTvDetail(data: DiscoverTvResultsItem) {
         val toDetailItemActivity =
-            FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailActivity(null, data)
+            FavoriteFragmentDirections.actionFavoriteFragmentToItemDetailFragment(null, data)
         view?.findNavController()?.navigate(toDetailItemActivity)
     }
 }

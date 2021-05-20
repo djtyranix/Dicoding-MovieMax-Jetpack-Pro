@@ -5,7 +5,8 @@
     android:id="@+id/searchFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.home.search.SearchFragment">
+    android:animateLayoutChanges="true"
+    tools:context=".views.search.SearchFragment">
 
     <include
         android:id="@+id/home_toolbar"
@@ -17,12 +18,12 @@
         android:layout_height="0dp"
         android:layout_marginBottom="1dp"
         android:orientation="vertical"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/home_toolbar"
-        app:shimmer_auto_start="true"
-        android:visibility="visible">
+        app:shimmer_auto_start="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,14 +53,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_movie_black"
         android:contentDescription="@string/search_empty"
+        android:src="@drawable/ic_movie_black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43"
-        android:visibility="gone" />
+        app:layout_constraintVertical_bias="0.43" />
 
     <TextView
         android:id="@+id/empty_search_info"
@@ -71,10 +72,10 @@
         android:textAlignment="center"
         android:textColor="?attr/text_color_primary"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/empty_search_placeholder"
         app:layout_constraintStart_toStartOf="@+id/empty_search_placeholder"
-        app:layout_constraintTop_toBottomOf="@+id/empty_search_placeholder"
-        android:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/empty_search_placeholder" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search_result"
