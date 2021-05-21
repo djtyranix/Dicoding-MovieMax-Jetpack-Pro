@@ -27,9 +27,9 @@
         <action
             android:id="@+id/action_homeFragment_to_settingsActivity"
             app:destination="@id/settingsActivity"
-            app:enterAnim="@android:anim/fade_in"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
